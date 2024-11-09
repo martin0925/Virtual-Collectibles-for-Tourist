@@ -10,6 +10,13 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
+
 import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
@@ -30,8 +37,8 @@ class MainActivity : AppCompatActivity() {
         map.setMultiTouchControls(true)
 
         // TODO: now starting on exact location, make on current GPS location
-        val startPoint = GeoPoint(50.1082, 14.4432)
-        map.controller.setZoom(25.0)
+        val startPoint = GeoPoint(49.19522, 16.60796)
+        map.controller.setZoom(18.0)
         map.controller.setCenter(startPoint)
 
         // Permission for exact location
@@ -40,6 +47,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadPlacesFromJson()
+    }
+
+    // Resizing map custom pins to ideal size when zooming
+    private fun resizeDrawable(drawable: Drawable, width: Int, height: Int): Bitmap {
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        drawable.setBounds(0, 0, canvas.width, canvas.height)
+        drawable.draw(canvas)
+        return bitmap
     }
 
     private fun loadPlacesFromJson() {
@@ -53,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                 val place = placesArray.getJSONObject(i)
                 val name = place.getString("title")
                 val coordinates = place.getString("coordinates")
-                val placeType = place.getString("place")
+                val location = place.getString("place")
                 val url = place.getString("url")
 
                 // Split the coordinates into latitude and longitude
@@ -64,9 +80,14 @@ class MainActivity : AppCompatActivity() {
                 // Create custom marker
                 val marker = Marker(map)
                 marker.position = GeoPoint(lat, lon)
-                marker.title = "$name ($placeType)"
-                marker.snippet = url
+                marker.title = name
+                marker.snippet = location
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+
+                // TODO: custom pin marker, now only one icon (museum)
+                val drawable = ContextCompat.getDrawable(this, R.drawable.landmark_solid)
+                val resizedBitmap = resizeDrawable(drawable!!, 64, 64)
+                marker.icon = BitmapDrawable(resources, resizedBitmap)
 
                 map.overlays.add(marker)
             }
@@ -82,11 +103,11 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         Configuration.getInstance().load(this, getSharedPreferences("osmdroid", MODE_PRIVATE))
-        map.onResume() // Needed for osmdroid
+        map.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        map.onPause() // Needed for osmdroid
+        map.onPause()
     }
 }
