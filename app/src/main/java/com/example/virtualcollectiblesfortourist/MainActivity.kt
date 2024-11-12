@@ -87,8 +87,6 @@ class MainActivity : AppCompatActivity() {
                     "epic" -> R.drawable.map_pin_bg_epic
                     else -> R.drawable.map_pin_bg_common
                 }
-
-                // Set the background for the pin layout
                 pinView.background = ContextCompat.getDrawable(this, backgroundRes)
 
                 // Create a bitmap

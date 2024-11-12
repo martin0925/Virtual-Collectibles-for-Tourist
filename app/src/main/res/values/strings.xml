@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Virtual Collectibles for Tourist</string>
+    <string name="filter_button">Filter Button</string>
+    <string name="czechia">Czechia</string>
 </resources>
