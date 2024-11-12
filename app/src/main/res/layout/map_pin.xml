@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/map_pin_bg_legendary"
+    android:orientation="horizontal"
+    android:padding="2dp"
+    android:visibility="visible">
+
+    <!-- Text container on the left side -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Title TextView with fixed width and ellipsis for overflow -->
+        <TextView
+            android:id="@+id/pin_title"
+            android:layout_width="135dp"
+            android:layout_height="wrap_content"
+            android:text="Astronomical Clock"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <TextView
+            android:id="@+id/pin_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Czechia"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <!-- ImageView aligned to the right side without padding or margin -->
+    <ImageView
+        android:id="@+id/pin_image"
+        android:layout_width="72dp"
+        android:layout_height="62dp"
+        android:layout_marginEnd="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_image" />
+
+</LinearLayout>

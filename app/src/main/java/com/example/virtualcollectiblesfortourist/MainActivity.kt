@@ -14,7 +14,8 @@ import org.osmdroid.views.overlay.Marker
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 
 import java.io.InputStream
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // osmdroid configuration
+        // Osmdroid configuration
         Configuration.getInstance().load(this, getSharedPreferences("osmdroid", MODE_PRIVATE))
 
         setContentView(R.layout.activity_main)
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         map.setMultiTouchControls(true)
 
         // TODO: now starting on exact location, make on current GPS location
-        val startPoint = GeoPoint(49.19522, 16.60796)
+        val startPoint = GeoPoint(50.0870, 14.4208)
         map.controller.setZoom(18.0)
         map.controller.setCenter(startPoint)
 
@@ -49,20 +50,11 @@ class MainActivity : AppCompatActivity() {
         loadPlacesFromJson()
     }
 
-    // Resizing map custom pins to ideal size when zooming
-    private fun resizeDrawable(drawable: Drawable, width: Int, height: Int): Bitmap {
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        drawable.setBounds(0, 0, canvas.width, canvas.height)
-        drawable.draw(canvas)
-        return bitmap
-    }
-
     private fun loadPlacesFromJson() {
         try {
-            val inputStream: InputStream = assets.open("czech_places.json")
+            // TODO: using reduced version of dataset, including rarity
+            val inputStream: InputStream = assets.open("czech_places_reduced.json")
             val jsonString = inputStream.bufferedReader().use { it.readText() }
-
             val placesArray = JSONArray(jsonString)
 
             for (i in 0 until placesArray.length()) {
@@ -70,12 +62,41 @@ class MainActivity : AppCompatActivity() {
                 val name = place.getString("title")
                 val coordinates = place.getString("coordinates")
                 val location = place.getString("place")
-                val url = place.getString("url")
+                val rarity = place.getString("value")
 
                 // Split the coordinates into latitude and longitude
                 val coords = coordinates.split(",").map { it.trim().toDouble() }
                 val lat = coords[0]
                 val lon = coords[1]
+
+                // Inflate custom layout for the pin
+                val inflater = layoutInflater
+                val pinView = inflater.inflate(R.layout.map_pin, null)
+
+                // Set title and subtitle in the custom pin layout
+                val titleView = pinView.findViewById<TextView>(R.id.pin_title)
+                val subtitleView = pinView.findViewById<TextView>(R.id.pin_subtitle)
+                titleView.text = name
+                subtitleView.text = location
+
+                // Select background based on location rarity
+                val backgroundRes = when (rarity) {
+                    "legendary" -> R.drawable.map_pin_bg_legendary
+                    "common" -> R.drawable.map_pin_bg_common
+                    "rare" -> R.drawable.map_pin_bg_rare
+                    "epic" -> R.drawable.map_pin_bg_epic
+                    else -> R.drawable.map_pin_bg_common
+                }
+
+                // Set the background for the pin layout
+                pinView.background = ContextCompat.getDrawable(this, backgroundRes)
+
+                // Create a bitmap
+                pinView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                pinView.layout(0, 0, pinView.measuredWidth, pinView.measuredHeight)
+                val bitmap = Bitmap.createBitmap(pinView.measuredWidth, pinView.measuredHeight, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(bitmap)
+                pinView.draw(canvas)
 
                 // Create custom marker
                 val marker = Marker(map)
@@ -83,11 +104,10 @@ class MainActivity : AppCompatActivity() {
                 marker.title = name
                 marker.snippet = location
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                marker.icon = BitmapDrawable(resources, bitmap)
 
-                // TODO: custom pin marker, now only one icon (museum)
-                val drawable = ContextCompat.getDrawable(this, R.drawable.landmark_solid)
-                val resizedBitmap = resizeDrawable(drawable!!, 64, 64)
-                marker.icon = BitmapDrawable(resources, resizedBitmap)
+                // Disable default info window popup on click
+                marker.infoWindow = null
 
                 map.overlays.add(marker)
             }
