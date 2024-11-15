@@ -3,1062 +3,2403 @@
     "title": "The Museum of Alchemists and Magicians of Old Prague",
     "place": "Prague, Czechia",
     "coordinates": "50.0881, 14.3987",
+    "rarity": "common",
+    "tags": [
+      "alchemy",
+      "magic",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/the-museum-of-alchemists-and-magicians-of-old-prague-prague-czechia"
   },
   {
     "title": "Strahov Monastery",
     "place": "Prague, Czechia",
     "coordinates": "50.0861, 14.3893",
+    "rarity": "common",
+    "tags": [
+      "wonder cabinets",
+      "repositories of knowledge",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/strahov-monastery-me"
   },
   {
     "title": "Idiom Installation",
     "place": "Prague, Czechia",
     "coordinates": "50.0874, 14.4174",
+    "rarity": "common",
+    "tags": [
+      "wells",
+      "installations",
+      "literature",
+      "books",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/idiom-installation"
   },
   {
     "title": "Dripstone Wall",
     "place": "Prague, Czechia",
     "coordinates": "50.0893, 14.4067",
+    "rarity": "common",
+    "tags": [
+      "secret passages",
+      "grottoes",
+      "walls",
+      "gardens",
+      "plants"
+    ],
     "url": "https://www.atlasobscura.com/places/dripstone-wall-2"
   },
   {
     "title": "Speculum Alchemiae",
     "place": "Prague, Czechia",
     "coordinates": "50.0908, 14.4225",
+    "rarity": "common",
+    "tags": [
+      "alchemy",
+      "magic",
+      "subterranean sites",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/speculum-alchemiae"
   },
   {
     "title": "Prague Astronomical Clock",
     "place": "Prague, Czechia",
     "coordinates": "50.0870, 14.4208",
+    "rarity": "common",
+    "tags": [
+      "astronomical clocks",
+      "amazing automata",
+      "astounding timepieces",
+      "clocks",
+      "inventions",
+      "eccentric homes",
+      "homes",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/prague-astronomical-clock"
   },
   {
     "title": "Sedlec Ossuary \"Bone Church\"",
     "place": "Czechia",
     "coordinates": "49.9603, 15.2890",
+    "rarity": "common",
+    "tags": [
+      "ossuaries",
+      "skeletons",
+      "ao loves halloween",
+      "bones",
+      "catacombs and crypts",
+      "churches",
+      "nature"
+    ],
     "url": "https://www.atlasobscura.com/places/sedlec-ossuary"
   },
   {
     "title": "Olšany Cemetery",
     "place": "Prague, Czechia",
     "coordinates": "50.0805, 14.4668",
+    "rarity": "common",
+    "tags": [
+      "jews",
+      "art nouveau",
+      "judaism",
+      "graveyards",
+      "gravestones",
+      "graves",
+      "cemeteries",
+      "monuments"
+    ],
     "url": "https://www.atlasobscura.com/places/olsany-cemetery"
   },
   {
     "title": "Cross Club",
     "place": "Prague, Czechia",
     "coordinates": "50.1082, 14.4432",
+    "rarity": "common",
+    "tags": [
+      "steampunk",
+      "clubs",
+      "dancing",
+      "bars",
+      "music"
+    ],
     "url": "https://www.atlasobscura.com/places/cross-club"
   },
   {
     "title": "Old Jewish Cemetery",
     "place": "Prague, Czechia",
     "coordinates": "50.0895, 14.4174",
+    "rarity": "common",
+    "tags": [
+      "judaism",
+      "nazis",
+      "medieval",
+      "cemeteries"
+    ],
     "url": "https://www.atlasobscura.com/places/old-jewish-cemetery-1"
   },
   {
     "title": "Grotta",
     "place": "Prague, Czechia",
     "coordinates": "50.0700, 14.4433",
+    "rarity": "common",
+    "tags": [
+      "caves",
+      "ecosystems"
+    ],
     "url": "https://www.atlasobscura.com/places/grotta"
-  },
-  {
-    "title": "Sex Machines Museum",
-    "place": "Prague, Czechia",
-    "coordinates": "50.0861, 14.4208",
-    "url": "https://www.atlasobscura.com/places/sex-machines-museum"
   },
   {
     "title": "Brown-Nosers",
     "place": "Prague, Czechia",
     "coordinates": "50.0737, 14.3943",
+    "rarity": "common",
+    "tags": [
+      "david cerny",
+      "art museum",
+      "politics",
+      "sculptures",
+      "statues",
+      "art",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/brownnosers"
+  },
+  {
+    "title": "Sex Machines Museum",
+    "place": "Prague, Czechia",
+    "coordinates": "50.0861, 14.4208",
+    "rarity": "common",
+    "tags": [
+      "erotic",
+      "museums and collections",
+      "museums"
+    ],
+    "url": "https://www.atlasobscura.com/places/sex-machines-museum"
   },
   {
     "title": "Hlava Franze Kafky (Franz Kafka's Head)",
     "place": "Prague, Czechia",
     "coordinates": "50.0818, 14.4212",
+    "rarity": "common",
+    "tags": [
+      "mechanical instruments",
+      "giant heads",
+      "automata",
+      "installations",
+      "literature",
+      "sculptures",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/hlava-franze-kafky"
   },
   {
     "title": "Tančící dům - Dancing House of Prague",
     "place": "Prague, Czechia",
     "coordinates": "50.0755, 14.4141",
+    "rarity": "common",
+    "tags": [
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/tancici-dum-the-dancing-house-of-prague"
   },
   {
     "title": "Man Hanging Out",
     "place": "Prague, Czechia",
     "coordinates": "50.0842, 14.4183",
+    "rarity": "common",
+    "tags": [
+      "david cerny",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/man-hanging-out"
   },
   {
     "title": "Paternoster Lift",
     "place": "Prague, Czechia",
     "coordinates": "50.0871, 14.4178",
+    "rarity": "common",
+    "tags": [
+      "elevators",
+      "preservation",
+      "architectural oddities",
+      "history",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/paternoster-lift-at-prague-city-hall"
   },
   {
     "title": "Nuclear Bunker Museum",
     "place": "Prague, Czechia",
     "coordinates": "50.0842, 14.4581",
+    "rarity": "common",
+    "tags": [
+      "gas masks",
+      "communist monuments",
+      "communist architecture",
+      "bunkers",
+      "cold war",
+      "nuclear",
+      "soviet history",
+      "military",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/nuclear-bunker-museum"
   },
   {
     "title": "Hrdlička Museum of Anthropology",
     "place": "Prague, Czechia",
     "coordinates": "50.0724, 14.4240",
+    "rarity": "common",
+    "tags": [
+      "anthropology",
+      "anatomy museums",
+      "skulls",
+      "bones",
+      "mummies",
+      "museums and collections"
+    ],
     "url": "https://www.atlasobscura.com/places/hrdlicka-museum-of-anthropology"
   },
   {
     "title": "Museum of Communism",
     "place": "Prague, Czechia",
     "coordinates": "50.0879, 14.4301",
+    "rarity": "common",
+    "tags": [
+      "communism",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/museum-of-communism"
   },
   {
     "title": "R2-D2 of Prague",
     "place": "Prague, Czechia",
     "coordinates": "50.0685, 14.4319",
+    "rarity": "common",
+    "tags": [
+      "star wars",
+      "robots",
+      "pop culture",
+      "bunkers",
+      "graffiti",
+      "outsider art"
+    ],
     "url": "https://www.atlasobscura.com/places/r2d2-of-prague"
   },
   {
     "title": "The Deer Moat Pedestrian Tunnel",
     "place": "Prague, Czechia",
     "coordinates": "50.0915, 14.3987",
+    "rarity": "common",
+    "tags": [
+      "underground",
+      "tunnels",
+      "castles",
+      "subterranean sites",
+      "parks"
+    ],
     "url": "https://www.atlasobscura.com/places/pedestrian-tunnel-the-deer-moat"
   },
   {
     "title": "The Thief's Arm at Kostel Sv. Jakuba Vetsiho",
     "place": "Prague, Czechia",
     "coordinates": "50.0884, 14.4246",
+    "rarity": "common",
+    "tags": [
+      "mummies",
+      "memento mori",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/thief-s-arm-kostel-sv-jakuba-vetsiho"
   },
   {
     "title": "Franz Kafka Museum",
     "place": "Prague, Czechia",
     "coordinates": "50.0880, 14.4105",
+    "rarity": "common",
+    "tags": [
+      "literature",
+      "books",
+      "collections",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/franz-kafka-museum"
   },
   {
     "title": "Lennon Wall",
     "place": "Prague, Czechia",
     "coordinates": "50.0863, 14.4068",
+    "rarity": "common",
+    "tags": [
+      "pop culture",
+      "music history",
+      "graffiti",
+      "politics",
+      "outsider art"
+    ],
     "url": "https://www.atlasobscura.com/places/lennon-wall"
   },
   {
     "title": "Statue of King Wenceslas Riding an Upside-Down Dead Horse",
     "place": "Prague, Czechia",
     "coordinates": "50.0814, 14.4254",
+    "rarity": "common",
+    "tags": [
+      "david cerny",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/statue-of-king-wenceslas-riding-an-upsidedown-dead-horse"
   },
   {
     "title": "Proudy",
     "place": "Prague, Czechia",
     "coordinates": "50.0881, 14.4103",
+    "rarity": "common",
+    "tags": [
+      "peeing statues",
+      "david cerny",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/proudy"
   },
   {
     "title": "Gulliver Airship",
     "place": "Prague, Czechia",
     "coordinates": "50.1068, 14.4470",
+    "rarity": "common",
+    "tags": [
+      "blimps",
+      "aircraft",
+      "architectural oddities",
+      "museums",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/gulliver-airship"
   },
   {
     "title": "Vinárna Čertovka",
     "place": "Prague, Czechia",
     "coordinates": "50.0880, 14.4096",
+    "rarity": "common",
+    "tags": [
+      "urban planning",
+      "cities"
+    ],
     "url": "https://www.atlasobscura.com/places/vinarna-certovka"
   },
   {
     "title": "'Trifot'",
     "place": "Prague, Czechia",
     "coordinates": "50.0507, 14.3494",
+    "rarity": "common",
+    "tags": [
+      "david cerny",
+      "spies",
+      "machines",
+      "photography",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/trifot"
   },
   {
     "title": "Old New Synagogue",
     "place": "Prague, Czechia",
     "coordinates": "50.0901, 14.4186",
+    "rarity": "common",
+    "tags": [
+      "sacred spaces",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/old-new-synagogue"
   },
   {
     "title": "Podobenství s Lebkou (Parable With Skull)",
     "place": "Prague, Czechia",
     "coordinates": "50.0925, 14.4247",
+    "rarity": "common",
+    "tags": [
+      "riddles",
+      "world's largest",
+      "castles",
+      "ancient",
+      "sculptures",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/podobenstvi-s-lebkou-parable-with-skull"
   },
   {
     "title": "Melník Chapel of Bones",
     "place": "Melnik, Czechia",
     "coordinates": "50.3506, 14.4742",
+    "rarity": "rare",
+    "tags": [
+      "ossuaries",
+      "catacombs",
+      "skulls",
+      "bones",
+      "memento mori",
+      "catacombs and crypts"
+    ],
     "url": "https://www.atlasobscura.com/places/melnik-chapel-bones"
   },
   {
     "title": "St. Valentine’s Shoulder Blade",
     "place": "Prague, Czechia",
     "coordinates": "50.0644, 14.4179",
+    "rarity": "common",
+    "tags": [
+      "saint valentine",
+      "relics",
+      "relics and reliquaries",
+      "saints",
+      "memento mori"
+    ],
     "url": "https://www.atlasobscura.com/places/st-valentines-shoulder-blade"
   },
   {
     "title": "Kostel Svatého Jiří Ghost Church",
     "place": "Manětín, Czechia",
     "coordinates": "50.0165, 13.1605",
+    "rarity": "rare",
+    "tags": [
+      "abandoned churches",
+      "31 days of halloween",
+      "ao loves halloween",
+      "ghosts",
+      "churches",
+      "abandoned",
+      "sculptures",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/haunted-ghost-church-kostel-svateho-jiri"
   },
   {
     "title": "The Penguins at Kampa Park",
     "place": "Prague, Czechia",
     "coordinates": "50.0848, 14.4084",
+    "rarity": "common",
+    "tags": [],
     "url": "https://www.atlasobscura.com/places/the-penguins-at-kampa-park-by-the-cracking-art-group"
   },
   {
     "title": "Museum of Miniatures",
     "place": "Prague, Czechia",
     "coordinates": "50.0873, 14.3893",
+    "rarity": "common",
+    "tags": [
+      "microminiature art"
+    ],
     "url": "https://www.atlasobscura.com/places/museum-miniatures"
   },
   {
     "title": "Brno Ossuary",
     "place": "Brno, Czechia",
     "coordinates": "49.1966, 16.6089",
+    "rarity": "common",
+    "tags": [
+      "ossuaries",
+      "catacombs and crypts",
+      "subterranean sites"
+    ],
     "url": "https://www.atlasobscura.com/places/brno-ossuary"
   },
   {
     "title": "Defenestration of Prague Window",
     "place": "Prague, Czechia",
     "coordinates": "50.0902, 14.3996",
+    "rarity": "common",
+    "tags": [
+      "execution",
+      "palaces",
+      "castles",
+      "war history",
+      "religion",
+      "military",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/defenestration-of-prague-window"
   },
   {
     "title": "The Devil Heads",
     "place": "Želízy, Czechia",
     "coordinates": "50.4204, 14.4646",
+    "rarity": "rare",
+    "tags": [
+      "giant heads",
+      "outsider art",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/the-devils-heads-zelizy-czechia"
   },
   {
     "title": "Pravčická brána (Pravčice Gate)",
     "place": "Hřensko, Czechia",
     "coordinates": "50.8840, 14.2815",
+    "rarity": "common",
+    "tags": [
+      "rock formations",
+      "rocks",
+      "geological oddities",
+      "natural wonders",
+      "geology",
+      "nature"
+    ],
     "url": "https://www.atlasobscura.com/places/pravcicka-brana"
   },
   {
     "title": "Municipal House",
     "place": "Prague, Czechia",
     "coordinates": "50.0876, 14.4282",
+    "rarity": "common",
+    "tags": [
+      "art nouveau",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/municipal-house"
   },
   {
     "title": "'Il Commendatore' ('Cloak of Conscience')",
     "place": "Prague, Czechia",
     "coordinates": "50.0858, 14.4231",
+    "rarity": "common",
+    "tags": [
+      "haunted",
+      "sculptures",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/anna-chromy-il-commendatore-statue"
   },
   {
     "title": "Žižkov Tower",
     "place": "Prague, Czechia",
     "coordinates": "50.0810, 14.4511",
+    "rarity": "common",
+    "tags": [
+      "david cerny",
+      "towers",
+      "monuments",
+      "sculptures",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/zizkov-tower"
   },
   {
     "title": "Spiral Tower of Krásno",
     "place": "Krásno, Czechia",
     "coordinates": "50.1015, 12.7864",
+    "rarity": "rare",
+    "tags": [
+      "towers",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/spiral-tower-of-krasno"
   },
   {
     "title": "Quo Vadis",
     "place": "Prague, Czechia",
     "coordinates": "50.0868, 14.3979",
+    "rarity": "common",
+    "tags": [
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/quo-vadis"
   },
   {
     "title": "Vojan Gardens",
     "place": "Prague, Czechia",
     "coordinates": "50.0886, 14.4083",
+    "rarity": "common",
+    "tags": [
+      "gardens",
+      "plants"
+    ],
     "url": "https://www.atlasobscura.com/places/vojan-gardens"
   },
   {
     "title": "Statue of St. Wilgefortis",
     "place": "Prague, Czechia",
     "coordinates": "50.0892, 14.3915",
+    "rarity": "common",
+    "tags": [
+      "pilgrimages",
+      "saints",
+      "churches",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/statue-st-wilgefortis"
   },
   {
     "title": "Velka Amerika",
     "place": "Vysoký Újezd, Czechia",
     "coordinates": "49.9594, 14.1986",
+    "rarity": "rare",
+    "tags": [
+      "quarries",
+      "mines",
+      "lakes",
+      "water"
+    ],
     "url": "https://www.atlasobscura.com/places/velka-amerika"
   },
   {
     "title": "Memorial to the Victims of Communism",
     "place": "Prague, Czechia",
     "coordinates": "50.0812, 14.4040",
+    "rarity": "common",
+    "tags": [
+      "politics",
+      "memorials",
+      "monuments",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/memorial-to-the-victims-of-communism"
   },
   {
     "title": "London Booster",
     "place": "Prague, Czechia",
     "coordinates": "50.0380, 14.4979",
+    "rarity": "rare",
+    "tags": [
+      "david cerny",
+      "mechanical instruments",
+      "automata",
+      "olympics",
+      "transportation",
+      "sculptures",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/london-booster"
   },
   {
     "title": "Muzeum Alchymie (Alchemy Museum)",
     "place": "Kutna Hora, Czechia",
     "coordinates": "49.9498, 15.2686",
+    "rarity": "rare",
+    "tags": [
+      "alchemy",
+      "strange science",
+      "sacred spaces",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/muzeum-alchymie"
   },
   {
     "title": "Český Ráj (Bohemian Paradise)",
     "place": "Turnov, Czechia",
     "coordinates": "50.5874, 15.1581",
+    "rarity": "rare",
+    "tags": [
+      "geological oddities",
+      "natural wonders",
+      "geology",
+      "nature",
+      "ruins",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/cesky-raj"
   },
   {
     "title": "Prague Pneumatic Post",
     "place": "Prague, Czechia",
     "coordinates": "50.0833, 14.4277",
+    "rarity": "rare",
+    "tags": [
+      "pneumatic tubes",
+      "retro-tech"
+    ],
     "url": "https://www.atlasobscura.com/places/prague-pneumatic-post"
   },
   {
     "title": "Prague Meridian",
     "place": "Prague, Czechia",
     "coordinates": "50.0875, 14.4213",
+    "rarity": "common",
+    "tags": [
+      "sundials",
+      "time",
+      "clocks",
+      "urban planning",
+      "cities"
+    ],
     "url": "https://www.atlasobscura.com/places/prague-meridian"
   },
   {
     "title": "Jan Palach Memorial",
     "place": "Prague, Czechia",
     "coordinates": "50.0798, 14.4297",
+    "rarity": "common",
+    "tags": [
+      "soviet history",
+      "memento mori",
+      "memorials"
+    ],
     "url": "https://www.atlasobscura.com/places/jan-palach-memorial"
   },
   {
     "title": "The Czech's Capuchin Crypt",
     "place": "Brno, Czechia",
     "coordinates": "49.1915, 16.6098",
+    "rarity": "common",
+    "tags": [
+      "capuchins",
+      "ossuaries",
+      "monks",
+      "mummies",
+      "catacombs and crypts",
+      "churches",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/czechs-capuchin-crypt"
   },
   {
     "title": "The Heydrich Terror Memorial",
     "place": "Prague, Czechia",
     "coordinates": "50.0759, 14.4167",
+    "rarity": "common",
+    "tags": [
+      "assassination",
+      "nazis",
+      "war history",
+      "world war ii",
+      "memorials",
+      "military"
+    ],
     "url": "https://www.atlasobscura.com/places/memorial-to-the-heroes-of-the-heydrich-terror"
   },
   {
     "title": "Dolní Morava Sky Walk",
     "place": "Dolní Morava, Czechia",
     "coordinates": "50.1255, 16.8004",
+    "rarity": "rare",
+    "tags": [
+      "playgrounds",
+      "resorts",
+      "mountains"
+    ],
     "url": "https://www.atlasobscura.com/places/sky-walk"
   },
   {
     "title": "Statue of Franz Kafka",
     "place": "Prague, Czechia",
     "coordinates": "50.0901, 14.4207",
+    "rarity": "common",
+    "tags": [
+      "literature",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/franz-kafka-statue"
   },
   {
     "title": "Adršpach-Teplice Rocks",
     "place": "Adršpach, Czechia",
     "coordinates": "50.6103, 16.1165",
+    "rarity": "rare",
+    "tags": [
+      "forests",
+      "trails",
+      "rocks",
+      "parks",
+      "ecosystems",
+      "geology"
+    ],
     "url": "https://www.atlasobscura.com/places/adrspach-teplice-rocks"
-  },
-  {
-    "title": "Prague Metronome",
-    "place": "Prague, Czechia",
-    "coordinates": "50.0947, 14.4160",
-    "url": "https://www.atlasobscura.com/places/prague-metronome"
   },
   {
     "title": "Periodic Table of Charles University",
     "place": "Prague, Czechia",
     "coordinates": "50.0683, 14.4248",
+    "rarity": "rare",
+    "tags": [
+      "chemistry",
+      "education",
+      "installations",
+      "instruments of science",
+      "universities",
+      "science"
+    ],
     "url": "https://www.atlasobscura.com/places/periodic-table-of-charles-university"
+  },
+  {
+    "title": "Prague Metronome",
+    "place": "Prague, Czechia",
+    "coordinates": "50.0947, 14.4160",
+    "rarity": "common",
+    "tags": [
+      "outsider architecture",
+      "ruins",
+      "architectural oddities",
+      "architecture"
+    ],
+    "url": "https://www.atlasobscura.com/places/prague-metronome"
   },
   {
     "title": "Macocha Abyss",
     "place": "Vilémovice, Czechia",
     "coordinates": "49.3731, 16.7297",
+    "rarity": "rare",
+    "tags": [
+      "land of stories",
+      "caves",
+      "natural wonders",
+      "ecosystems",
+      "nature"
+    ],
     "url": "https://www.atlasobscura.com/places/macocha-abyss"
   },
   {
     "title": "Squat Milada",
     "place": "Prague, Czechia",
     "coordinates": "50.1171, 14.4438",
+    "rarity": "rare",
+    "tags": [
+      "squat",
+      "abandoned houses",
+      "villas",
+      "graffiti",
+      "houses",
+      "homes",
+      "abandoned",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/squat-milada"
   },
   {
     "title": "David Černý's Embryo",
     "place": "Prague, Czechia",
     "coordinates": "50.0850, 14.4147",
+    "rarity": "common",
+    "tags": [
+      "david cerny",
+      "aliens",
+      "installations",
+      "sculptures",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/david-cernys-embryo"
   },
   {
     "title": "Houska Castle",
     "place": "Blatce, Czechia",
     "coordinates": "50.4911, 14.6288",
+    "rarity": "rare",
+    "tags": [
+      "gates to hell",
+      "demons",
+      "holes",
+      "folklore",
+      "castles",
+      "legends"
+    ],
     "url": "https://www.atlasobscura.com/places/houska-castle"
   },
   {
     "title": "Rozhledna Doubravka",
     "place": "Prague, Czechia",
     "coordinates": "50.0973, 14.5572",
+    "rarity": "rare",
+    "tags": [
+      "towers"
+    ],
     "url": "https://www.atlasobscura.com/places/rozhledna-doubravka"
   },
   {
     "title": "Memento Mori: 'Of One's Own Volition'",
     "place": "Prague, Czechia",
     "coordinates": "50.0674, 14.4299",
+    "rarity": "common",
+    "tags": [
+      "suicide",
+      "installations",
+      "plaques",
+      "bridges",
+      "art",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/memento-mori-of-ones-own-volition"
   },
   {
     "title": "'Babies'",
     "place": "Prague, Czechia",
     "coordinates": "50.0810, 14.4511",
+    "rarity": "common",
+    "tags": [
+      "babies",
+      "art outside",
+      "sculptures",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/babies"
   },
   {
     "title": "Klatovy Catacomb Mummies",
     "place": "Klatovy, Czechia",
     "coordinates": "49.3951, 13.2918",
+    "rarity": "rare",
+    "tags": [
+      "ossuaries",
+      "skeletons",
+      "bones",
+      "mummies",
+      "catacombs and crypts"
+    ],
     "url": "https://www.atlasobscura.com/places/klatovy-catacomb-mummies"
   },
   {
     "title": "Křtiny Ossuary",
     "place": "Křtiny, Czechia",
     "coordinates": "49.2971, 16.7437",
+    "rarity": "rare",
+    "tags": [
+      "ossuaries",
+      "memento mori",
+      "catacombs and crypts"
+    ],
     "url": "https://www.atlasobscura.com/places/krtiny-ossuary"
   },
   {
     "title": "Palladium Shopping Mall",
     "place": "Prague, Czechia",
     "coordinates": "50.0890, 14.4288",
+    "rarity": "common",
+    "tags": [
+      "malls",
+      "ruins",
+      "history & culture",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/palladium-shopping-mall"
   },
   {
     "title": "Hotel Ještěd",
     "place": "Liberec, Czechia",
     "coordinates": "50.7326, 14.9846",
+    "rarity": "rare",
+    "tags": [
+      "retrofuturistic",
+      "places to stay",
+      "hotels",
+      "mountains",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/hotel-jested"
   },
   {
     "title": "'Llamas (He and She)'",
     "place": "Prague, Czechia",
     "coordinates": "50.1219, 14.4125",
+    "rarity": "rare",
+    "tags": [
+      "llamas",
+      "botanical gardens",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/llamas-he-and-she"
   },
   {
     "title": "Velvet Revolution Monument",
     "place": "Prague, Czechia",
     "coordinates": "50.0819, 14.4180",
+    "rarity": "common",
+    "tags": [
+      "protest",
+      "communism",
+      "plaques",
+      "monuments"
+    ],
     "url": "https://www.atlasobscura.com/places/velvet-revolution-monument"
   },
   {
     "title": "Museum of the Infant Jesus",
     "place": "Prague, Czechia",
     "coordinates": "50.0858, 14.4041",
+    "rarity": "common",
+    "tags": [
+      "rituals",
+      "fashion",
+      "christianity",
+      "religion",
+      "churches",
+      "sacred spaces",
+      "statues",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/museum-of-the-infant-jesus"
   },
   {
     "title": "Putim Ossuary",
     "place": "Putim, Czechia",
     "coordinates": "49.2655, 14.1188",
+    "rarity": "rare",
+    "tags": [
+      "hats",
+      "ossuaries",
+      "skulls",
+      "bones",
+      "memento mori",
+      "catacombs and crypts",
+      "cemeteries",
+      "churches",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/putim-ossuary"
   },
   {
     "title": "Znojmo Catacombs",
     "place": "Znojmo, Czechia",
     "coordinates": "48.8558, 16.0492",
+    "rarity": "rare",
+    "tags": [
+      "catacombs",
+      "subterranean",
+      "tunnels",
+      "catacombs and crypts",
+      "subterranean sites",
+      "cemeteries"
+    ],
     "url": "https://www.atlasobscura.com/places/znojmo-catacombs"
   },
   {
     "title": "Pilsen Historical Underground",
     "place": "Pilsen, Czechia",
     "coordinates": "49.7482, 13.3803",
+    "rarity": "rare",
+    "tags": [
+      "beer",
+      "subterranean",
+      "tunnels",
+      "subterranean sites"
+    ],
     "url": "https://www.atlasobscura.com/places/pilsen-historical-underground"
   },
   {
     "title": "Museum of Historical Chamber Pots and Toilets",
     "place": "Prague, Czechia",
     "coordinates": "50.0019, 14.4090",
+    "rarity": "rare",
+    "tags": [
+      "bathrooms",
+      "collections",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/museum-of-historical-chamber-pots-and-toilets"
   },
   {
     "title": "The Lidice Children",
     "place": "Lidice, Czechia",
     "coordinates": "50.1432, 14.1892",
+    "rarity": "rare",
+    "tags": [
+      "nazis",
+      "world war ii",
+      "military",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/the-lidice-children-lidice-czechia"
   },
   {
     "title": "The Indecent Little Man on the Church of St. James",
     "place": "Brno, Czechia",
     "coordinates": "49.1964, 16.6080",
+    "rarity": "rare",
+    "tags": [
+      "secret",
+      "hidden",
+      "churches",
+      "sculptures",
+      "sacred spaces",
+      "statues",
+      "architectural oddities",
+      "art",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/indecent-little-man-sculpture-on-church-of-st-james"
   },
   {
     "title": "Nuclear Shelter 10-Z",
     "place": "Brno, Czechia",
     "coordinates": "49.1940, 16.6044",
+    "rarity": "rare",
+    "tags": [
+      "bunkers",
+      "cold war",
+      "nuclear",
+      "places to stay",
+      "world war ii",
+      "military"
+    ],
     "url": "https://www.atlasobscura.com/places/nuclear-shelter-10z"
   },
   {
     "title": "Karel Hynek Mácha Statue",
     "place": "Prague, Czechia",
     "coordinates": "50.0817, 14.4019",
+    "rarity": "rare",
+    "tags": [
+      "literature",
+      "monuments",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/karel-hynek-macha-statue"
   },
   {
     "title": "The Unfinished Gothic Church of Panenský Týnec",
     "place": "Panenský Týnec, Czechia",
     "coordinates": "50.2961, 13.9168",
+    "rarity": "rare",
+    "tags": [
+      "crosses",
+      "energy",
+      "magic",
+      "religion",
+      "churches",
+      "sacred spaces",
+      "ruins",
+      "architectural oddities",
+      "history",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/unfinished-church-panensky-tynec"
   },
   {
     "title": "Location of Saint John of Nepomuk's Martyrdom",
     "place": "Prague, Czechia",
     "coordinates": "50.0866, 14.4106",
+    "rarity": "common",
+    "tags": [
+      "luck",
+      "saints",
+      "christianity",
+      "plaques",
+      "bridges",
+      "legends",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/location-of-saint-john-of-nepomuk-s-martyrdom"
   },
   {
     "title": "Lower Vítkovice",
     "place": "Ostrava, Czechia",
     "coordinates": "49.8185, 18.2792",
+    "rarity": "rare",
+    "tags": [
+      "steampunk",
+      "factories",
+      "industrial",
+      "parks",
+      "plants",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/lower-vitkovice-dolni-vitkovice"
-  },
-  {
-    "title": "The Bear Moat at Český Krumlov Castle",
-    "place": "Český Krumlov, Czechia",
-    "coordinates": "48.8130, 14.3151",
-    "url": "https://www.atlasobscura.com/places/the-bear-moat-at-cesky-krumlov-castle-cesky-krumlov-czechia"
   },
   {
     "title": "Faustův Dům (Faust House)",
     "place": "Prague, Czechia",
     "coordinates": "50.0734, 14.4190",
+    "rarity": "rare",
+    "tags": [
+      "alchemy",
+      "occult",
+      "houses",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/faust-house"
+  },
+  {
+    "title": "The Bear Moat at Český Krumlov Castle",
+    "place": "Český Krumlov, Czechia",
+    "coordinates": "48.8130, 14.3151",
+    "rarity": "common",
+    "tags": [
+      "bears",
+      "castles",
+      "animals"
+    ],
+    "url": "https://www.atlasobscura.com/places/the-bear-moat-at-cesky-krumlov-castle-cesky-krumlov-czechia"
   },
   {
     "title": "Černy's Buried Soviet Tank",
     "place": "Prague, Czechia",
     "coordinates": "50.0792, 14.4042",
+    "rarity": "rare",
+    "tags": [
+      "tanks",
+      "soviet history",
+      "art outside",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/cernys-soviet-buried-tank"
   },
   {
     "title": "Panská Skála",
     "place": "Kamenický Šenov, Czechia",
     "coordinates": "50.7694, 14.4852",
+    "rarity": "rare",
+    "tags": [
+      "rock formations",
+      "rocks",
+      "geological oddities",
+      "geology"
+    ],
     "url": "https://www.atlasobscura.com/places/panska-skala"
   },
   {
     "title": "The Old Wastewater Treatment Plant Stará čistírna",
     "place": "Prague, Czechia",
     "coordinates": "50.1101, 14.4022",
+    "rarity": "rare",
+    "tags": [
+      "factories",
+      "water"
+    ],
     "url": "https://www.atlasobscura.com/places/the-old-wastewater-treatment-plant"
   },
   {
     "title": "Kabourek",
     "place": "Prague, Czechia",
     "coordinates": "50.0862, 14.4076",
+    "rarity": "rare",
+    "tags": [
+      "folklore",
+      "bridges",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/kabourek-prague"
   },
   {
     "title": "Saint Barbara's Church",
     "place": "Kutna Hora, Czechia",
     "coordinates": "49.9449, 15.2636",
+    "rarity": "common",
+    "tags": [
+      "art nouveau",
+      "churches",
+      "sacred spaces",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/chram-svate-barbory-saint-barbaras-church"
   },
   {
     "title": "Pekelné Doly (Mines of Hell)",
     "place": "Cvikov, Czechia",
     "coordinates": "50.7268, 14.6465",
+    "rarity": "epic",
+    "tags": [
+      "clubs",
+      "rock formations",
+      "underground",
+      "mines",
+      "caves",
+      "world war ii",
+      "ecosystems",
+      "military"
+    ],
     "url": "https://www.atlasobscura.com/places/pekelne-doly-mines-of-hell"
   },
   {
     "title": "Josef Vachal Museum",
     "place": "Litomysl, Czechia",
     "coordinates": "49.8706, 16.3163",
+    "rarity": "epic",
+    "tags": [
+      "horror",
+      "eccentric homes",
+      "outsider art",
+      "houses",
+      "homes",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/josef-vachal-museum"
   },
   {
     "title": "Entropa",
     "place": "Pilsen, Czechia",
     "coordinates": "49.7452, 13.3617",
+    "rarity": "epic",
+    "tags": [
+      "outsider art",
+      "museums and collections"
+    ],
     "url": "https://www.atlasobscura.com/places/entropa"
   },
   {
     "title": "House of the Black Madonna",
     "place": "Prague, Czechia",
     "coordinates": "50.0870, 14.4255",
+    "rarity": "rare",
+    "tags": [
+      "houses",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/house-of-the-black-madonna-prague"
   },
   {
     "title": "Kaiserbad Spa",
     "place": "Karlovy Vary, Czechia",
     "coordinates": "50.2189, 12.8816",
+    "rarity": "rare",
+    "tags": [
+      "chess",
+      "wealth",
+      "victorian",
+      "film locations",
+      "hotels"
+    ],
     "url": "https://www.atlasobscura.com/places/kaiserbad-spa"
-  },
-  {
-    "title": "J.A. Comenius Museum",
-    "place": "Prague, Czechia",
-    "coordinates": "50.0905, 14.4052",
-    "url": "https://www.atlasobscura.com/places/j-a-comenius-museum"
   },
   {
     "title": "Brno Astronomical Clock",
     "place": "Brno, Czechia",
     "coordinates": "49.1948, 16.6086",
+    "rarity": "common",
+    "tags": [
+      "clocks",
+      "war history",
+      "memorials",
+      "monuments",
+      "military"
+    ],
     "url": "https://www.atlasobscura.com/places/brno-astronomical-clock"
+  },
+  {
+    "title": "J.A. Comenius Museum",
+    "place": "Prague, Czechia",
+    "coordinates": "50.0905, 14.4052",
+    "rarity": "rare",
+    "tags": [
+      "philosophy",
+      "education",
+      "schools",
+      "museums and collections"
+    ],
+    "url": "https://www.atlasobscura.com/places/j-a-comenius-museum"
   },
   {
     "title": "Cave of the Blanik Knights",
     "place": "Kunštát, Czechia",
     "coordinates": "49.5173, 16.5113",
+    "rarity": "epic",
+    "tags": [
+      "legends",
+      "caves",
+      "world war ii",
+      "ecosystems",
+      "military",
+      "sculptures",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/cave-of-blanik-knights"
   },
   {
     "title": "Skalní obydlí Lhotka (Cliff Dwelling in Lhotka)",
     "place": "Lhotka, Czechia",
     "coordinates": "50.3714, 14.5488",
+    "rarity": "epic",
+    "tags": [
+      "cliff villages",
+      "rocks",
+      "geology"
+    ],
     "url": "https://www.atlasobscura.com/places/cliff-dwelling-in-lhotka"
   },
   {
     "title": "Holy Trinity Column",
     "place": "Olomouc, Czechia",
     "coordinates": "49.5939, 17.2504",
+    "rarity": "rare",
+    "tags": [
+      "plague",
+      "monuments"
+    ],
     "url": "https://www.atlasobscura.com/places/holy-trinity-column"
   },
   {
     "title": "Military Technical Museum of Lesany",
     "place": "Týnec nad Sázavou, Czechia",
     "coordinates": "49.8335, 14.5898",
+    "rarity": "epic",
+    "tags": [
+      "tanks",
+      "military history",
+      "military",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/military-technical-museum-of-lesany"
   },
   {
     "title": "Kristek's House",
     "place": "Brno, Czechia",
     "coordinates": "49.2104, 16.6254",
+    "rarity": "epic",
+    "tags": [
+      "outsider art",
+      "houses",
+      "homes",
+      "art",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/kristeks-house"
   },
   {
     "title": "Vrbice Wine Cellars",
     "place": "Vrbice, Czechia",
     "coordinates": "48.9131, 16.8922",
+    "rarity": "epic",
+    "tags": [
+      "wine",
+      "villages",
+      "underground",
+      "tunnels",
+      "alcohol",
+      "subterranean sites"
+    ],
     "url": "https://www.atlasobscura.com/places/vrbice-wine-cellars"
   },
   {
     "title": "Brno Dragon",
     "place": "Brno, Czechia",
     "coordinates": "49.1931, 16.6088",
+    "rarity": "common",
+    "tags": [
+      "dragons",
+      "monsters",
+      "taxidermy",
+      "animals"
+    ],
     "url": "https://www.atlasobscura.com/places/brno-dragon"
   },
   {
     "title": "Andělská Hora Castle",
     "place": "Andělská Hora, Czechia",
     "coordinates": "50.2044, 12.9628",
+    "rarity": "epic",
+    "tags": [
+      "hiking",
+      "castles",
+      "ruins",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/andelska-hora-castle"
-  },
-  {
-    "title": "The State Chateau of Hluboká",
-    "place": "Hluboká nad Vltavou, Czechia",
-    "coordinates": "49.0511, 14.4416",
-    "url": "https://www.atlasobscura.com/places/the-state-chateau-of-hluboka"
   },
   {
     "title": "Winton Children Farewell Memorial",
     "place": "Prague, Czechia",
     "coordinates": "50.0830, 14.4355",
+    "rarity": "rare",
+    "tags": [
+      "holocaust",
+      "world war ii",
+      "memorials",
+      "monuments"
+    ],
     "url": "https://www.atlasobscura.com/places/winton-children-farewell-memorial"
   },
   {
     "title": "Poledník Lookout Tower",
     "place": "Prášily, Czechia",
     "coordinates": "49.0641, 13.3952",
+    "rarity": "epic",
+    "tags": [
+      "radio",
+      "communism",
+      "secret",
+      "cold war",
+      "soviet history",
+      "maps",
+      "towers",
+      "military history",
+      "military",
+      "museums",
+      "history"
+    ],
     "url": "https://www.atlasobscura.com/places/polednik-tower"
   },
   {
-    "title": "Hunger Wall of Prague",
-    "place": "Prague, Czechia",
-    "coordinates": "50.0807, 14.4021",
-    "url": "https://www.atlasobscura.com/places/hunger-wall-prague-czechia"
-  },
-  {
-    "title": "Hunger Stones of Děčín",
-    "place": "Děčín, Czechia",
-    "coordinates": "50.7826, 14.2078",
-    "url": "https://www.atlasobscura.com/places/hunger-stones-of-decin"
+    "title": "The State Chateau of Hluboká",
+    "place": "Hluboká nad Vltavou, Czechia",
+    "coordinates": "49.0511, 14.4416",
+    "rarity": "rare",
+    "tags": [
+      "world war ii",
+      "military",
+      "history & culture",
+      "architecture"
+    ],
+    "url": "https://www.atlasobscura.com/places/the-state-chateau-of-hluboka"
   },
   {
     "title": "Bradáč",
     "place": "Prague, Czechia",
     "coordinates": "50.0866, 14.4136",
+    "rarity": "rare",
+    "tags": [
+      "bridges",
+      "history & culture",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/bradac"
+  },
+  {
+    "title": "Hunger Stones of Děčín",
+    "place": "Děčín, Czechia",
+    "coordinates": "50.7826, 14.2078",
+    "rarity": "epic",
+    "tags": [
+      "rocks",
+      "water",
+      "geology",
+      "history"
+    ],
+    "url": "https://www.atlasobscura.com/places/hunger-stones-of-decin"
+  },
+  {
+    "title": "Hunger Wall of Prague",
+    "place": "Prague, Czechia",
+    "coordinates": "50.0807, 14.4021",
+    "rarity": "rare",
+    "tags": [
+      "famine",
+      "walls",
+      "memorials",
+      "history"
+    ],
+    "url": "https://www.atlasobscura.com/places/hunger-wall-prague-czechia"
   },
   {
     "title": "Pilgrimage Church of Saint John of Nepomuk",
     "place": "Žďár nad Sázavou, Czechia",
     "coordinates": "49.5802, 15.9421",
+    "rarity": "epic",
+    "tags": [
+      "hoaxes and pseudoscience",
+      "relics",
+      "relics and reliquaries",
+      "saints",
+      "sacred spaces"
+    ],
     "url": "https://www.atlasobscura.com/places/pilgrimage-church-of-saint-john-of-nepomuk"
   },
   {
     "title": "Olomouc's Communist Clock",
     "place": "Olomouc, Czechia",
     "coordinates": "49.5941, 17.2514",
+    "rarity": "rare",
+    "tags": [
+      "amazing automata",
+      "astounding timepieces"
+    ],
     "url": "https://www.atlasobscura.com/places/olomoucs-communist-clock"
   },
   {
     "title": "Velké Losiny Château",
     "place": "Velké Losiny, Czechia",
     "coordinates": "50.0233, 17.0313",
+    "rarity": "epic",
+    "tags": [
+      "land of stories",
+      "chateau",
+      "horror",
+      "witches",
+      "witchcraft"
+    ],
     "url": "https://www.atlasobscura.com/places/chateau-velke-losiny"
   },
   {
     "title": "Hotel Radium Palace",
     "place": "Jáchymov, Czechia",
     "coordinates": "50.3585, 12.9342",
+    "rarity": "epic",
+    "tags": [
+      "radioactive",
+      "mining",
+      "places to stay",
+      "hotels"
+    ],
     "url": "https://www.atlasobscura.com/places/hotel-radium-palace"
   },
   {
     "title": "Hostina Obrů (Feast of Giants)",
     "place": "Liberec, Czechia",
     "coordinates": "50.7710, 15.0594",
+    "rarity": "epic",
+    "tags": [
+      "david cerny",
+      "giant heads",
+      "public works",
+      "giant",
+      "nazis",
+      "transportation",
+      "world war ii",
+      "military",
+      "sculptures",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/feast-of-giants-hostina-obru"
   },
   {
     "title": "Karel Zeman Museum",
     "place": "Prague, Czechia",
     "coordinates": "50.0868, 14.4076",
+    "rarity": "epic",
+    "tags": [
+      "special effects",
+      "movie sets",
+      "film",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/karel-zeman-museum"
   },
   {
     "title": "The Samurai of Brno",
     "place": "Brno, Czechia",
     "coordinates": "49.1918, 16.6076",
+    "rarity": "rare",
+    "tags": [
+      "samurai",
+      "statue"
+    ],
     "url": "https://www.atlasobscura.com/places/the-samurai-of-brno"
   },
   {
     "title": "Karl Marx Monument",
     "place": "Karlovy Vary, Czechia",
     "coordinates": "50.2246, 12.8766",
+    "rarity": "rare",
+    "tags": [
+      "philosophy",
+      "communism",
+      "monuments",
+      "sculptures",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/karl-marx-monument"
   },
   {
     "title": "'Slovanská epopej' ('Slav Epic')",
     "place": "Moravský Krumlov, Czechia",
     "coordinates": "49.0487, 16.3075",
+    "rarity": "epic",
+    "tags": [
+      "art nouveau",
+      "artists",
+      "paintings",
+      "art",
+      "history & culture"
+    ],
     "url": "https://www.atlasobscura.com/places/alphonse-mucha-slav-epic"
-  },
-  {
-    "title": "Theresienstadt (Terezín Concentration Camp)",
-    "place": "Terezín, Czechia",
-    "coordinates": "50.5138, 14.1649",
-    "url": "https://www.atlasobscura.com/places/theresienstadt-terezin-concentration-camp"
   },
   {
     "title": "Prague Hlavni Nadrazi Vestibule",
     "place": "Prague, Czechia",
     "coordinates": "50.0832, 14.4353",
+    "rarity": "rare",
+    "tags": [
+      "art nouveau",
+      "train stations",
+      "trains",
+      "transportation",
+      "design",
+      "art",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/art-nouveau-vestibule-of-pragues-main-rail-station"
   },
   {
     "title": "Emmaus Monastery",
     "place": "Prague, Czechia",
     "coordinates": "50.0721, 14.4173",
+    "rarity": "rare",
+    "tags": [
+      "monks",
+      "monasteries",
+      "world war ii",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/emmaus-monastery"
+  },
+  {
+    "title": "Theresienstadt (Terezín Concentration Camp)",
+    "place": "Terezín, Czechia",
+    "coordinates": "50.5138, 14.1649",
+    "rarity": "rare",
+    "tags": [
+      "propaganda",
+      "holocaust",
+      "nazis",
+      "world war ii",
+      "memorials",
+      "military"
+    ],
+    "url": "https://www.atlasobscura.com/places/theresienstadt-terezin-concentration-camp"
   },
   {
     "title": "Libušín a Maměnka",
     "place": "Pustevny, Czechia",
     "coordinates": "49.4897, 18.2654",
+    "rarity": "legendary",
+    "tags": [
+      "art nouveau",
+      "folktales",
+      "places to stay",
+      "hotels",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/libusin-a-mamenka-czechia"
   },
   {
     "title": "'The Thief'",
     "place": "Olomouc, Czechia",
     "coordinates": "49.5960, 17.2563",
+    "rarity": "epic",
+    "tags": [
+      "outsider art",
+      "sculptures",
+      "art",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/the-thief"
   },
   {
     "title": "Pohádková Zahrádka (Fairytale Garden)",
     "place": "Biskupice-Pulkov, Czechia",
     "coordinates": "49.0332, 16.0139",
+    "rarity": "legendary",
+    "tags": [
+      "fairytales",
+      "sculpture gardens",
+      "gravestones",
+      "graves",
+      "outsider art",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/pohadkova-zahradka-fairytale-garden"
   },
   {
     "title": "Vanocni dum",
     "place": "Karlovy Vary, Czechia",
     "coordinates": "50.2118, 12.8248",
+    "rarity": "epic",
+    "tags": [
+      "holiday",
+      "christmas",
+      "mansions"
+    ],
     "url": "https://www.atlasobscura.com/places/christmas-house"
   },
   {
     "title": "Tiské Stěny",
     "place": "Tisá, Czechia",
     "coordinates": "50.7862, 14.0282",
+    "rarity": "epic",
+    "tags": [
+      "fantasy",
+      "children's literature",
+      "rock formations",
+      "film locations",
+      "trails",
+      "books",
+      "natural wonders",
+      "nature"
+    ],
     "url": "https://www.atlasobscura.com/places/tiske-steny-czechia"
   },
   {
     "title": "Stray Boulder (Bludný Kámen)",
     "place": "České Budějovice, Czechia",
     "coordinates": "48.9745, 14.4744",
+    "rarity": "epic",
+    "tags": [
+      "legends",
+      "rocks",
+      "geology",
+      "history"
+    ],
     "url": "https://www.atlasobscura.com/places/stray-boulder-bludny-kamen"
   },
   {
     "title": "Orloj Martina Chaloupky",
     "place": "Žibřidice, Czechia",
     "coordinates": "50.7419, 14.8590",
+    "rarity": "epic",
+    "tags": [
+      "astronomical clocks",
+      "astounding timepieces",
+      "clocks",
+      "abandoned"
+    ],
     "url": "https://www.atlasobscura.com/places/astronomical-clock-of-krystofovo-valley"
   },
   {
     "title": "Muzeum Samorostů (Museum of Driftwood)",
     "place": "Slavonice, Czechia",
     "coordinates": "49.0044, 15.3340",
+    "rarity": "legendary",
+    "tags": [
+      "trees",
+      "plants",
+      "sculptures",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/muzeum-samorostu-museum-of-driftwood"
   },
   {
     "title": "11-Year-Old Mozart Statue",
     "place": "Brno, Czechia",
     "coordinates": "49.1923, 16.6089",
+    "rarity": "rare",
+    "tags": [
+      "mozart",
+      "music",
+      "statues",
+      "art"
+    ],
     "url": "https://www.atlasobscura.com/places/11-year-old-mozart-statue"
   },
   {
     "title": "Moved Church of Most",
     "place": "Most, Czechia",
     "coordinates": "50.5180, 13.6488",
+    "rarity": "epic",
+    "tags": [
+      "engineering",
+      "technology",
+      "churches",
+      "sacred spaces",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/moved-church-of-most-kostel-nanebevzeti-panny-marie-church-of-the-assumption-of-the-virgin-mary"
   },
   {
     "title": "Muzeum Betlémů Karlštejn (Museum of Nativity Scenes)",
     "place": "Karlštejn, Czechia",
     "coordinates": "49.9392, 14.1886",
+    "rarity": "epic",
+    "tags": [
+      "dioramas",
+      "christmas",
+      "world's largest",
+      "christianity",
+      "collections",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/museum-of-nativity-scenes"
   },
   {
     "title": "Miniature Park Boheminium",
     "place": "Mariánské Lázně, Czechia",
     "coordinates": "49.9710, 12.7207",
+    "rarity": "epic",
+    "tags": [
+      "miniature towns",
+      "landmarks",
+      "miniatures",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/miniature-park-boheminium"
   },
   {
     "title": "Battle of Prague Monument",
     "place": "Prague, Czechia",
     "coordinates": "50.0760, 14.5563",
+    "rarity": "epic",
+    "tags": [
+      "war memorial",
+      "war history",
+      "monuments"
+    ],
     "url": "https://www.atlasobscura.com/places/battle-of-prague-monument"
   },
   {
     "title": "'Lilith' by David Černý",
     "place": "Prague, Czechia",
     "coordinates": "50.0970, 14.4619",
+    "rarity": "epic",
+    "tags": [
+      "installations",
+      "art outside",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/lilith-david-cerny-prague"
   },
   {
     "title": "Fort Stachelberg",
     "place": "Trutnov, Czechia",
     "coordinates": "50.6306, 15.9120",
+    "rarity": "legendary",
+    "tags": [
+      "bunkers",
+      "fortresses",
+      "war history",
+      "world war ii",
+      "military"
+    ],
     "url": "https://www.atlasobscura.com/places/stachelberg-fortress"
   },
   {
     "title": "Church of Blessed Maria Restituta Kafka",
     "place": "Brno, Czechia",
     "coordinates": "49.2255, 16.6238",
+    "rarity": "epic",
+    "tags": [
+      "nuns",
+      "nazis",
+      "beer",
+      "world war ii",
+      "religion",
+      "churches",
+      "military",
+      "sacred spaces",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/church-of-blessed-maria-restituta-kafka"
   },
   {
     "title": "Rotonde Saint-Martin (St Martin’s Rotunda)",
     "place": "Prague, Czechia",
     "coordinates": "50.0637, 14.4215",
+    "rarity": "epic",
+    "tags": [
+      "design",
+      "history & culture",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/rotonde-saint-martin-st-martin-s-rotunda"
   },
   {
     "title": "Stork Nest Farm",
     "place": "Olbramovice, Czechia",
     "coordinates": "49.6682, 14.6604",
+    "rarity": "legendary",
+    "tags": [
+      "outsider architecture",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/architecture-nest"
   },
   {
     "title": "Doubice Wooden Sculptures and Tanks",
     "place": "Doubice, Czechia",
     "coordinates": "50.8891, 14.4574",
+    "rarity": "legendary",
+    "tags": [
+      "tanks",
+      "woodwork",
+      "sculpture gardens",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/doubice-wooden-sculpture-garden-tank-collection"
   },
   {
     "title": "Zapa Concrete Holubice",
     "place": "Holubice, Czechia",
     "coordinates": "49.1838, 16.8030",
+    "rarity": "epic",
+    "tags": [
+      "war history",
+      "military",
+      "architectural oddities",
+      "art",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/zapa-concrete-holubice"
   },
   {
     "title": "The Zwinger Gardens",
     "place": "Olomouc, Czechia",
     "coordinates": "49.5943, 17.2603",
+    "rarity": "legendary",
+    "tags": [
+      "gardens",
+      "war history",
+      "plants",
+      "military",
+      "sculptures",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/the-zwinger-gardens"
-  },
-  {
-    "title": "Třeboň",
-    "place": "Třeboň, Czechia",
-    "coordinates": "49.0035, 14.7641",
-    "url": "https://www.atlasobscura.com/places/trebon"
   },
   {
     "title": "Museum of Romani Culture",
     "place": "Brno, Czechia",
     "coordinates": "49.2006, 16.6234",
+    "rarity": "legendary",
+    "tags": [
+      "cultures",
+      "history & culture",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/museum-of-romani-culture"
+  },
+  {
+    "title": "Třeboň",
+    "place": "Třeboň, Czechia",
+    "coordinates": "49.0035, 14.7641",
+    "rarity": "epic",
+    "tags": [
+      "fauna",
+      "holidays",
+      "animals"
+    ],
+    "url": "https://www.atlasobscura.com/places/trebon"
   },
   {
     "title": "Geigenbauer-Denkmal (Violin Maker Monument)",
     "place": "Luby, Czechia",
     "coordinates": "50.2543, 12.4056",
+    "rarity": "legendary",
+    "tags": [
+      "music",
+      "monuments"
+    ],
     "url": "https://www.atlasobscura.com/places/geigenbauerdenkmal-violin-maker-monument"
   },
   {
     "title": "First Roma Stolpersteine",
     "place": "Slatina, Czechia",
     "coordinates": "49.1845, 16.6658",
+    "rarity": "legendary",
+    "tags": [
+      "holocaust",
+      "memorials"
+    ],
     "url": "https://www.atlasobscura.com/places/first-roma-stolpersteine"
   },
   {
     "title": "Bítov Castle",
     "place": "Bítov, Czechia",
     "coordinates": "48.9438, 15.7005",
+    "rarity": "legendary",
+    "tags": [
+      "oddities",
+      "dogs",
+      "taxidermy",
+      "castles",
+      "animals"
+    ],
     "url": "https://www.atlasobscura.com/places/bitov-castle-czechia"
   },
   {
     "title": "Mausoleum of Yugoslav Soldiers",
     "place": "Olomouc, Czechia",
     "coordinates": "49.5947, 17.2553",
+    "rarity": "epic",
+    "tags": [
+      "mausoleums",
+      "war memorial",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/mausoleum-of-yugoslav-soldiers"
   },
   {
     "title": "FairyTale House of Puppets and Wine",
     "place": "Český Krumlov, Czechia",
     "coordinates": "48.8113, 14.3151",
+    "rarity": "legendary",
+    "tags": [
+      "puppets",
+      "fairytales",
+      "folklore",
+      "wine",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/fairytale-house-of-puppets-and-wine"
   },
   {
     "title": "'Kladenská koule' ('Kladno Ball')",
     "place": "Kladno, Czechia",
     "coordinates": "50.1479, 14.1060",
+    "rarity": "legendary",
+    "tags": [
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/kladenska-koule-kladno-ball"
-  },
-  {
-    "title": "Royal Mint Jáchymov Museum",
-    "place": "Jáchymov, Czechia",
-    "coordinates": "50.3726, 12.9117",
-    "url": "https://www.atlasobscura.com/places/royal-mint-jachymov-museum"
   },
   {
     "title": "'Hvězdicová Kotelna'",
     "place": "Slaný, Czechia",
     "coordinates": "50.2283, 14.0841",
+    "rarity": "legendary",
+    "tags": [
+      "buildings",
+      "design",
+      "history & culture",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/hvezdicova-kotelna"
+  },
+  {
+    "title": "Royal Mint Jáchymov Museum",
+    "place": "Jáchymov, Czechia",
+    "coordinates": "50.3726, 12.9117",
+    "rarity": "legendary",
+    "tags": [
+      "coins",
+      "money",
+      "museums and collections",
+      "museums"
+    ],
+    "url": "https://www.atlasobscura.com/places/royal-mint-jachymov-museum"
   },
   {
     "title": "The Dragon of Trutnov",
     "place": "Trutnov, Czechia",
     "coordinates": "50.5612, 15.9127",
+    "rarity": "legendary",
+    "tags": [
+      "dragons",
+      "legends",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/dragon-of-trutnov"
   },
   {
     "title": "The Leaning Church of St. Peter of Alcantara",
     "place": "Karviná, Czechia",
     "coordinates": "49.8345, 18.4894",
+    "rarity": "legendary",
+    "tags": [
+      "history & culture",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/the-leaning-church-of-st-peter-of-alcantara"
-  },
-  {
-    "title": "Městská Elektrárna v Písku (Písek Electricity Museum)",
-    "place": "Písek, Czechia",
-    "coordinates": "49.3077, 14.1463",
-    "url": "https://www.atlasobscura.com/places/mestska-elektrarna-v-pisku-electricity-museum"
   },
   {
     "title": "Harfenice Cave",
     "place": "Želízy, Czechia",
     "coordinates": "50.4349, 14.4528",
+    "rarity": "legendary",
+    "tags": [
+      "art outside",
+      "sculptures"
+    ],
     "url": "https://www.atlasobscura.com/places/skalni-reliefy-a-jeskyne-harfenice"
+  },
+  {
+    "title": "Městská Elektrárna v Písku (Písek Electricity Museum)",
+    "place": "Písek, Czechia",
+    "coordinates": "49.3077, 14.1463",
+    "rarity": "legendary",
+    "tags": [
+      "mechanical instruments",
+      "mills",
+      "electricity",
+      "machines",
+      "technology",
+      "museums"
+    ],
+    "url": "https://www.atlasobscura.com/places/mestska-elektrarna-v-pisku-electricity-museum"
   },
   {
     "title": "Kovozoo (Metal Zoo)",
     "place": "Staré Město, Czechia",
     "coordinates": "49.0731, 17.4263",
+    "rarity": "legendary",
+    "tags": [
+      "recycling",
+      "metal",
+      "art outside",
+      "outsider art",
+      "sculptures",
+      "animals"
+    ],
     "url": "https://www.atlasobscura.com/places/kovozoo-metal-zoo"
-  },
-  {
-    "title": "Abstrakce",
-    "place": "Kladno, Czechia",
-    "coordinates": "50.1384, 14.1073",
-    "url": "https://www.atlasobscura.com/places/abstrakce"
   },
   {
     "title": "The VKOL Red Church",
     "place": "Olomouc, Czechia",
     "coordinates": "49.5935, 17.2467",
+    "rarity": "legendary",
+    "tags": [
+      "bookstore",
+      "churches",
+      "architectural oddities"
+    ],
     "url": "https://www.atlasobscura.com/places/the-red-church-czech-republic"
+  },
+  {
+    "title": "Abstrakce",
+    "place": "Kladno, Czechia",
+    "coordinates": "50.1384, 14.1073",
+    "rarity": "legendary",
+    "tags": [
+      "art outside",
+      "sculptures",
+      "art"
+    ],
+    "url": "https://www.atlasobscura.com/places/abstrakce"
   },
   {
     "title": "Pomník Rudoarmějce",
     "place": "Kladno, Czechia",
     "coordinates": "50.1357, 14.1116",
+    "rarity": "legendary",
+    "tags": [
+      "soviet history",
+      "world war ii",
+      "statues"
+    ],
     "url": "https://www.atlasobscura.com/places/pomnik-rudoarmejce"
+  },
+  {
+    "title": "Národní památník odposlechu (National Interception Memorial)",
+    "place": "Lipnice nad Sázavou, Czechia",
+    "coordinates": "49.6160, 15.3936",
+    "rarity": "legendary",
+    "tags": [
+      "spies",
+      "quarries",
+      "stone",
+      "sculptures"
+    ],
+    "url": "https://www.atlasobscura.com/places/narodni-pamatnik-odposlechu"
   },
   {
     "title": "Valley of the Mills (Údolí mlýnků)",
     "place": "Jáchymov, Czechia",
     "coordinates": "50.3527, 12.9276",
+    "rarity": "legendary",
+    "tags": [
+      "mills",
+      "miniatures",
+      "art outside"
+    ],
     "url": "https://www.atlasobscura.com/places/valley-of-the-mills-udoli-mlynku"
   },
   {
     "title": "Wallenstein's Death Room",
     "place": "Cheb, Czechia",
     "coordinates": "50.0802, 12.3702",
+    "rarity": "legendary",
+    "tags": [
+      "replicas",
+      "war",
+      "religion",
+      "history & culture"
+    ],
     "url": "https://www.atlasobscura.com/places/wallensteins-death-room-czechia"
-  },
-  {
-    "title": "Národní památník odposlechu (National Interception Memorial)",
-    "place": "Lipnice nad Sázavou, Czechia",
-    "coordinates": "49.6160, 15.3936",
-    "url": "https://www.atlasobscura.com/places/narodni-pamatnik-odposlechu"
-  },
-  {
-    "title": "House of Stone Maiden",
-    "place": "Brno-střed, Czechia",
-    "coordinates": "49.1933, 16.6113",
-    "url": "https://www.atlasobscura.com/places/house-of-stone-maiden"
   },
   {
     "title": "Iron Knight",
     "place": "Prague, Czechia",
     "coordinates": "50.0871, 14.4177",
+    "rarity": "legendary",
+    "tags": [
+      "ghost stories",
+      "folklore",
+      "legends",
+      "statues",
+      "history & culture"
+    ],
     "url": "https://www.atlasobscura.com/places/iron-knight-statue-prague"
+  },
+  {
+    "title": "House of Stone Maiden",
+    "place": "Brno-střed, Czechia",
+    "coordinates": "49.1933, 16.6113",
+    "rarity": "legendary",
+    "tags": [
+      "witchcraft",
+      "folklore",
+      "legends"
+    ],
+    "url": "https://www.atlasobscura.com/places/house-of-stone-maiden"
   },
   {
     "title": "Bohnický Hřbitov Cemetery (Cemetery of Fools)",
     "place": "Prague, Czechia",
     "coordinates": "50.1380, 14.4037",
+    "rarity": "common",
+    "tags": [
+      "insane asylum cemeteries",
+      "abandoned cemeteries",
+      "insane asylums",
+      "graveyards",
+      "cemeteries",
+      "abandoned"
+    ],
     "url": "https://www.atlasobscura.com/places/bohnicky-hrbitov-cemetery"
   },
   {
     "title": "KGB Muzeum",
     "place": "Prague, Czechia",
     "coordinates": "50.0871, 14.3995",
+    "rarity": "common",
+    "tags": [
+      "secret police",
+      "kgb",
+      "museums and collections",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/kgb-muzeum"
   },
   {
     "title": "Saint Michael's Church",
     "place": "Prague, Czechia",
     "coordinates": "50.0784, 14.3984",
+    "rarity": "common",
+    "tags": [
+      "woodwork",
+      "gardens",
+      "religion",
+      "churches",
+      "plants",
+      "sacred spaces",
+      "architectural oddities",
+      "architecture"
+    ],
     "url": "https://www.atlasobscura.com/places/saint-michaels-church"
   },
   {
     "title": "Batalion Comic Book Museum and Club",
     "place": "Prague, Czechia",
     "coordinates": "50.0835, 14.4222",
+    "rarity": "common",
+    "tags": [
+      "comic books",
+      "bars",
+      "shops",
+      "museums and collections",
+      "art",
+      "museums"
+    ],
     "url": "https://www.atlasobscura.com/places/batalion-comic-book-museum-and-club"
   },
   {
     "title": "Aeroplane Bar Letka Tu-104",
     "place": "Olomouc, Czechia",
-    "coordinates": "\n                        \n  \n      \n  \n\n\n                        49.5938, 17.2509\n                        \n                          \n                        \n                      ",
+    "coordinates": "49.5938, 17.2509",
+    "rarity": "epic",
+    "tags": [
+      "airplanes",
+      "bars"
+    ],
     "url": "https://www.atlasobscura.com/places/aeroplane-bar-letka-tu-104"
   }
 ]

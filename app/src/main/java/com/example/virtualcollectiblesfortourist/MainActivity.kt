@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPlacesFromJson() {
         try {
-            // TODO: using reduced version of dataset, including rarity
-            val inputStream: InputStream = assets.open("czech_places_reduced.json")
+            val inputStream: InputStream = assets.open("czech_places.json")
             val jsonString = inputStream.bufferedReader().use { it.readText() }
             val placesArray = JSONArray(jsonString)
 
@@ -61,8 +60,8 @@ class MainActivity : AppCompatActivity() {
                 val place = placesArray.getJSONObject(i)
                 val name = place.getString("title")
                 val coordinates = place.getString("coordinates")
-                val location = place.getString("place")
-                val rarity = place.getString("value")
+                val location = place.getString("place").split(",")[0]
+                val rarity = place.getString("rarity")
 
                 // Split the coordinates into latitude and longitude
                 val coords = coordinates.split(",").map { it.trim().toDouble() }
@@ -82,10 +81,10 @@ class MainActivity : AppCompatActivity() {
                 // Select background based on location rarity
                 val backgroundRes = when (rarity) {
                     "legendary" -> R.drawable.map_pin_bg_legendary
-                    "common" -> R.drawable.map_pin_bg_common
+                    "common" -> R.drawable.map_pin_bg_common_grey
                     "rare" -> R.drawable.map_pin_bg_rare
                     "epic" -> R.drawable.map_pin_bg_epic
-                    else -> R.drawable.map_pin_bg_common
+                    else -> R.drawable.map_pin_bg_common_grey
                 }
                 pinView.background = ContextCompat.getDrawable(this, backgroundRes)
 
