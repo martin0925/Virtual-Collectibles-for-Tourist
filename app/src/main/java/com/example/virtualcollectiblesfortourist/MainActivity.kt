@@ -1,5 +1,6 @@
 package com.example.virtualcollectiblesfortourist
 
+import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -16,13 +17,17 @@ import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 
 import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var map: MapView
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,17 +42,62 @@ class MainActivity : AppCompatActivity() {
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.setMultiTouchControls(true)
 
-        // TODO: now starting on exact location, make on current GPS location
-        val startPoint = GeoPoint(50.0870, 14.4208)
-        map.controller.setZoom(18.0)
-        map.controller.setCenter(startPoint)
+        // Initialize client for GPS location
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        // Permission for exact location
-        if (checkSelfPermission(android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        // Request location permissions
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        } else {
+            getCurrentLocation()
         }
 
         loadPlacesFromJson()
+    }
+
+    // Getting current location
+    @SuppressLint("MissingPermission")
+    private fun getCurrentLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            if (location != null) {
+                val currentLocation = GeoPoint(location.latitude, location.longitude)
+                map.controller.setZoom(18.0)
+                map.controller.setCenter(currentLocation)
+
+                val marker = Marker(map)
+                marker.position = currentLocation
+
+                // Resize and set current position marker
+                val drawable = ContextCompat.getDrawable(this, R.drawable.current_location)
+                if (drawable != null) {
+                    val width = 16
+                    val height = 16
+                    val bitmap = Bitmap.createScaledBitmap(
+                        (drawable as BitmapDrawable).bitmap,
+                        width,
+                        height,
+                        false
+                    )
+                    marker.icon = BitmapDrawable(resources, bitmap)
+                }
+
+                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+
+                // Disable default info window popup on click
+                marker.infoWindow = null
+
+                map.overlays.add(marker)
+                map.invalidate()
+            }
+        }
+    }
+
+    // Handle permission result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            getCurrentLocation()
+        }
     }
 
     private fun loadPlacesFromJson() {
@@ -100,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                 marker.position = GeoPoint(lat, lon)
                 marker.title = name
                 marker.snippet = location
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                marker.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
                 marker.icon = BitmapDrawable(resources, bitmap)
 
                 // Disable default info window popup on click
