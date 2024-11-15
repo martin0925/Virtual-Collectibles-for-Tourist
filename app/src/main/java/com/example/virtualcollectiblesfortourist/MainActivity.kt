@@ -156,6 +156,19 @@ class MainActivity : AppCompatActivity() {
                 // Disable default info window popup on click
                 marker.infoWindow = null
 
+                // Set marker click listener to zoom in when clicked
+                marker.setOnMarkerClickListener { clickedMarker, mapView ->
+                    mapView.controller.setZoom(18.0)
+                    val offsetFactor = 0.0005
+                    val offsetPosition = GeoPoint(
+                        clickedMarker.position.latitude,
+                        clickedMarker.position.longitude + offsetFactor
+                    )
+
+                    mapView.controller.animateTo(offsetPosition)
+                    true
+                }
+
                 map.overlays.add(marker)
             }
 
