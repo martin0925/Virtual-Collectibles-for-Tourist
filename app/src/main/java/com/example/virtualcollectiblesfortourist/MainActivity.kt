@@ -35,11 +35,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Set phone status bar to transparent background
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = android.graphics.Color.TRANSPARENT
+        }
 
         // Osmdroid configuration
         Configuration.getInstance().load(this, getSharedPreferences("osmdroid", MODE_PRIVATE))
-
-        setContentView(R.layout.activity_main)
 
         // Initialize map
         map = findViewById(R.id.map)
