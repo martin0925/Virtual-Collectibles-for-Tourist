@@ -16,11 +16,15 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.navigation.NavigationView
 
 import java.io.InputStream
 
@@ -53,6 +57,37 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadPlacesFromJson()
+
+        // Initialize the drawer layout for navigation drawer functionality
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+
+        // Set up the menu icon inside the search_bar.xml to toggle the drawer
+        val menuIcon: ImageView = findViewById(R.id.menu_icon)
+        menuIcon.setOnClickListener {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END)
+            } else {
+                drawerLayout.openDrawer(GravityCompat.END)
+            }
+        }
+
+        // Set up navigation item selection listener for the NavigationView
+        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_badges -> {
+                    // Handle the badges action
+                }
+                R.id.nav_plan_trip -> {
+                    // Handle the plan my trip action
+                }
+                R.id.nav_settings -> {
+                    // Handle the settings action
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.END)
+            true
+        }
     }
 
     // Getting current location
