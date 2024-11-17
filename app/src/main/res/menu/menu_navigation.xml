@@ -8,7 +8,7 @@
 
     <item
         android:id="@+id/nav_plan_trip"
-        android:title="Plan my Trip"
+        android:title="Plan my trip"
         android:icon="@drawable/ic_trip" />
 
     <item

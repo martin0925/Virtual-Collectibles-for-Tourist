@@ -18,6 +18,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
@@ -65,10 +66,8 @@ class MainActivity : AppCompatActivity() {
 
         loadPlacesFromJson()
 
-        // Initialize the drawer layout for navigation drawer functionality
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-
-        // Set up the menu icon inside the search_bar.xml to toggle the drawer
+        // Set up the menu icon to toggle side menu
         val menuIcon: ImageView = findViewById(R.id.menu_icon)
         menuIcon.setOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
@@ -78,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set up navigation item selection listener for the NavigationView
+        // Set up navigation item selection listener
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -95,6 +94,22 @@ class MainActivity : AppCompatActivity() {
             drawerLayout.closeDrawer(GravityCompat.END)
             true
         }
+
+        // Set up filtering menu after clicking on button
+        val filterButton = findViewById<ImageView>(R.id.filter_button)
+        filterButton.setOnClickListener {
+            showFilterDialog()
+        }
+    }
+
+    private fun showFilterDialog() {
+        val filterDialog = FilterPopup()
+        filterDialog.show(supportFragmentManager, "com.example.virtualcollectiblesfortourist.FilterPopup")
+    }
+
+    fun onFiltersSelected(filters: List<String>) {
+        // TODO: Handle changes in filter options
+        Toast.makeText(this, "Selected filters: ${filters.joinToString()}", Toast.LENGTH_SHORT).show()
     }
 
     // Getting current location

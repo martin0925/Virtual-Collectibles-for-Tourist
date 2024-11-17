@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter by Type"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_museum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Museum" />
+
+        <CheckBox
+            android:id="@+id/checkbox_park"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Park" />
+
+        <CheckBox
+            android:id="@+id/checkbox_house"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="House" />
+
+        <CheckBox
+            android:id="@+id/checkbox_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter by Rarity"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_common"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Common" />
+
+        <CheckBox
+            android:id="@+id/checkbox_rare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rare" />
+
+        <CheckBox
+            android:id="@+id/checkbox_epic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Epic" />
+
+        <CheckBox
+            android:id="@+id/checkbox_legendary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Legendary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Special Badges"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_time_limited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time-Limited Badges" />
+
+        <Button
+            android:id="@+id/apply_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply" />
+
+    </LinearLayout>
+</ScrollView>
