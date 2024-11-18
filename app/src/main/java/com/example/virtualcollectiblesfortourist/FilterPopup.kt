@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ToggleButton
+import androidx.core.content.ContextCompat
 
 class FilterPopup : DialogFragment() {
 
@@ -15,10 +17,10 @@ class FilterPopup : DialogFragment() {
     private lateinit var houseCheckBox: CheckBox
     private lateinit var otherCheckBox: CheckBox
 
-    private lateinit var commonCheckBox: CheckBox
-    private lateinit var rareCheckBox: CheckBox
-    private lateinit var epicCheckBox: CheckBox
-    private lateinit var legendaryCheckBox: CheckBox
+    private lateinit var commonToggle: ToggleButton
+    private lateinit var rareToggle: ToggleButton
+    private lateinit var epicToggle: ToggleButton
+    private lateinit var legendaryToggle: ToggleButton
 
     private lateinit var timeLimitedCheckBox: CheckBox
     private lateinit var applyButton: Button
@@ -29,18 +31,23 @@ class FilterPopup : DialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.popup_filter, container, false)
 
-        // Initialize all checkboxes
+        // TODO: all possible categories after final dataset
         museumCheckBox = view.findViewById(R.id.checkbox_museum)
         parkCheckBox = view.findViewById(R.id.checkbox_park)
         houseCheckBox = view.findViewById(R.id.checkbox_house)
         otherCheckBox = view.findViewById(R.id.checkbox_other)
 
-        commonCheckBox = view.findViewById(R.id.checkbox_common)
-        rareCheckBox = view.findViewById(R.id.checkbox_rare)
-        epicCheckBox = view.findViewById(R.id.checkbox_epic)
-        legendaryCheckBox = view.findViewById(R.id.checkbox_legendary)
+        commonToggle = view.findViewById(R.id.toggle_common)
+        rareToggle = view.findViewById(R.id.toggle_rare)
+        epicToggle = view.findViewById(R.id.toggle_epic)
+        legendaryToggle = view.findViewById(R.id.toggle_legendary)
 
         timeLimitedCheckBox = view.findViewById(R.id.checkbox_time_limited)
+
+        initializeToggleButton(commonToggle, R.color.common)
+        initializeToggleButton(rareToggle, R.color.rare)
+        initializeToggleButton(epicToggle, R.color.epic)
+        initializeToggleButton(legendaryToggle, R.color.legendary)
 
         applyButton = view.findViewById(R.id.apply_button)
         applyButton.setOnClickListener {
@@ -48,6 +55,24 @@ class FilterPopup : DialogFragment() {
         }
 
         return view
+    }
+
+    private fun initializeToggleButton(toggleButton: ToggleButton, activeColorResId: Int) {
+        toggleButton.isChecked = true
+        updateToggleButtonColor(toggleButton, activeColorResId)
+
+        toggleButton.setOnCheckedChangeListener { _, _ ->
+            updateToggleButtonColor(toggleButton, activeColorResId)
+        }
+    }
+
+    private fun updateToggleButtonColor(toggleButton: ToggleButton, activeColorResId: Int) {
+        val color = if (toggleButton.isChecked) {
+            ContextCompat.getColor(requireContext(), activeColorResId)
+        } else {
+            ContextCompat.getColor(requireContext(), R.color.inactive_color)
+        }
+        toggleButton.setBackgroundColor(color)
     }
 
     private fun applyFilters() {
@@ -58,10 +83,10 @@ class FilterPopup : DialogFragment() {
         if (houseCheckBox.isChecked) selectedFilters.add("House")
         if (otherCheckBox.isChecked) selectedFilters.add("Other")
 
-        if (commonCheckBox.isChecked) selectedFilters.add("Common")
-        if (rareCheckBox.isChecked) selectedFilters.add("Rare")
-        if (epicCheckBox.isChecked) selectedFilters.add("Epic")
-        if (legendaryCheckBox.isChecked) selectedFilters.add("Legendary")
+        if (commonToggle.isChecked) selectedFilters.add("Common")
+        if (rareToggle.isChecked) selectedFilters.add("Rare")
+        if (epicToggle.isChecked) selectedFilters.add("Epic")
+        if (legendaryToggle.isChecked) selectedFilters.add("Legendary")
 
         if (timeLimitedCheckBox.isChecked) selectedFilters.add("Time-Limited")
         (activity as? FilterDialogListener)?.onFiltersSelected(selectedFilters)
