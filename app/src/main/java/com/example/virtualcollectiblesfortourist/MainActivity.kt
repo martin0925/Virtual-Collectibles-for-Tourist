@@ -1,5 +1,6 @@
 package com.example.virtualcollectiblesfortourist
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
@@ -25,13 +26,9 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.view.animation.AnimationUtils
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.google.android.flexbox.FlexboxLayout
 import androidx.core.view.GravityCompat
@@ -56,7 +53,7 @@ class MainActivity : AppCompatActivity() {
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            statusBarColor = android.graphics.Color.TRANSPARENT
+            statusBarColor = Color.TRANSPARENT
         }
 
         // Osmdroid configuration
@@ -71,8 +68,8 @@ class MainActivity : AppCompatActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // Request location permissions
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
         } else {
             getCurrentLocation()
         }
@@ -206,11 +203,11 @@ class MainActivity : AppCompatActivity() {
 
         // Define a color for the rarity (based on the string value)
         val rarityColor = when (rarity?.lowercase()) {
-            "legendary" -> R.color.legendary_color
-            "epic" -> R.color.epic_color
-            "rare" -> R.color.rare_color
-            "common" -> R.color.common_color
-            else -> android.R.color.black  // Default color if rarity is unknown
+            "legendary" -> R.color.legendary
+            "epic" -> R.color.epic
+            "rare" -> R.color.rare
+            "common" -> R.color.common
+            else -> R.color.common
         }
 
         // Set the tint color and text color for the rarity view
