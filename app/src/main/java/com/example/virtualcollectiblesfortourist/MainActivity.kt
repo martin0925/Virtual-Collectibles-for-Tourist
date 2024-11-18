@@ -16,10 +16,12 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -112,7 +114,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Selected filters: ${filters.joinToString()}", Toast.LENGTH_SHORT).show()
     }
 
-    // Getting current location
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -124,23 +125,10 @@ class MainActivity : AppCompatActivity() {
                 val marker = Marker(map)
                 marker.position = currentLocation
 
-                // Resize and set current position marker
-                val drawable = ContextCompat.getDrawable(this, R.drawable.current_location)
-                if (drawable != null) {
-                    val width = 16
-                    val height = 16
-                    val bitmap = Bitmap.createScaledBitmap(
-                        (drawable as BitmapDrawable).bitmap,
-                        width,
-                        height,
-                        false
-                    )
-                    marker.icon = BitmapDrawable(resources, bitmap)
-                }
-
+                // Set custom drawable for the marker
+                val drawable = ContextCompat.getDrawable(this@MainActivity, R.drawable.current_location)
+                marker.icon = drawable
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-
-                // Disable default info window popup on click
                 marker.infoWindow = null
 
                 map.overlays.add(marker)
