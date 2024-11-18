@@ -1,6 +1,8 @@
 package com.example.virtualcollectiblesfortourist
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -14,8 +16,16 @@ import org.osmdroid.views.overlay.Marker
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
+import android.util.TypedValue
 import android.view.View
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,6 +33,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
+import com.google.android.flexbox.FlexboxLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -145,6 +156,109 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showPopup(marker: Marker) {
+        // Create a new dialog instance
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.popup_dialog)  // Set the layout for the dialog
+        dialog.setCancelable(true)  // Make the dialog cancelable by tapping outside
+
+        // Extract the related data (object URL, rarity, and coordinates) from the marker
+        val relatedData = marker.relatedObject as? Triple<String, String, String>
+        val objectUrl = relatedData?.first
+        val rarity = relatedData?.second
+        val coordinatesText = relatedData?.third
+
+        // Adjust the dialog window size and make it look better
+        val window = dialog.window
+        if (window != null) {
+            window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))  // Make the background transparent
+            val layoutParams = WindowManager.LayoutParams()
+            layoutParams.copyFrom(window.attributes)
+            val margin = (resources.displayMetrics.widthPixels * 0.05).toInt()  // Set margin as 5% of screen width
+            layoutParams.width = resources.displayMetrics.widthPixels - 2 * margin  // Adjust dialog width
+            layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT  // Set height to wrap content
+            window.attributes = layoutParams  // Apply the new layout parameters
+        }
+
+        // Bind views from the dialog layout
+        val titleView = dialog.findViewById<TextView>(R.id.info_title)
+        val locationView = dialog.findViewById<TextView>(R.id.info_location)
+        val urlButton = dialog.findViewById<Button>(R.id.info_url)
+        val imageView = dialog.findViewById<ImageView>(R.id.info_image)
+        val rarityView = dialog.findViewById<TextView>(R.id.info_rarity)
+        val collectButton = dialog.findViewById<Button>(R.id.info_collect_button)
+        // val closeButton = dialog.findViewById<ImageView>(R.id.close_button)  // Close button (commented out)
+
+        // Set the text values for the title and location
+        titleView.text = marker.title
+        locationView.text = "${marker.snippet} ($coordinatesText)"  // Display location with coordinates
+
+        // Set the URL button text and configure it to open the URL when clicked
+        urlButton.text = "Visit Website"
+        urlButton.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(objectUrl))
+            startActivity(intent)  // Open the URL in a browser
+        }
+
+        // Set the rarity text and background color
+        rarityView.text = rarity
+        rarityView.background = ContextCompat.getDrawable(this, R.drawable.badge_rarity)  // Set background based on rarity
+
+        // Define a color for the rarity (based on the string value)
+        val rarityColor = when (rarity?.lowercase()) {
+            "legendary" -> R.color.legendary_color
+            "epic" -> R.color.epic_color
+            "rare" -> R.color.rare_color
+            "common" -> R.color.common_color
+            else -> android.R.color.black  // Default color if rarity is unknown
+        }
+
+        // Set the tint color and text color for the rarity view
+        rarityView.backgroundTintList = ContextCompat.getColorStateList(this, rarityColor)
+        rarityView.setTextColor(ContextCompat.getColor(this, android.R.color.white))
+
+        // Set a sample image in the image view
+        imageView.setImageResource(R.drawable.sample_image)
+
+        // Set up the tags container and dynamically add tags to the dialog
+        val tagsContainer = dialog.findViewById<FlexboxLayout>(R.id.info_tags_container)
+        tagsContainer.removeAllViews()  // Clear any existing tags
+
+        // Split the tags from the marker description, clean them, and add them to the container
+        val tags = marker.subDescription?.split(", ")?.map { it.replace("\"", "").trim() } ?: emptyList()
+        for (tag in tags) {
+            val tagView = TextView(this)
+            tagView.text = tag
+            tagView.setPadding(16, 8, 16, 8)  // Add padding to the tags
+            tagView.setTextColor(ContextCompat.getColor(this, android.R.color.black))
+            tagView.background = ContextCompat.getDrawable(this, R.drawable.tag_background)  // Background for tags
+            tagView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f)  // Set text size for tags
+
+            // Set the layout for the tag and add margins
+            val layoutParams = FlexboxLayout.LayoutParams(
+                FlexboxLayout.LayoutParams.WRAP_CONTENT,
+                FlexboxLayout.LayoutParams.WRAP_CONTENT
+            )
+            layoutParams.setMargins(8, 8, 8, 8)
+            tagView.layoutParams = layoutParams
+
+            tagsContainer.addView(tagView)  // Add the tag view to the container
+        }
+
+        // Set the collect button click listener to dismiss the dialog
+        collectButton.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        // Uncomment this to enable the close button (currently not in use)
+        // closeButton.setOnClickListener {
+        //     dialog.dismiss()
+        // }
+
+        // Show the dialog
+        dialog.show()
+    }
+
     private fun loadPlacesFromJson() {
         try {
             val inputStream: InputStream = assets.open("czech_places.json")
@@ -157,6 +271,8 @@ class MainActivity : AppCompatActivity() {
                 val coordinates = place.getString("coordinates")
                 val location = place.getString("place").split(",")[0]
                 val rarity = place.getString("rarity")
+                val description = place.getJSONArray("tags").join(", ").replace("[", "").replace("]", "")
+                val objectUrl = place.getString("url")
 
                 // Split the coordinates into latitude and longitude
                 val coords = coordinates.split(",").map { it.trim().toDouble() }
@@ -197,9 +313,9 @@ class MainActivity : AppCompatActivity() {
                 marker.snippet = location
                 marker.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
                 marker.icon = BitmapDrawable(resources, bitmap)
+                marker.subDescription = description
+                marker.relatedObject = Triple(objectUrl, rarity, coordinates)
 
-                // Disable default info window popup on click
-                marker.infoWindow = null
 
                 // Set marker click listener to zoom in when clicked
                 marker.setOnMarkerClickListener { clickedMarker, mapView ->
@@ -210,10 +326,12 @@ class MainActivity : AppCompatActivity() {
                         clickedMarker.position.longitude + offsetFactor
                     )
                     mapView.controller.animateTo(offsetPosition)
-
-                    // Re-add clicked marker for changing z-index to the top layer
+                    
+                  // Re-add clicked marker for changing z-index to the top layer
                     mapView.overlays.remove(clickedMarker)
                     mapView.overlays.add(clickedMarker)
+
+                    showPopup(clickedMarker)
                     true
                 }
 

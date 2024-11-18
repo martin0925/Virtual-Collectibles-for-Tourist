@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
+    android:padding="16dp">
+
+    <!-- Close button -->
+    <!--    <ImageView-->
+    <!--        android:id="@+id/close_button"-->
+    <!--        android:layout_width="24dp"-->
+    <!--        android:layout_height="24dp"-->
+    <!--        android:layout_gravity="end"-->
+    <!--        android:src="@android:drawable/ic_menu_close_clear_cancel"-->
+    <!--        android:contentDescription="Close" />-->
+
+    <!-- Large photo -->
+    <!-- Image -->
+    <ImageView
+        android:id="@+id/info_image"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Place name and rarity -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <!-- Place name -->
+        <TextView
+            android:id="@+id/info_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textColor="@android:color/black"
+            android:textSize="22sp"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+        <!-- Rarity -->
+        <TextView
+            android:id="@+id/info_rarity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/badge_rarity"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+    <!-- Location -->
+    <TextView
+        android:id="@+id/info_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:drawablePadding="4dp"
+        android:drawableLeft="@android:drawable/ic_menu_compass" />
+
+    <!-- Tags -->
+    <TextView
+        android:id="@+id/info_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
+        android:textSize="14sp" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/info_tags_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexDirection="row"
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start"
+        />
+
+    <!-- Visit button -->
+    <Button
+        android:id="@+id/info_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="Visit Website"
+        android:textColor="@android:color/white" />
+
+    <!-- Collect button -->
+    <Button
+        android:id="@+id/info_collect_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:text="Collect"
+        android:textColor="@android:color/white" />
+
+</LinearLayout>
