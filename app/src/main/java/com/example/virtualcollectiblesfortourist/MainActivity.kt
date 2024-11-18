@@ -209,8 +209,11 @@ class MainActivity : AppCompatActivity() {
                         clickedMarker.position.latitude,
                         clickedMarker.position.longitude + offsetFactor
                     )
-
                     mapView.controller.animateTo(offsetPosition)
+
+                    // Re-add clicked marker for changing z-index to the top layer
+                    mapView.overlays.remove(clickedMarker)
+                    mapView.overlays.add(clickedMarker)
                     true
                 }
 
