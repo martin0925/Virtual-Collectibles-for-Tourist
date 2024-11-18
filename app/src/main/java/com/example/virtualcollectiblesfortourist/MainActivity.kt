@@ -5,81 +5,76 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
-import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import org.json.JSONArray
-import org.osmdroid.config.Configuration
-import org.osmdroid.tileprovider.tilesource.TileSourceFactory
-import org.osmdroid.util.GeoPoint
-import org.osmdroid.views.MapView
-import org.osmdroid.views.overlay.Marker
-
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
+import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.google.android.flexbox.FlexboxLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.flexbox.FlexboxLayout
+import com.google.android.gms.location.*
 import com.google.android.material.navigation.NavigationView
-
+import org.json.JSONArray
+import org.json.JSONObject
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
 import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var map: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var locationCallback: LocationCallback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set phone status bar to transparent background
+        setupStatusBar()
+        setupOsmdroidConfiguration()
+        setupMap()
+        setupSideMenu()
+        setupFilterButton()
+        setupLocationClient()
+        loadPlacesFromJson()
+    }
+
+    private fun setupStatusBar() {
         window.apply {
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             statusBarColor = Color.TRANSPARENT
         }
+    }
 
-        // Osmdroid configuration
+    private fun setupOsmdroidConfiguration() {
         Configuration.getInstance().load(this, getSharedPreferences("osmdroid", MODE_PRIVATE))
+    }
 
-        // Initialize map
+    private fun setupMap() {
         map = findViewById(R.id.map)
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.setMultiTouchControls(true)
+    }
 
-        // Initialize client for GPS location
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        // Request location permissions
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-        } else {
-            getCurrentLocation()
-        }
-
-        loadPlacesFromJson()
-
+    private fun setupSideMenu() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        // Set up the menu icon to toggle side menu
-        val menuIcon: ImageView = findViewById(R.id.menu_icon)
-        menuIcon.setOnClickListener {
+        findViewById<ImageView>(R.id.menu_icon).setOnClickListener {
             if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout.closeDrawer(GravityCompat.END)
             } else {
@@ -87,27 +82,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Set up navigation item selection listener
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_badges -> {
-                    // Handle the badges action
-                }
-                R.id.nav_plan_trip -> {
-                    // Handle the plan my trip action
-                }
-                R.id.nav_settings -> {
-                    // Handle the settings action
-                }
+                R.id.nav_badges -> { /* Handle badges action */ }
+                R.id.nav_plan_trip -> { /* Handle plan my trip action */ }
+                R.id.nav_settings -> { /* Handle settings action */ }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
             true
         }
+    }
 
-        // Set up filtering menu after clicking on button
-        val filterButton = findViewById<ImageView>(R.id.filter_button)
-        filterButton.setOnClickListener {
+    private fun setupFilterButton() {
+        findViewById<ImageView>(R.id.filter_button).setOnClickListener {
             showFilterDialog()
         }
     }
@@ -117,40 +105,73 @@ class MainActivity : AppCompatActivity() {
         filterDialog.show(supportFragmentManager, "com.example.virtualcollectiblesfortourist.FilterPopup")
     }
 
-    fun onFiltersSelected(filters: List<String>) {
-        // TODO: Handle changes in filter options
-        Toast.makeText(this, "Selected filters: ${filters.joinToString()}", Toast.LENGTH_SHORT).show()
+    private fun setupLocationClient() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        } else {
+            startLocationUpdates()
+        }
     }
+
+    private var isFirstLocationUpdate = true
+    private var userLocationMarker: Marker? = null
 
     @SuppressLint("MissingPermission")
-    private fun getCurrentLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                val currentLocation = GeoPoint(location.latitude, location.longitude)
-                map.controller.setZoom(18.0)
-                map.controller.setCenter(currentLocation)
+    private fun startLocationUpdates() {
+        val locationRequest = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
 
-                val marker = Marker(map)
-                marker.position = currentLocation
-
-                // Set custom drawable for the marker
-                val drawable = ContextCompat.getDrawable(this@MainActivity, R.drawable.current_location)
-                marker.icon = drawable
-                marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-                marker.infoWindow = null
-
-                map.overlays.add(marker)
-                map.invalidate()
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                locationResult.lastLocation?.let { location ->
+                    updateUserLocationMarker(location.latitude, location.longitude)
+                }
             }
         }
+        fusedLocationClient.requestLocationUpdates(locationRequest, locationCallback, mainLooper)
     }
 
-    // Handle permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            getCurrentLocation()
+    private fun updateUserLocationMarker(latitude: Double, longitude: Double) {
+        val currentLocation = GeoPoint(latitude, longitude)
+
+        if (userLocationMarker == null) {
+            // Create the marker for the first time
+            userLocationMarker = Marker(map).apply {
+                position = currentLocation
+                icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.current_location)
+                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                map.overlays.add(this)
+            }
+        } else {
+            userLocationMarker?.position = currentLocation
         }
+
+        // Center the map only on the first location update
+        if (isFirstLocationUpdate) {
+            map.controller.setZoom(18.0)
+            map.controller.setCenter(currentLocation)
+            isFirstLocationUpdate = false
+        }
+
+        map.invalidate()
+    }
+
+    private fun updateMapWithLocation(latitude: Double, longitude: Double) {
+        val currentLocation = GeoPoint(latitude, longitude)
+        map.controller.setZoom(18.0)
+        map.controller.setCenter(currentLocation)
+
+        val marker = Marker(map)
+        marker.position = currentLocation
+        marker.icon = ContextCompat.getDrawable(this, R.drawable.current_location)
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+        map.overlays.clear()
+        map.overlays.add(marker)
+        map.invalidate()
     }
 
     private fun showPopup(marker: Marker) {
@@ -264,74 +285,7 @@ class MainActivity : AppCompatActivity() {
 
             for (i in 0 until placesArray.length()) {
                 val place = placesArray.getJSONObject(i)
-                val name = place.getString("title")
-                val coordinates = place.getString("coordinates")
-                val location = place.getString("place").split(",")[0]
-                val rarity = place.getString("rarity")
-                val description = place.getJSONArray("tags").join(", ").replace("[", "").replace("]", "")
-                val objectUrl = place.getString("url")
-
-                // Split the coordinates into latitude and longitude
-                val coords = coordinates.split(",").map { it.trim().toDouble() }
-                val lat = coords[0]
-                val lon = coords[1]
-
-                // Inflate custom layout for the pin
-                val inflater = layoutInflater
-                val pinView = inflater.inflate(R.layout.map_pin, null)
-
-                // Set title and subtitle in the custom pin layout
-                val titleView = pinView.findViewById<TextView>(R.id.pin_title)
-                val subtitleView = pinView.findViewById<TextView>(R.id.pin_subtitle)
-                titleView.text = name
-                subtitleView.text = location
-
-                // Select background based on location rarity
-                val backgroundRes = when (rarity) {
-                    "legendary" -> R.drawable.map_pin_bg_legendary
-                    "common" -> R.drawable.map_pin_bg_common_grey
-                    "rare" -> R.drawable.map_pin_bg_rare
-                    "epic" -> R.drawable.map_pin_bg_epic
-                    else -> R.drawable.map_pin_bg_common_grey
-                }
-                pinView.background = ContextCompat.getDrawable(this, backgroundRes)
-
-                // Create a bitmap
-                pinView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-                pinView.layout(0, 0, pinView.measuredWidth, pinView.measuredHeight)
-                val bitmap = Bitmap.createBitmap(pinView.measuredWidth, pinView.measuredHeight, Bitmap.Config.ARGB_8888)
-                val canvas = Canvas(bitmap)
-                pinView.draw(canvas)
-
-                // Create custom marker
-                val marker = Marker(map)
-                marker.position = GeoPoint(lat, lon)
-                marker.title = name
-                marker.snippet = location
-                marker.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
-                marker.icon = BitmapDrawable(resources, bitmap)
-                marker.subDescription = description
-                marker.relatedObject = Triple(objectUrl, rarity, coordinates)
-
-
-                // Set marker click listener to zoom in when clicked
-                marker.setOnMarkerClickListener { clickedMarker, mapView ->
-                    mapView.controller.setZoom(18.0)
-                    val offsetFactor = 0.0005
-                    val offsetPosition = GeoPoint(
-                        clickedMarker.position.latitude,
-                        clickedMarker.position.longitude + offsetFactor
-                    )
-                    mapView.controller.animateTo(offsetPosition)
-                    
-                  // Re-add clicked marker for changing z-index to the top layer
-                    mapView.overlays.remove(clickedMarker)
-                    mapView.overlays.add(clickedMarker)
-
-                    showPopup(clickedMarker)
-                    true
-                }
-
+                val marker = createMarkerFromPlace(place)
                 map.overlays.add(marker)
             }
 
@@ -342,15 +296,119 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun createMarkerFromPlace(place: JSONObject): Marker {
+        val name = place.getString("title")
+        val coordinates = place.getString("coordinates")
+        val location = place.getString("place").split(",")[0]
+        val rarity = place.getString("rarity")
+        val description = place.getJSONArray("tags").join(", ").replace("[", "").replace("]", "")
+        val objectUrl = place.getString("url")
+
+        val (lat, lon) = parseCoordinates(coordinates)
+        val bitmap = createCustomPinBitmap(name, location, rarity)
+
+        return setupMarker(GeoPoint(lat, lon), name, location, bitmap, description, objectUrl, rarity, coordinates)
+    }
+
+    private fun parseCoordinates(coordinates: String): Pair<Double, Double> {
+        val coords = coordinates.split(",").map { it.trim().toDouble() }
+        return Pair(coords[0], coords[1])
+    }
+
+    private fun createCustomPinBitmap(name: String, location: String, rarity: String): Bitmap {
+        val inflater = layoutInflater
+        val pinView = inflater.inflate(R.layout.map_pin, null)
+
+        // Set title and subtitle in the custom pin layout
+        val titleView = pinView.findViewById<TextView>(R.id.pin_title)
+        val subtitleView = pinView.findViewById<TextView>(R.id.pin_subtitle)
+        titleView.text = name
+        subtitleView.text = location
+
+        // Set background based on rarity
+        val backgroundRes = when (rarity) {
+            "legendary" -> R.drawable.map_pin_bg_legendary
+            "common" -> R.drawable.map_pin_bg_common_grey
+            "rare" -> R.drawable.map_pin_bg_rare
+            "epic" -> R.drawable.map_pin_bg_epic
+            else -> R.drawable.map_pin_bg_common_grey
+        }
+        pinView.background = ContextCompat.getDrawable(this, backgroundRes)
+
+        // Create bitmap from custom view
+        pinView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+        pinView.layout(0, 0, pinView.measuredWidth, pinView.measuredHeight)
+        val bitmap = Bitmap.createBitmap(pinView.measuredWidth, pinView.measuredHeight, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        pinView.draw(canvas)
+
+        return bitmap
+    }
+
+    private fun setupMarker(
+        position: GeoPoint,
+        title: String,
+        location: String,
+        iconBitmap: Bitmap,
+        description: String,
+        objectUrl: String,
+        rarity: String,
+        coordinates: String
+    ): Marker {
+        val marker = Marker(map).apply {
+            this.position = position
+            this.title = title
+            this.snippet = location
+            this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
+            this.icon = BitmapDrawable(resources, iconBitmap)
+            this.subDescription = description
+            this.relatedObject = Triple(objectUrl, rarity, coordinates)
+        }
+
+        marker.setOnMarkerClickListener { clickedMarker, mapView ->
+            handleMarkerClick(clickedMarker, mapView)
+        }
+
+        return marker
+    }
+
+    private fun handleMarkerClick(marker: Marker, mapView: MapView): Boolean {
+        mapView.controller.setZoom(18.0)
+        val offsetFactor = 0.0005
+        val offsetPosition = GeoPoint(
+            marker.position.latitude,
+            marker.position.longitude + offsetFactor
+        )
+        mapView.controller.animateTo(offsetPosition)
+
+        // Re-add clicked marker to set z-index to the top layer
+        mapView.overlays.remove(marker)
+        mapView.overlays.add(marker)
+
+        showPopup(marker)
+        return true
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdates()
+        } else {
+            updateMapWithLocation(49.1951, 16.6068)  // Brno location if permission is not approved
+        }
+    }
 
     override fun onResume() {
         super.onResume()
-        Configuration.getInstance().load(this, getSharedPreferences("osmdroid", MODE_PRIVATE))
         map.onResume()
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdates()
+        }
     }
 
     override fun onPause() {
         super.onPause()
         map.onPause()
+        fusedLocationClient.removeLocationUpdates(locationCallback)
     }
 }
