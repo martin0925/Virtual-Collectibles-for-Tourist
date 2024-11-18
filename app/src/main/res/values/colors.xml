@@ -8,4 +8,11 @@
     <color name="common_color">#BEBEBE</color>
     <color name="rare_color">#4169E1</color>
     <color name="epic_color">#8A2BE2</color>
+    <color name="active_color">#3498DB</color>
+    <color name="inactive_color">#BDC3C7</color>
+    <color name="apply_button_background">#8E44AD</color>
+    <color name="legendary">#CE9415</color>
+    <color name="epic">#4F1F72</color>
+    <color name="rare">#33368D</color>
+    <color name="common">#6D6D6D</color>
 </resources>

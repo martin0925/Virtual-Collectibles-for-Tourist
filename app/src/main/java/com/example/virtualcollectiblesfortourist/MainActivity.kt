@@ -26,12 +26,19 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.google.android.flexbox.FlexboxLayout
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.navigation.NavigationView
 
 import java.io.InputStream
 
@@ -42,11 +49,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Set phone status bar to transparent background
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = android.graphics.Color.TRANSPARENT
+        }
 
         // Osmdroid configuration
         Configuration.getInstance().load(this, getSharedPreferences("osmdroid", MODE_PRIVATE))
-
-        setContentView(R.layout.activity_main)
 
         // Initialize map
         map = findViewById(R.id.map)
@@ -64,9 +78,53 @@ class MainActivity : AppCompatActivity() {
         }
 
         loadPlacesFromJson()
+
+        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        // Set up the menu icon to toggle side menu
+        val menuIcon: ImageView = findViewById(R.id.menu_icon)
+        menuIcon.setOnClickListener {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
+                drawerLayout.closeDrawer(GravityCompat.END)
+            } else {
+                drawerLayout.openDrawer(GravityCompat.END)
+            }
+        }
+
+        // Set up navigation item selection listener
+        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_badges -> {
+                    // Handle the badges action
+                }
+                R.id.nav_plan_trip -> {
+                    // Handle the plan my trip action
+                }
+                R.id.nav_settings -> {
+                    // Handle the settings action
+                }
+            }
+            drawerLayout.closeDrawer(GravityCompat.END)
+            true
+        }
+
+        // Set up filtering menu after clicking on button
+        val filterButton = findViewById<ImageView>(R.id.filter_button)
+        filterButton.setOnClickListener {
+            showFilterDialog()
+        }
     }
 
-    // Getting current location
+    private fun showFilterDialog() {
+        val filterDialog = FilterPopup()
+        filterDialog.show(supportFragmentManager, "com.example.virtualcollectiblesfortourist.FilterPopup")
+    }
+
+    fun onFiltersSelected(filters: List<String>) {
+        // TODO: Handle changes in filter options
+        Toast.makeText(this, "Selected filters: ${filters.joinToString()}", Toast.LENGTH_SHORT).show()
+    }
+
     @SuppressLint("MissingPermission")
     private fun getCurrentLocation() {
         fusedLocationClient.lastLocation.addOnSuccessListener { location ->
@@ -78,23 +136,10 @@ class MainActivity : AppCompatActivity() {
                 val marker = Marker(map)
                 marker.position = currentLocation
 
-                // Resize and set current position marker
-                val drawable = ContextCompat.getDrawable(this, R.drawable.current_location)
-                if (drawable != null) {
-                    val width = 16
-                    val height = 16
-                    val bitmap = Bitmap.createScaledBitmap(
-                        (drawable as BitmapDrawable).bitmap,
-                        width,
-                        height,
-                        false
-                    )
-                    marker.icon = BitmapDrawable(resources, bitmap)
-                }
-
+                // Set custom drawable for the marker
+                val drawable = ContextCompat.getDrawable(this@MainActivity, R.drawable.current_location)
+                marker.icon = drawable
                 marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
-
-                // Disable default info window popup on click
                 marker.infoWindow = null
 
                 map.overlays.add(marker)
@@ -280,8 +325,12 @@ class MainActivity : AppCompatActivity() {
                         clickedMarker.position.latitude,
                         clickedMarker.position.longitude + offsetFactor
                     )
-
                     mapView.controller.animateTo(offsetPosition)
+                    
+                  // Re-add clicked marker for changing z-index to the top layer
+                    mapView.overlays.remove(clickedMarker)
+                    mapView.overlays.add(clickedMarker)
+
                     showPopup(clickedMarker)
                     true
                 }
