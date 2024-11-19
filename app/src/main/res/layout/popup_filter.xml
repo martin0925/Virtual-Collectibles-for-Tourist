@@ -1,0 +1,113 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter by Rarity"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <!-- Rarity Toggle Buttons -->
+        <ToggleButton
+            android:id="@+id/toggle_common"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textOn="Common"
+            android:textOff="Common"
+            android:background="@drawable/btn_toggle_background_common" />
+
+        <ToggleButton
+            android:id="@+id/toggle_rare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textOn="Rare"
+            android:textOff="Rare"
+            android:background="@drawable/btn_toggle_background_rare" />
+
+        <ToggleButton
+            android:id="@+id/toggle_epic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textOn="Epic"
+            android:textOff="Epic"
+            android:background="@drawable/btn_toggle_background_epic" />
+
+        <ToggleButton
+            android:id="@+id/toggle_legendary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:textOn="Legendary"
+            android:textOff="Legendary"
+            android:background="@drawable/btn_toggle_background_legendary" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Filter by Type"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_museum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Museum" />
+
+        <CheckBox
+            android:id="@+id/checkbox_park"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Park" />
+
+        <CheckBox
+            android:id="@+id/checkbox_house"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="House" />
+
+        <CheckBox
+            android:id="@+id/checkbox_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Special Badges"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_time_limited"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Time-Limited Badges" />
+
+        <Button
+            android:id="@+id/apply_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Apply"
+            android:background="@color/apply_button_background"
+            android:layout_marginTop="16dp"
+            android:padding="12dp" />
+    </LinearLayout>
+</ScrollView>

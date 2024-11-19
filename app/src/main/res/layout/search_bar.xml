@@ -28,7 +28,7 @@
         android:layout_toStartOf="@id/menu_icon"
         android:layout_toEndOf="@id/search_icon"
         android:background="@android:color/transparent"
-        android:hint="Kafka's turning head..."
+        android:hint="Strahov Monastery..."
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:textColor="@android:color/black"
