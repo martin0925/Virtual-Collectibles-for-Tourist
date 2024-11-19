@@ -217,7 +217,6 @@ class MainActivity : AppCompatActivity() {
         val imageView = dialog.findViewById<ImageView>(R.id.info_image)
         val rarityView = dialog.findViewById<TextView>(R.id.info_rarity)
         val collectButton = dialog.findViewById<Button>(R.id.info_collect_button)
-        // val closeButton = dialog.findViewById<ImageView>(R.id.close_button)  // Close button (commented out)
 
         // Set the text values for the title and location
         titleView.text = marker.title
@@ -231,7 +230,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Set the rarity text and background color
-        rarityView.text = rarity
+        if (rarity != null) {
+            rarityView.text = rarity.uppercase()
+        }
         rarityView.background = ContextCompat.getDrawable(this, R.drawable.badge_rarity)  // Set background based on rarity
 
         // Define a color for the rarity (based on the string value)
@@ -279,11 +280,6 @@ class MainActivity : AppCompatActivity() {
         collectButton.setOnClickListener {
             dialog.dismiss()
         }
-
-        // Uncomment this to enable the close button (currently not in use)
-        // closeButton.setOnClickListener {
-        //     dialog.dismiss()
-        // }
 
         // Show the dialog
         dialog.show()

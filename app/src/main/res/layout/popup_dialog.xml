@@ -79,6 +79,7 @@
         android:id="@+id/info_tags_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="8dp"
         app:flexDirection="row"
         app:flexWrap="wrap"
         app:justifyContent="flex_start"
@@ -89,7 +90,7 @@
         android:id="@+id/info_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@android:color/holo_blue_dark"
+        android:backgroundTint="@android:color/holo_blue_light"
         android:text="Visit Website"
         android:textColor="@android:color/white" />
 
