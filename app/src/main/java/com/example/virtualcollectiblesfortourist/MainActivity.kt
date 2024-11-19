@@ -169,13 +169,21 @@ class MainActivity : AppCompatActivity() {
         map.controller.setZoom(18.0)
         map.controller.setCenter(currentLocation)
 
-        val marker = Marker(map)
-        marker.position = currentLocation
-        marker.icon = ContextCompat.getDrawable(this, R.drawable.current_location)
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+        // Create and set up the marker without a popup
+        val marker = Marker(map).apply {
+            position = currentLocation
+            icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.current_location)
+            setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+            setOnMarkerClickListener { _, _ -> true }
+        }
+
         map.overlays.clear()
         map.overlays.add(marker)
         map.invalidate()
+    }
+
+    private fun setStaticLocation() {
+        updateMapWithLocation(49.1928, 16.6090) // Static Brno location
     }
 
     private fun showPopup(marker: Marker) {
@@ -441,7 +449,7 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == 1 && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates()
         } else {
-            updateMapWithLocation(49.1951, 16.6068)  // Brno location if permission is not approved
+            setStaticLocation()  // Brno location if permission is not approved
         }
     }
 
@@ -450,12 +458,16 @@ class MainActivity : AppCompatActivity() {
         map.onResume()
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates()
+        } else {
+            setStaticLocation()
         }
     }
 
     override fun onPause() {
         super.onPause()
         map.onPause()
-        fusedLocationClient.removeLocationUpdates(locationCallback)
+        if (::locationCallback.isInitialized) {
+            fusedLocationClient.removeLocationUpdates(locationCallback)
+        }
     }
 }
