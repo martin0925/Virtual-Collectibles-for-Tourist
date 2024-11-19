@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/map_pin_bg_common_grey"
     android:orientation="horizontal"
     android:padding="2dp"
@@ -31,12 +32,15 @@
             android:textColor="@android:color/black" />
     </LinearLayout>
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/pin_image"
         android:layout_width="72dp"
         android:layout_height="62dp"
         android:layout_marginEnd="4dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample_image" />
+        android:adjustViewBounds="true"
+        app:shapeAppearanceOverlay="@style/RoundedImageView"
+        android:padding="0.5dp"
+        android:background="@android:color/transparent" />
 
 </LinearLayout>

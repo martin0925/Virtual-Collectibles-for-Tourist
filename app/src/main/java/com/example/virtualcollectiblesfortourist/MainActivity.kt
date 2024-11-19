@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -22,6 +23,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.gms.location.*
 import com.google.android.material.navigation.NavigationView
@@ -285,8 +289,7 @@ class MainActivity : AppCompatActivity() {
 
             for (i in 0 until placesArray.length()) {
                 val place = placesArray.getJSONObject(i)
-                val marker = createMarkerFromPlace(place)
-                map.overlays.add(marker)
+                createMarkerFromPlace(place)
             }
 
             map.invalidate()
@@ -296,18 +299,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun createMarkerFromPlace(place: JSONObject): Marker {
+    private fun createMarkerFromPlace(place: JSONObject) {
         val name = place.getString("title")
         val coordinates = place.getString("coordinates")
         val location = place.getString("place").split(",")[0]
         val rarity = place.getString("rarity")
         val description = place.getJSONArray("tags").join(", ").replace("[", "").replace("]", "")
         val objectUrl = place.getString("url")
+        val imageUrl = place.getString("image")
 
         val (lat, lon) = parseCoordinates(coordinates)
-        val bitmap = createCustomPinBitmap(name, location, rarity)
+        val position = GeoPoint(lat, lon)
 
-        return setupMarker(GeoPoint(lat, lon), name, location, bitmap, description, objectUrl, rarity, coordinates)
+        // Load image asynchronously and set up marker once image is loaded
+        createCustomPinBitmap(name, location, rarity, imageUrl, position, description, objectUrl, coordinates)
     }
 
     private fun parseCoordinates(coordinates: String): Pair<Double, Double> {
@@ -315,17 +320,26 @@ class MainActivity : AppCompatActivity() {
         return Pair(coords[0], coords[1])
     }
 
-    private fun createCustomPinBitmap(name: String, location: String, rarity: String): Bitmap {
+    private fun createCustomPinBitmap(
+        name: String,
+        location: String,
+        rarity: String,
+        imageUrl: String,
+        position: GeoPoint,
+        description: String,
+        objectUrl: String,
+        coordinates: String
+    ) {
         val inflater = layoutInflater
         val pinView = inflater.inflate(R.layout.map_pin, null)
 
-        // Set title and subtitle in the custom pin layout
         val titleView = pinView.findViewById<TextView>(R.id.pin_title)
         val subtitleView = pinView.findViewById<TextView>(R.id.pin_subtitle)
+        val imageView = pinView.findViewById<ImageView>(R.id.pin_image)
+
         titleView.text = name
         subtitleView.text = location
 
-        // Set background based on rarity
         val backgroundRes = when (rarity) {
             "legendary" -> R.drawable.map_pin_bg_legendary
             "common" -> R.drawable.map_pin_bg_common_grey
@@ -335,14 +349,47 @@ class MainActivity : AppCompatActivity() {
         }
         pinView.background = ContextCompat.getDrawable(this, backgroundRes)
 
-        // Create bitmap from custom view
-        pinView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        pinView.layout(0, 0, pinView.measuredWidth, pinView.measuredHeight)
-        val bitmap = Bitmap.createBitmap(pinView.measuredWidth, pinView.measuredHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        pinView.draw(canvas)
+        // Load the actual image from the provided URL using Glide
+        Glide.with(this)
+            .asBitmap()
+            .load(imageUrl)
+            .placeholder(R.drawable.sample_image)
+            .error(R.drawable.sample_image)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    // Set the loaded image
+                    imageView.setImageBitmap(resource)
 
-        return bitmap
+                    // Render the view to a bitmap after the image has loaded
+                    pinView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
+                    pinView.layout(0, 0, pinView.measuredWidth, pinView.measuredHeight)
+                    val bitmap = Bitmap.createBitmap(pinView.measuredWidth, pinView.measuredHeight, Bitmap.Config.ARGB_8888)
+                    val canvas = Canvas(bitmap)
+                    pinView.draw(canvas)
+
+                    // Set up the marker with the final bitmap
+                    val marker = setupMarker(
+                        position = position,
+                        title = name,
+                        location = location,
+                        iconBitmap = bitmap,
+                        description = description,
+                        objectUrl = objectUrl,
+                        rarity = rarity,
+                        coordinates = coordinates
+                    )
+                    map.overlays.add(marker)
+                    map.invalidate()  // Refresh the map to show the marker
+                }
+
+                override fun onLoadFailed(errorDrawable: Drawable?) {
+                    Log.e("Debug", "Failed to load image for URL: $imageUrl")
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    imageView.setImageDrawable(placeholder)
+                }
+            })
     }
 
     private fun setupMarker(
