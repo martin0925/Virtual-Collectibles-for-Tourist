@@ -192,11 +192,12 @@ class MainActivity : AppCompatActivity() {
         dialog.setContentView(R.layout.popup_dialog)  // Set the layout for the dialog
         dialog.setCancelable(true)  // Make the dialog cancelable by tapping outside
 
-        // Extract the related data (object URL, rarity, and coordinates) from the marker
-        val relatedData = marker.relatedObject as? Triple<String, String, String>
-        val objectUrl = relatedData?.first
-        val rarity = relatedData?.second
-        val coordinatesText = relatedData?.third
+        // Extract the related data (object URL, rarity, coordinates, image URL) from the marker
+        val relatedData = marker.relatedObject as? MarkerData
+        val objectUrl = relatedData?.objectUrl
+        val rarity = relatedData?.rarity
+        val coordinatesText = relatedData?.coordinates
+        val imageUrl = relatedData?.imageUrl
 
         // Adjust the dialog window size and make it look better
         val window = dialog.window
@@ -248,8 +249,14 @@ class MainActivity : AppCompatActivity() {
         rarityView.backgroundTintList = ContextCompat.getColorStateList(this, rarityColor)
         rarityView.setTextColor(ContextCompat.getColor(this, android.R.color.white))
 
-        // Set a sample image in the image view
-        imageView.setImageResource(R.drawable.sample_image)
+        // Load the image from the URL
+        imageUrl?.let {
+            Glide.with(this)
+                .load(it)
+                .placeholder(R.drawable.sample_image)
+                .error(R.drawable.sample_image)
+                .into(imageView)
+        }
 
         // Set up the tags container and dynamically add tags to the dialog
         val tagsContainer = dialog.findViewById<FlexboxLayout>(R.id.info_tags_container)
@@ -380,6 +387,7 @@ class MainActivity : AppCompatActivity() {
                         description = description,
                         objectUrl = objectUrl,
                         rarity = rarity,
+                        imageUrl = imageUrl,
                         coordinates = coordinates
                     )
                     map.overlays.add(marker)
@@ -396,6 +404,13 @@ class MainActivity : AppCompatActivity() {
             })
     }
 
+    data class MarkerData(
+        val objectUrl: String,
+        val rarity: String,
+        val coordinates: String,
+        val imageUrl: String
+    )
+
     private fun setupMarker(
         position: GeoPoint,
         title: String,
@@ -403,6 +418,7 @@ class MainActivity : AppCompatActivity() {
         iconBitmap: Bitmap,
         description: String,
         objectUrl: String,
+        imageUrl: String,
         rarity: String,
         coordinates: String
     ): Marker {
@@ -413,7 +429,7 @@ class MainActivity : AppCompatActivity() {
             this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
             this.icon = BitmapDrawable(resources, iconBitmap)
             this.subDescription = description
-            this.relatedObject = Triple(objectUrl, rarity, coordinates)
+            this.relatedObject = MarkerData(objectUrl, rarity, coordinates, imageUrl)
         }
 
         marker.setOnMarkerClickListener { clickedMarker, mapView ->
@@ -454,8 +470,6 @@ class MainActivity : AppCompatActivity() {
         map.onResume()
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates()
-        } else {
-            setStaticLocation()
         }
     }
 
