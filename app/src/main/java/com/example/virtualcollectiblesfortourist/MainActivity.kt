@@ -294,13 +294,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadPlacesFromJson() {
         try {
-            val inputStream: InputStream = assets.open("czech_places.json")
-            val jsonString = inputStream.bufferedReader().use { it.readText() }
-            val placesArray = JSONArray(jsonString)
+            val datasets = listOf("czech_places.json", "luxembourg_places.json", "belgium_places.json")
 
-            for (i in 0 until placesArray.length()) {
-                val place = placesArray.getJSONObject(i)
-                createMarkerFromPlace(place)
+            for (dataset in datasets) {
+                val inputStream: InputStream = assets.open(dataset)
+                val jsonString = inputStream.bufferedReader().use { it.readText() }
+                val placesArray = JSONArray(jsonString)
+
+                for (i in 0 until placesArray.length()) {
+                    val place = placesArray.getJSONObject(i)
+                    createMarkerFromPlace(place)
+                }
             }
 
             map.invalidate()
