@@ -26,17 +26,20 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.virtualcollectiblesfortourist.data.AppDatabase
+import com.example.virtualcollectiblesfortourist.data.DatabaseUtils.loadPlacesFromJsonToDb
+import com.example.virtualcollectiblesfortourist.data.Place
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.gms.location.*
 import com.google.android.material.navigation.NavigationView
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import java.io.InputStream
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,7 +58,10 @@ class MainActivity : AppCompatActivity() {
         setupFilterButton()
         setupLocationClient()
         setupCurrentLocationButton()
-        loadPlacesFromJson()
+
+        val database = AppDatabase.getDatabase(this)
+        loadPlacesFromJsonToDb(this, database)
+        loadPlacesFromDb()
     }
 
     private fun setupStatusBar() {
@@ -312,42 +318,32 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun loadPlacesFromJson() {
-        try {
-            val datasets = listOf("czech_places.json", "luxembourg_places.json", "belgium_places.json")
-
-            for (dataset in datasets) {
-                val inputStream: InputStream = assets.open(dataset)
-                val jsonString = inputStream.bufferedReader().use { it.readText() }
-                val placesArray = JSONArray(jsonString)
-
-                for (i in 0 until placesArray.length()) {
-                    val place = placesArray.getJSONObject(i)
+    private fun loadPlacesFromDb() {
+        val database = AppDatabase.getDatabase(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            val places = database.placeDao().getAllPlaces()
+            runOnUiThread {
+                for (place in places) {
                     createMarkerFromPlace(place)
                 }
             }
-
-            map.invalidate()
-        } catch (e: Exception) {
-            Log.e("Error", "Error loading markers: ${e.localizedMessage}")
-            e.printStackTrace()
         }
     }
 
-    private fun createMarkerFromPlace(place: JSONObject) {
-        val name = place.getString("title")
-        val coordinates = place.getString("coordinates")
-        val location = place.getString("place").split(",")[0]
-        val rarity = place.getString("rarity")
-        val description = place.getJSONArray("tags").join(", ").replace("[", "").replace("]", "")
-        val objectUrl = place.getString("url")
-        val imageUrl = place.getString("image")
-
-        val (lat, lon) = parseCoordinates(coordinates)
+    private fun createMarkerFromPlace(place: Place) {
+        val (lat, lon) = parseCoordinates(place.coordinates)
         val position = GeoPoint(lat, lon)
 
-        // Load image asynchronously and set up marker once image is loaded
-        createCustomPinBitmap(name, location, rarity, imageUrl, position, description, objectUrl, coordinates)
+        createCustomPinBitmap(
+            name = place.title,
+            location = place.place,
+            rarity = place.rarity,
+            imageUrl = place.imageUrl,
+            position = position,
+            description = place.tags,
+            objectUrl = place.objectUrl,
+            coordinates = place.coordinates
+        )
     }
 
     private fun parseCoordinates(coordinates: String): Pair<Double, Double> {
