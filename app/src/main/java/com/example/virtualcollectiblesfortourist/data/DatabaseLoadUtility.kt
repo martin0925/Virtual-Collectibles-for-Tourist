@@ -28,7 +28,9 @@ object DatabaseUtils {
                             rarity = jsonObject.getString("rarity"),
                             tags = jsonObject.getJSONArray("tags").join(", "),
                             imageUrl = jsonObject.getString("image"),
-                            objectUrl = jsonObject.getString("url")
+                            objectUrl = jsonObject.getString("url"),
+                            collected = false,
+                            dateOfVisit = null
                         )
                         places.add(place)
                     }

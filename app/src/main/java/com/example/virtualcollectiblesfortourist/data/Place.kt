@@ -12,5 +12,7 @@ data class Place(
     val rarity: String,
     val tags: String,
     val imageUrl: String,
-    val objectUrl: String
+    val objectUrl: String,
+    var collected: Boolean = false,
+    var dateOfVisit: String? = null
 )

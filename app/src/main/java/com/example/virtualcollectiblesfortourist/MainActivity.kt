@@ -18,6 +18,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -224,6 +225,7 @@ class MainActivity : AppCompatActivity() {
         val rarity = relatedData?.rarity
         val coordinatesText = relatedData?.coordinates
         val imageUrl = relatedData?.imageUrl
+        val placeId = relatedData?.id
 
         // Adjust the dialog window size and make it look better
         val window = dialog.window
@@ -309,12 +311,29 @@ class MainActivity : AppCompatActivity() {
             tagsContainer.addView(tagView)  // Add the tag view to the container
         }
 
-        // Set the collect button click listener to dismiss the dialog
+        // Handle the collect button click
+        // TODO: remove toast messages, replace with own popups
         collectButton.setOnClickListener {
+            placeId?.let { id ->
+                CoroutineScope(Dispatchers.IO).launch {
+                    val placeDao = AppDatabase.getDatabase(applicationContext).placeDao()
+                    val place = placeDao.getPlaceById(id)
+
+                    if (place.collected) {
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Already collected", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        placeDao.updatePlace(id)
+                        runOnUiThread {
+                            Toast.makeText(this@MainActivity, "Place collected!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+            }
             dialog.dismiss()
         }
 
-        // Show the dialog
         dialog.show()
     }
 
@@ -335,6 +354,7 @@ class MainActivity : AppCompatActivity() {
         val position = GeoPoint(lat, lon)
 
         createCustomPinBitmap(
+            id = place.id,
             name = place.title,
             location = place.place,
             rarity = place.rarity,
@@ -352,6 +372,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createCustomPinBitmap(
+        id: Int,
         name: String,
         location: String,
         rarity: String,
@@ -388,7 +409,6 @@ class MainActivity : AppCompatActivity() {
             .error(R.drawable.sample_image)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    // Set the loaded image
                     imageView.setImageBitmap(resource)
 
                     // Render the view to a bitmap after the image has loaded
@@ -400,6 +420,7 @@ class MainActivity : AppCompatActivity() {
 
                     // Set up the marker with the final bitmap
                     val marker = setupMarker(
+                        id = id,
                         position = position,
                         title = name,
                         location = location,
@@ -425,6 +446,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     data class MarkerData(
+        val id: Int,
         val objectUrl: String,
         val rarity: String,
         val coordinates: String,
@@ -432,6 +454,7 @@ class MainActivity : AppCompatActivity() {
     )
 
     private fun setupMarker(
+        id: Int,
         position: GeoPoint,
         title: String,
         location: String,
@@ -449,7 +472,7 @@ class MainActivity : AppCompatActivity() {
             this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
             this.icon = BitmapDrawable(resources, iconBitmap)
             this.subDescription = description
-            this.relatedObject = MarkerData(objectUrl, rarity, coordinates, imageUrl)
+            this.relatedObject = MarkerData(id, objectUrl, rarity, coordinates, imageUrl)
         }
 
         marker.setOnMarkerClickListener { clickedMarker, mapView ->

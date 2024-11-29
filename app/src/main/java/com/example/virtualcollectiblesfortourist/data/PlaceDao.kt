@@ -7,6 +7,9 @@ import androidx.room.Query
 
 @Dao
 interface PlaceDao {
+    @Query("SELECT * FROM places WHERE id = :placeId")
+    fun getPlaceById(placeId: Int): Place
+
     @Query("SELECT * FROM places WHERE rarity = :rarity")
     fun getPlacesByRarity(rarity: String): List<Place>
 
@@ -15,4 +18,8 @@ interface PlaceDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertPlaces(places: List<Place>)
+
+    // Update only the collected status to true and set dateOfVisit to the current date
+    @Query("UPDATE places SET collected = 1, dateOfVisit = strftime('%Y-%m-%d', 'now') WHERE id = :placeId")
+    fun updatePlace(placeId: Int)
 }
