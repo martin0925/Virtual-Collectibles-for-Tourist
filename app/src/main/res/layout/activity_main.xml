@@ -35,6 +35,18 @@
             android:layout_margin="16dp"
             android:padding="10dp"
             android:elevation="8dp" />
+
+        <ImageView
+            android:id="@+id/btn_current_location"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:src="@drawable/ic_goto_location"
+            android:contentDescription="Goto Location Button"
+            android:layout_above="@id/filter_button"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:padding="10dp"
+            android:elevation="8dp" />
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
