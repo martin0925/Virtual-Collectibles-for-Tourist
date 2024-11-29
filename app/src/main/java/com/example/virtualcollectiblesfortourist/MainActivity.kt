@@ -54,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         setupSideMenu()
         setupFilterButton()
         setupLocationClient()
+        setupCurrentLocationButton()
         loadPlacesFromJson()
     }
 
@@ -184,6 +185,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun setStaticLocation() {
         updateMapWithLocation(49.1928, 16.6090) // Static Brno location
+    }
+
+    private fun setupCurrentLocationButton() {
+        val currentLocationButton = findViewById<ImageView>(R.id.btn_current_location)
+        currentLocationButton.setOnClickListener {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    if (location != null) {
+                        val currentLocation = GeoPoint(location.latitude, location.longitude)
+                        map.controller.animateTo(currentLocation)
+                        map.controller.setZoom(18.0)
+                    } else {
+                        Log.e("Location", "Location is null")
+                    }
+                }
+            } else {
+                Log.e("Permission", "Location permission not granted")
+            }
+        }
     }
 
     private fun showPopup(marker: Marker) {
