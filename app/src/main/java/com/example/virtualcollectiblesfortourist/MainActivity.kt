@@ -3,7 +3,10 @@ package com.example.virtualcollectiblesfortourist
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -48,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var map: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var profileUpdateReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +68,33 @@ class MainActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(this)
         loadPlacesFromJsonToDb(this, database)
         loadPlacesFromDb()
+
+        // Check changes in user profile settings
+        profileUpdateReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == "com.example.virtualcollectiblesfortourist.PROFILE_UPDATED") {
+                    val updatedName = intent.getStringExtra("name")
+                    updateSideMenuProfileName(updatedName)
+                }
+            }
+        }
+        registerReceiver(profileUpdateReceiver, IntentFilter("com.example.virtualcollectiblesfortourist.PROFILE_UPDATED"),
+            RECEIVER_NOT_EXPORTED
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(profileUpdateReceiver)
+    }
+
+    private fun updateSideMenuProfileName(name: String?) {
+        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        val navHeader = navigationView.getHeaderView(0)
+        if (navHeader != null) {
+            val profileName = navHeader.findViewById<TextView>(R.id.profile_name)
+            profileName.text = name ?: "Default Name"
+        }
     }
 
     private fun setupStatusBar() {
@@ -96,6 +127,42 @@ class MainActivity : AppCompatActivity() {
         }
 
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
+
+        val navHeader = navigationView.getHeaderView(0)
+        if (navHeader != null) {
+            val profileImage = navHeader.findViewById<ImageView>(R.id.profile_image)
+            val profileName = navHeader.findViewById<TextView>(R.id.profile_name)
+
+            val userDao = AppDatabase.getDatabase(this).userDao()
+            CoroutineScope(Dispatchers.IO).launch {
+                val user = userDao.getDefaultUser()
+
+                withContext(Dispatchers.Main) {
+                    if (user != null) {
+                        profileName.text = user.name
+
+                        Glide.with(this@MainActivity)
+                            .load(user.imageUrl)
+                            .placeholder(R.drawable.profile_placeholder)
+                            .circleCrop()
+                            .into(profileImage)
+                    }
+                }
+            }
+
+            profileImage.setOnClickListener {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+
+            profileName.setOnClickListener {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+        } else {
+            Log.e("MainActivity", "Navigation header view is missing!")
+        }
+
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.nav_badges -> {
