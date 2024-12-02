@@ -321,26 +321,38 @@ class MainActivity : AppCompatActivity() {
 
         // Handle the collect button click
         // TODO: remove toast messages, replace with own popups
-        collectButton.setOnClickListener {
-            placeId?.let { id ->
-                CoroutineScope(Dispatchers.IO).launch {
-                    val placeDao = AppDatabase.getDatabase(applicationContext).placeDao()
-                    val place = placeDao.getPlaceById(id)
+        if (placeId != null) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val placeDao = AppDatabase.getDatabase(applicationContext).placeDao()
+                val place = placeDao.getPlaceById(placeId)
 
+                withContext(Dispatchers.Main) {
                     if (place.collected) {
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Already collected", Toast.LENGTH_SHORT).show()
-                        }
+                        // Deactivate the button and change text
+                        collectButton.isEnabled = false
+                        collectButton.text = "Already collected"
+                        collectButton.setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.darker_gray))
                     } else {
-                        placeDao.updatePlace(id)
-                        runOnUiThread {
-                            Toast.makeText(this@MainActivity, "Place collected!", Toast.LENGTH_SHORT).show()
+                        // Set up the collect button for uncollected places
+                        collectButton.isEnabled = true
+                        collectButton.text = "Collect"
+                        collectButton.setOnClickListener {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                placeDao.updatePlace(placeId)
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(this@MainActivity, "Place collected!", Toast.LENGTH_SHORT).show()
+                                    collectButton.isEnabled = false
+                                    collectButton.text = "Already collected"
+                                    collectButton.setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.darker_gray))
+                                }
+                            }
+                            dialog.dismiss()
                         }
                     }
                 }
             }
-            dialog.dismiss()
         }
+
 
         dialog.show()
     }
@@ -374,7 +386,8 @@ class MainActivity : AppCompatActivity() {
             position = position,
             description = place.tags,
             objectUrl = place.objectUrl,
-            coordinates = place.coordinates
+            coordinates = place.coordinates,
+            isCollected = place.collected
         )
     }
 
@@ -392,7 +405,8 @@ class MainActivity : AppCompatActivity() {
         position: GeoPoint,
         description: String,
         objectUrl: String,
-        coordinates: String
+        coordinates: String,
+        isCollected: Boolean
     ) {
         val inflater = layoutInflater
         val pinView = inflater.inflate(R.layout.map_pin, null)

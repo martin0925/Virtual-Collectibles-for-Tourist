@@ -9,13 +9,20 @@ import org.json.JSONArray
 object DatabaseUtils {
 
     fun loadPlacesFromJsonToDb(context: Context, database: AppDatabase) {
+        val sharedPreferences = context.getSharedPreferences("AppPreferences", Context.MODE_PRIVATE)
+
+        // Check if database is already initialized
+        if (sharedPreferences.getBoolean("isDatabaseInitialized", false)) {
+            return
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
             val datasets = listOf("czech_places.json")
             val places = mutableListOf<Place>()
 
             try {
                 for (dataset in datasets) {
-                    context.assets.open(dataset).use { inputStream -> // Use 'use' to auto-close
+                    context.assets.open(dataset).use { inputStream ->
                         val jsonString = inputStream.bufferedReader().use { it.readText() }
                         val jsonArray = JSONArray(jsonString)
 
@@ -47,6 +54,7 @@ object DatabaseUtils {
 
                 if (places.isNotEmpty()) {
                     database.placeDao().insertPlaces(places)
+                    sharedPreferences.edit().putBoolean("isDatabaseInitialized", true).apply()
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
