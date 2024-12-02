@@ -36,6 +36,7 @@ import com.google.android.material.navigation.NavigationView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -348,9 +349,13 @@ class MainActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(this)
         CoroutineScope(Dispatchers.IO).launch {
             val places = database.placeDao().getAllPlaces()
-            runOnUiThread {
-                for (place in places) {
-                    createMarkerFromPlace(place)
+            val batchSize = 50
+            places.chunked(batchSize).forEach { batch ->
+                withContext(Dispatchers.Main) {
+                    for (place in batch) {
+                        createMarkerFromPlace(place)
+                    }
+                    map.invalidate()
                 }
             }
         }
