@@ -22,4 +22,7 @@ interface PlaceDao {
     // Update only the collected status to true and set dateOfVisit to the current date
     @Query("UPDATE places SET collected = 1, dateOfVisit = strftime('%Y-%m-%d', 'now') WHERE id = :placeId")
     fun updatePlace(placeId: Int)
+
+    @Query("SELECT * FROM places WHERE collected = 1")
+    fun getCollectedPlaces(): List<Place>
 }

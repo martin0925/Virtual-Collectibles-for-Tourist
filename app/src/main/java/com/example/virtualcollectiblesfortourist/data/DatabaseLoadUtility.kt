@@ -23,7 +23,7 @@ object DatabaseUtils {
                         val jsonObject = jsonArray.getJSONObject(i)
                         val place = Place(
                             title = jsonObject.getString("title"),
-                            place = jsonObject.getString("place"),
+                            place = jsonObject.getString("place").split(",")[0],
                             coordinates = jsonObject.getString("coordinates"),
                             rarity = jsonObject.getString("rarity"),
                             tags = jsonObject.getJSONArray("tags").join(", "),

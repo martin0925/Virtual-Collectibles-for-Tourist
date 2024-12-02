@@ -97,9 +97,16 @@ class MainActivity : AppCompatActivity() {
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_badges -> { /* Handle badges action */ }
-                R.id.nav_plan_trip -> { /* Handle plan my trip action */ }
-                R.id.nav_settings -> { /* Handle settings action */ }
+                R.id.nav_badges -> {
+                    val intent = Intent(this, BadgeActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_plan_trip -> {
+                    Toast.makeText(this, "Plan Trip clicked", Toast.LENGTH_SHORT).show()
+                }
+                R.id.nav_settings -> {
+                    Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
             true
