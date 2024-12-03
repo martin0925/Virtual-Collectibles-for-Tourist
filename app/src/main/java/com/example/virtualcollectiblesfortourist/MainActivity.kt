@@ -114,6 +114,41 @@ class MainActivity : AppCompatActivity() {
         map = findViewById(R.id.map)
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.setMultiTouchControls(true)
+
+        map.addMapListener(object : org.osmdroid.events.MapListener {
+            override fun onScroll(event: org.osmdroid.events.ScrollEvent?): Boolean {
+                return false
+            }
+
+            override fun onZoom(event: org.osmdroid.events.ZoomEvent?): Boolean {
+                if (event != null) {
+                    val zoomLevel = map.zoomLevelDouble
+                    updateMarkerVisibility(zoomLevel)
+                }
+                return true
+            }
+        })
+    }
+
+    private fun updateMarkerVisibility(zoomLevel: Double) {
+        val shouldShowLargeMarkers = zoomLevel >= 14
+
+        customMarkers.forEach { marker ->
+            if (shouldShowLargeMarkers && !map.overlays.contains(marker)) {
+                map.overlays.add(marker)
+            } else if (!shouldShowLargeMarkers && map.overlays.contains(marker)) {
+                map.overlays.remove(marker)
+            }
+        }
+
+        customSmallMarkers.forEach { marker ->
+            if (!shouldShowLargeMarkers && !map.overlays.contains(marker)) {
+                map.overlays.add(marker)
+            } else if (shouldShowLargeMarkers && map.overlays.contains(marker)) {
+                map.overlays.remove(marker)
+            }
+        }
+        map.invalidate()
     }
 
     private fun setupSideMenu() {
@@ -171,9 +206,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_plan_trip -> {
                     Toast.makeText(this, "Plan Trip clicked", Toast.LENGTH_SHORT).show()
-                }
-                R.id.nav_settings -> {
-                    Toast.makeText(this, "Settings clicked", Toast.LENGTH_SHORT).show()
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -546,6 +578,8 @@ class MainActivity : AppCompatActivity() {
         val imageUrl: String
     )
 
+    private val customMarkers = mutableListOf<Marker>()
+    private val customSmallMarkers = mutableListOf<Marker>()
     private fun setupMarker(
         id: Int,
         position: GeoPoint,
@@ -568,14 +602,34 @@ class MainActivity : AppCompatActivity() {
             this.relatedObject = MarkerData(id, objectUrl, rarity, coordinates, imageUrl)
         }
 
-        marker.setOnMarkerClickListener { clickedMarker, mapView ->
-            handleMarkerClick(clickedMarker, mapView)
+        val smallMarkerIcon = ContextCompat.getDrawable(this@MainActivity, R.drawable.map_pin_small)?.let { drawable ->
+            val originalBitmap = (drawable as BitmapDrawable).bitmap
+            val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 21, 26, true)
+            BitmapDrawable(resources, scaledBitmap)
         }
 
+        val smallMarker = Marker(map).apply {
+            this.position = position
+            this.icon = smallMarkerIcon
+            this.setAnchor(0.5f, 0.5f)
+        }
+
+        marker.setOnMarkerClickListener { clickedMarker, mapView ->
+            handleMarkerClick(clickedMarker, mapView, false)
+        }
+
+        smallMarker.setOnMarkerClickListener { clickedMarker, mapView ->
+            handleMarkerClick(clickedMarker, mapView, true)
+        }
+
+        customMarkers.add(marker)
+        customSmallMarkers.add(smallMarker)
+
+        map.overlays.add(marker)
         return marker
     }
 
-    private fun handleMarkerClick(marker: Marker, mapView: MapView): Boolean {
+    private fun handleMarkerClick(marker: Marker, mapView: MapView, isSmall:Boolean): Boolean {
         mapView.controller.setZoom(18.0)
         val offsetFactor = 0.0005
         val offsetPosition = GeoPoint(
@@ -588,7 +642,9 @@ class MainActivity : AppCompatActivity() {
         mapView.overlays.remove(marker)
         mapView.overlays.add(marker)
 
-        showPopup(marker)
+        if (!isSmall) {
+            showPopup(marker)
+        }
         return true
     }
 
