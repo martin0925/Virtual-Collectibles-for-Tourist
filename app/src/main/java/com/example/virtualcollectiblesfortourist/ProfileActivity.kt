@@ -1,7 +1,9 @@
 package com.example.virtualcollectiblesfortourist
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -30,6 +32,8 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        setupStatusBar()
+
         profileImage = findViewById(R.id.profileImage)
         editUserName = findViewById(R.id.editUserName)
         editUserTitle = findViewById(R.id.editUserTitle)
@@ -43,6 +47,15 @@ class ProfileActivity : AppCompatActivity() {
 
         saveProfileButton.setOnClickListener {
             saveUserProfile()
+        }
+    }
+
+    private fun setupStatusBar() {
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.TRANSPARENT
         }
     }
 

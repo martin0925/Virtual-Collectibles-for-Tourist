@@ -194,8 +194,6 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
             }
-        } else {
-            Log.e("MainActivity", "Navigation header view is missing!")
         }
 
         navigationView.setNavigationItemSelectedListener { menuItem ->
@@ -611,7 +609,7 @@ class MainActivity : AppCompatActivity() {
         val smallMarker = Marker(map).apply {
             this.position = position
             this.icon = smallMarkerIcon
-            this.setAnchor(0.5f, 0.5f)
+            this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
         }
 
         marker.setOnMarkerClickListener { clickedMarker, mapView ->
@@ -645,6 +643,8 @@ class MainActivity : AppCompatActivity() {
         if (!isSmall) {
             showPopup(marker)
         }
+        updateMarkerVisibility(18.0)
+
         return true
     }
 
