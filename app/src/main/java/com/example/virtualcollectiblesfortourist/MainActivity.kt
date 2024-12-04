@@ -46,12 +46,17 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
 
     private lateinit var map: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var profileUpdateReceiver: BroadcastReceiver
+
+    private val activeFilters = mutableSetOf(
+        "common", "rare", "epic", "legendary",
+        "Museum", "Park", "House", "Other"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -132,22 +137,29 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateMarkerVisibility(zoomLevel: Double) {
         val shouldShowLargeMarkers = zoomLevel >= 14
+        map.overlays.clear()
 
-        customMarkers.forEach { marker ->
-            if (shouldShowLargeMarkers && !map.overlays.contains(marker)) {
-                map.overlays.add(marker)
-            } else if (!shouldShowLargeMarkers && map.overlays.contains(marker)) {
-                map.overlays.remove(marker)
+        if (shouldShowLargeMarkers) {
+            customMarkers.forEach { marker ->
+                if (marker != userLocationMarker) {
+                    val markerData = marker.relatedObject as? MarkerData
+                    if (markerData?.rarity?.let { activeFilters.contains(it) } == true || activeFilters.isEmpty()) {
+                        map.overlays.add(marker)
+                    }
+                }
+            }
+        } else {
+            customSmallMarkers.forEach { marker ->
+                if (marker != userLocationMarker) {
+                    val markerData = marker.relatedObject as? MarkerData
+                    if (markerData?.rarity?.let { activeFilters.contains(it) } == true || activeFilters.isEmpty()) {
+                        map.overlays.add(marker)
+                    }
+                }
             }
         }
 
-        customSmallMarkers.forEach { marker ->
-            if (!shouldShowLargeMarkers && !map.overlays.contains(marker)) {
-                map.overlays.add(marker)
-            } else if (shouldShowLargeMarkers && map.overlays.contains(marker)) {
-                map.overlays.remove(marker)
-            }
-        }
+        userLocationMarker?.let { map.overlays.add(it) }
         map.invalidate()
     }
 
@@ -219,6 +231,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showFilterDialog() {
         val filterDialog = FilterPopup()
+        // Pass current active filters to popup for highlighting the active buttons
+        filterDialog.setActiveFilters(activeFilters)
         filterDialog.show(supportFragmentManager, "com.example.virtualcollectiblesfortourist.FilterPopup")
     }
 
@@ -610,6 +624,7 @@ class MainActivity : AppCompatActivity() {
             this.position = position
             this.icon = smallMarkerIcon
             this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
+            this.relatedObject = MarkerData(id, objectUrl, rarity, coordinates, imageUrl)
         }
 
         marker.setOnMarkerClickListener { clickedMarker, mapView ->
@@ -671,5 +686,12 @@ class MainActivity : AppCompatActivity() {
         if (::locationCallback.isInitialized) {
             fusedLocationClient.removeLocationUpdates(locationCallback)
         }
+    }
+
+    override fun onFiltersSelected(filters: List<String>) {
+        activeFilters.clear()
+        activeFilters.addAll(filters)
+        val currentZoomLevel = map.zoomLevelDouble
+        updateMarkerVisibility(currentZoomLevel)
     }
 }
