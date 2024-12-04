@@ -22,8 +22,9 @@ class FilterPopup : DialogFragment() {
     private lateinit var epicToggle: ToggleButton
     private lateinit var legendaryToggle: ToggleButton
 
-    private lateinit var timeLimitedCheckBox: CheckBox
     private lateinit var applyButton: Button
+
+    private var activeFilters: Set<String> = emptySet()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +32,6 @@ class FilterPopup : DialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.popup_filter, container, false)
 
-        // TODO: all possible categories after final dataset
         museumCheckBox = view.findViewById(R.id.checkbox_museum)
         parkCheckBox = view.findViewById(R.id.checkbox_park)
         houseCheckBox = view.findViewById(R.id.checkbox_house)
@@ -42,12 +42,10 @@ class FilterPopup : DialogFragment() {
         epicToggle = view.findViewById(R.id.toggle_epic)
         legendaryToggle = view.findViewById(R.id.toggle_legendary)
 
-        timeLimitedCheckBox = view.findViewById(R.id.checkbox_time_limited)
-
-        initializeToggleButton(commonToggle, R.color.common)
-        initializeToggleButton(rareToggle, R.color.rare)
-        initializeToggleButton(epicToggle, R.color.epic)
-        initializeToggleButton(legendaryToggle, R.color.legendary)
+        initializeToggleButton(commonToggle, "common", R.color.common)
+        initializeToggleButton(rareToggle, "rare", R.color.rare)
+        initializeToggleButton(epicToggle, "epic", R.color.epic)
+        initializeToggleButton(legendaryToggle, "legendary", R.color.legendary)
 
         applyButton = view.findViewById(R.id.apply_button)
         applyButton.setOnClickListener {
@@ -57,8 +55,13 @@ class FilterPopup : DialogFragment() {
         return view
     }
 
-    private fun initializeToggleButton(toggleButton: ToggleButton, activeColorResId: Int) {
-        toggleButton.isChecked = true
+    fun setActiveFilters(filters: Set<String>) {
+        activeFilters = filters
+    }
+
+    private fun initializeToggleButton(toggleButton: ToggleButton, filterKey: String, activeColorResId: Int) {
+        // Set toggle button state based on active filters
+        toggleButton.isChecked = activeFilters.contains(filterKey)
         updateToggleButtonColor(toggleButton, activeColorResId)
 
         toggleButton.setOnCheckedChangeListener { _, _ ->
@@ -78,19 +81,17 @@ class FilterPopup : DialogFragment() {
     private fun applyFilters() {
         val selectedFilters = mutableListOf<String>()
 
+        if (commonToggle.isChecked) selectedFilters.add("common")
+        if (rareToggle.isChecked) selectedFilters.add("rare")
+        if (epicToggle.isChecked) selectedFilters.add("epic")
+        if (legendaryToggle.isChecked) selectedFilters.add("legendary")
+
         if (museumCheckBox.isChecked) selectedFilters.add("Museum")
         if (parkCheckBox.isChecked) selectedFilters.add("Park")
         if (houseCheckBox.isChecked) selectedFilters.add("House")
         if (otherCheckBox.isChecked) selectedFilters.add("Other")
 
-        if (commonToggle.isChecked) selectedFilters.add("Common")
-        if (rareToggle.isChecked) selectedFilters.add("Rare")
-        if (epicToggle.isChecked) selectedFilters.add("Epic")
-        if (legendaryToggle.isChecked) selectedFilters.add("Legendary")
-
-        if (timeLimitedCheckBox.isChecked) selectedFilters.add("Time-Limited")
         (activity as? FilterDialogListener)?.onFiltersSelected(selectedFilters)
-
         dismiss()
     }
 

@@ -11,9 +11,4 @@
         android:title="Plan my trip"
         android:icon="@drawable/ic_trip" />
 
-    <item
-        android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@drawable/ic_settings" />
-
 </menu>

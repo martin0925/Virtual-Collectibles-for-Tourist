@@ -86,21 +86,6 @@
             android:layout_height="wrap_content"
             android:text="Other" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Special Badges"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
-
-        <CheckBox
-            android:id="@+id/checkbox_time_limited"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Time-Limited Badges" />
-
         <Button
             android:id="@+id/apply_button"
             android:layout_width="match_parent"

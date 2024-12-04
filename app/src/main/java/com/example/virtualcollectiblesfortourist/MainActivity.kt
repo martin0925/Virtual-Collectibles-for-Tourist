@@ -3,7 +3,10 @@ package com.example.virtualcollectiblesfortourist
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
@@ -18,6 +21,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -26,23 +30,33 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.example.virtualcollectiblesfortourist.data.AppDatabase
+import com.example.virtualcollectiblesfortourist.data.DatabaseUtils.loadPlacesFromJsonToDb
+import com.example.virtualcollectiblesfortourist.data.Place
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.gms.location.*
 import com.google.android.material.navigation.NavigationView
-import org.json.JSONArray
-import org.json.JSONObject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import java.io.InputStream
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
 
     private lateinit var map: MapView
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var profileUpdateReceiver: BroadcastReceiver
+
+    private val activeFilters = mutableSetOf(
+        "common", "rare", "epic", "legendary",
+        "Museum", "Park", "House", "Other"
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +69,37 @@ class MainActivity : AppCompatActivity() {
         setupFilterButton()
         setupLocationClient()
         setupCurrentLocationButton()
-        loadPlacesFromJson()
+
+        val database = AppDatabase.getDatabase(this)
+        loadPlacesFromJsonToDb(this, database)
+        loadPlacesFromDb()
+
+        // Check changes in user profile settings
+        profileUpdateReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                if (intent?.action == "com.example.virtualcollectiblesfortourist.PROFILE_UPDATED") {
+                    val updatedName = intent.getStringExtra("name")
+                    updateSideMenuProfileName(updatedName)
+                }
+            }
+        }
+        registerReceiver(profileUpdateReceiver, IntentFilter("com.example.virtualcollectiblesfortourist.PROFILE_UPDATED"),
+            RECEIVER_NOT_EXPORTED
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(profileUpdateReceiver)
+    }
+
+    private fun updateSideMenuProfileName(name: String?) {
+        val navigationView: NavigationView = findViewById(R.id.navigation_view)
+        val navHeader = navigationView.getHeaderView(0)
+        if (navHeader != null) {
+            val profileName = navHeader.findViewById<TextView>(R.id.profile_name)
+            profileName.text = name ?: "Default Name"
+        }
     }
 
     private fun setupStatusBar() {
@@ -75,6 +119,48 @@ class MainActivity : AppCompatActivity() {
         map = findViewById(R.id.map)
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.setMultiTouchControls(true)
+
+        map.addMapListener(object : org.osmdroid.events.MapListener {
+            override fun onScroll(event: org.osmdroid.events.ScrollEvent?): Boolean {
+                return false
+            }
+
+            override fun onZoom(event: org.osmdroid.events.ZoomEvent?): Boolean {
+                if (event != null) {
+                    val zoomLevel = map.zoomLevelDouble
+                    updateMarkerVisibility(zoomLevel)
+                }
+                return true
+            }
+        })
+    }
+
+    private fun updateMarkerVisibility(zoomLevel: Double) {
+        val shouldShowLargeMarkers = zoomLevel >= 14
+        map.overlays.clear()
+
+        if (shouldShowLargeMarkers) {
+            customMarkers.forEach { marker ->
+                if (marker != userLocationMarker) {
+                    val markerData = marker.relatedObject as? MarkerData
+                    if (markerData?.rarity?.let { activeFilters.contains(it) } == true || activeFilters.isEmpty()) {
+                        map.overlays.add(marker)
+                    }
+                }
+            }
+        } else {
+            customSmallMarkers.forEach { marker ->
+                if (marker != userLocationMarker) {
+                    val markerData = marker.relatedObject as? MarkerData
+                    if (markerData?.rarity?.let { activeFilters.contains(it) } == true || activeFilters.isEmpty()) {
+                        map.overlays.add(marker)
+                    }
+                }
+            }
+        }
+
+        userLocationMarker?.let { map.overlays.add(it) }
+        map.invalidate()
     }
 
     private fun setupSideMenu() {
@@ -88,11 +174,49 @@ class MainActivity : AppCompatActivity() {
         }
 
         val navigationView: NavigationView = findViewById(R.id.navigation_view)
+
+        val navHeader = navigationView.getHeaderView(0)
+        if (navHeader != null) {
+            val profileImage = navHeader.findViewById<ImageView>(R.id.profile_image)
+            val profileName = navHeader.findViewById<TextView>(R.id.profile_name)
+
+            val userDao = AppDatabase.getDatabase(this).userDao()
+            CoroutineScope(Dispatchers.IO).launch {
+                val user = userDao.getDefaultUser()
+
+                withContext(Dispatchers.Main) {
+                    if (user != null) {
+                        profileName.text = user.name
+
+                        Glide.with(this@MainActivity)
+                            .load(user.imageUrl)
+                            .placeholder(R.drawable.profile_placeholder)
+                            .circleCrop()
+                            .into(profileImage)
+                    }
+                }
+            }
+
+            profileImage.setOnClickListener {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+
+            profileName.setOnClickListener {
+                val intent = Intent(this, ProfileActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
         navigationView.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_badges -> { /* Handle badges action */ }
-                R.id.nav_plan_trip -> { /* Handle plan my trip action */ }
-                R.id.nav_settings -> { /* Handle settings action */ }
+                R.id.nav_badges -> {
+                    val intent = Intent(this, BadgeActivity::class.java)
+                    startActivity(intent)
+                }
+                R.id.nav_plan_trip -> {
+                    Toast.makeText(this, "Plan Trip clicked", Toast.LENGTH_SHORT).show()
+                }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
             true
@@ -107,6 +231,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun showFilterDialog() {
         val filterDialog = FilterPopup()
+        // Pass current active filters to popup for highlighting the active buttons
+        filterDialog.setActiveFilters(activeFilters)
         filterDialog.show(supportFragmentManager, "com.example.virtualcollectiblesfortourist.FilterPopup")
     }
 
@@ -218,6 +344,7 @@ class MainActivity : AppCompatActivity() {
         val rarity = relatedData?.rarity
         val coordinatesText = relatedData?.coordinates
         val imageUrl = relatedData?.imageUrl
+        val placeId = relatedData?.id
 
         // Adjust the dialog window size and make it look better
         val window = dialog.window
@@ -303,51 +430,76 @@ class MainActivity : AppCompatActivity() {
             tagsContainer.addView(tagView)  // Add the tag view to the container
         }
 
-        // Set the collect button click listener to dismiss the dialog
-        collectButton.setOnClickListener {
-            dialog.dismiss()
+        // Handle the collect button click
+        // TODO: remove toast messages, replace with own popups
+        if (placeId != null) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val placeDao = AppDatabase.getDatabase(applicationContext).placeDao()
+                val place = placeDao.getPlaceById(placeId)
+
+                withContext(Dispatchers.Main) {
+                    if (place.collected) {
+                        // Deactivate the button and change text
+                        collectButton.isEnabled = false
+                        collectButton.text = "Already collected"
+                        collectButton.setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.darker_gray))
+                    } else {
+                        // Set up the collect button for uncollected places
+                        collectButton.isEnabled = true
+                        collectButton.text = "Collect"
+                        collectButton.setOnClickListener {
+                            CoroutineScope(Dispatchers.IO).launch {
+                                placeDao.updatePlace(placeId)
+                                withContext(Dispatchers.Main) {
+                                    Toast.makeText(this@MainActivity, "Place collected!", Toast.LENGTH_SHORT).show()
+                                    collectButton.isEnabled = false
+                                    collectButton.text = "Already collected"
+                                    collectButton.setBackgroundColor(ContextCompat.getColor(this@MainActivity, android.R.color.darker_gray))
+                                }
+                            }
+                            dialog.dismiss()
+                        }
+                    }
+                }
+            }
         }
 
-        // Show the dialog
+
         dialog.show()
     }
 
-    private fun loadPlacesFromJson() {
-        try {
-            val datasets = listOf("czech_places.json", "luxembourg_places.json", "belgium_places.json")
-
-            for (dataset in datasets) {
-                val inputStream: InputStream = assets.open(dataset)
-                val jsonString = inputStream.bufferedReader().use { it.readText() }
-                val placesArray = JSONArray(jsonString)
-
-                for (i in 0 until placesArray.length()) {
-                    val place = placesArray.getJSONObject(i)
-                    createMarkerFromPlace(place)
+    private fun loadPlacesFromDb() {
+        val database = AppDatabase.getDatabase(this)
+        CoroutineScope(Dispatchers.IO).launch {
+            val places = database.placeDao().getAllPlaces()
+            val batchSize = 50
+            places.chunked(batchSize).forEach { batch ->
+                withContext(Dispatchers.Main) {
+                    for (place in batch) {
+                        createMarkerFromPlace(place)
+                    }
+                    map.invalidate()
                 }
             }
-
-            map.invalidate()
-        } catch (e: Exception) {
-            Log.e("Error", "Error loading markers: ${e.localizedMessage}")
-            e.printStackTrace()
         }
     }
 
-    private fun createMarkerFromPlace(place: JSONObject) {
-        val name = place.getString("title")
-        val coordinates = place.getString("coordinates")
-        val location = place.getString("place").split(",")[0]
-        val rarity = place.getString("rarity")
-        val description = place.getJSONArray("tags").join(", ").replace("[", "").replace("]", "")
-        val objectUrl = place.getString("url")
-        val imageUrl = place.getString("image")
-
-        val (lat, lon) = parseCoordinates(coordinates)
+    private fun createMarkerFromPlace(place: Place) {
+        val (lat, lon) = parseCoordinates(place.coordinates)
         val position = GeoPoint(lat, lon)
 
-        // Load image asynchronously and set up marker once image is loaded
-        createCustomPinBitmap(name, location, rarity, imageUrl, position, description, objectUrl, coordinates)
+        createCustomPinBitmap(
+            id = place.id,
+            name = place.title,
+            location = place.place,
+            rarity = place.rarity,
+            imageUrl = place.imageUrl,
+            position = position,
+            description = place.tags,
+            objectUrl = place.objectUrl,
+            coordinates = place.coordinates,
+            isCollected = place.collected
+        )
     }
 
     private fun parseCoordinates(coordinates: String): Pair<Double, Double> {
@@ -356,6 +508,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun createCustomPinBitmap(
+        id: Int,
         name: String,
         location: String,
         rarity: String,
@@ -363,7 +516,8 @@ class MainActivity : AppCompatActivity() {
         position: GeoPoint,
         description: String,
         objectUrl: String,
-        coordinates: String
+        coordinates: String,
+        isCollected: Boolean
     ) {
         val inflater = layoutInflater
         val pinView = inflater.inflate(R.layout.map_pin, null)
@@ -392,7 +546,6 @@ class MainActivity : AppCompatActivity() {
             .error(R.drawable.sample_image)
             .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                    // Set the loaded image
                     imageView.setImageBitmap(resource)
 
                     // Render the view to a bitmap after the image has loaded
@@ -404,6 +557,7 @@ class MainActivity : AppCompatActivity() {
 
                     // Set up the marker with the final bitmap
                     val marker = setupMarker(
+                        id = id,
                         position = position,
                         title = name,
                         location = location,
@@ -429,13 +583,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     data class MarkerData(
+        val id: Int,
         val objectUrl: String,
         val rarity: String,
         val coordinates: String,
         val imageUrl: String
     )
 
+    private val customMarkers = mutableListOf<Marker>()
+    private val customSmallMarkers = mutableListOf<Marker>()
     private fun setupMarker(
+        id: Int,
         position: GeoPoint,
         title: String,
         location: String,
@@ -453,17 +611,38 @@ class MainActivity : AppCompatActivity() {
             this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
             this.icon = BitmapDrawable(resources, iconBitmap)
             this.subDescription = description
-            this.relatedObject = MarkerData(objectUrl, rarity, coordinates, imageUrl)
+            this.relatedObject = MarkerData(id, objectUrl, rarity, coordinates, imageUrl)
+        }
+
+        val smallMarkerIcon = ContextCompat.getDrawable(this@MainActivity, R.drawable.map_pin_small)?.let { drawable ->
+            val originalBitmap = (drawable as BitmapDrawable).bitmap
+            val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, 21, 26, true)
+            BitmapDrawable(resources, scaledBitmap)
+        }
+
+        val smallMarker = Marker(map).apply {
+            this.position = position
+            this.icon = smallMarkerIcon
+            this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
+            this.relatedObject = MarkerData(id, objectUrl, rarity, coordinates, imageUrl)
         }
 
         marker.setOnMarkerClickListener { clickedMarker, mapView ->
-            handleMarkerClick(clickedMarker, mapView)
+            handleMarkerClick(clickedMarker, mapView, false)
         }
 
+        smallMarker.setOnMarkerClickListener { clickedMarker, mapView ->
+            handleMarkerClick(clickedMarker, mapView, true)
+        }
+
+        customMarkers.add(marker)
+        customSmallMarkers.add(smallMarker)
+
+        map.overlays.add(marker)
         return marker
     }
 
-    private fun handleMarkerClick(marker: Marker, mapView: MapView): Boolean {
+    private fun handleMarkerClick(marker: Marker, mapView: MapView, isSmall:Boolean): Boolean {
         mapView.controller.setZoom(18.0)
         val offsetFactor = 0.0005
         val offsetPosition = GeoPoint(
@@ -476,7 +655,11 @@ class MainActivity : AppCompatActivity() {
         mapView.overlays.remove(marker)
         mapView.overlays.add(marker)
 
-        showPopup(marker)
+        if (!isSmall) {
+            showPopup(marker)
+        }
+        updateMarkerVisibility(18.0)
+
         return true
     }
 
@@ -503,5 +686,12 @@ class MainActivity : AppCompatActivity() {
         if (::locationCallback.isInitialized) {
             fusedLocationClient.removeLocationUpdates(locationCallback)
         }
+    }
+
+    override fun onFiltersSelected(filters: List<String>) {
+        activeFilters.clear()
+        activeFilters.addAll(filters)
+        val currentZoomLevel = map.zoomLevelDouble
+        updateMarkerVisibility(currentZoomLevel)
     }
 }
