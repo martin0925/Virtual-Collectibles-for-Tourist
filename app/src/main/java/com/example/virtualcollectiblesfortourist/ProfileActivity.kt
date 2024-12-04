@@ -25,7 +25,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var editEmail: EditText
     private lateinit var editCountry: EditText
     private lateinit var editCity: EditText
-    private lateinit var editPhoneNumber: EditText
     private lateinit var saveProfileButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +39,6 @@ class ProfileActivity : AppCompatActivity() {
         editEmail = findViewById(R.id.editEmail)
         editCountry = findViewById(R.id.editCountry)
         editCity = findViewById(R.id.editCity)
-        editPhoneNumber = findViewById(R.id.editPhoneNumber)
         saveProfileButton = findViewById(R.id.saveProfileButton)
 
         loadUserProfile()
@@ -76,11 +74,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun displayUserProfile(user: User) {
         editUserName.setText(user.name)
-        editUserTitle.setText(user.city) // Temporary: using city as title
+        editUserTitle.setText("Common Traveller")
         editEmail.setText(user.email)
         editCountry.setText(user.country)
         editCity.setText(user.city)
-        editPhoneNumber.setText(user.phoneNumber)
 
         Glide.with(this)
             .load(user.imageUrl)
@@ -97,7 +94,7 @@ class ProfileActivity : AppCompatActivity() {
             imageUrl = "https://example.com/default-user.jpg",
             email = editEmail.text.toString(),
             city = editCity.text.toString(),
-            phoneNumber = editPhoneNumber.text.toString()
+            phoneNumber = "000-000-000"
         )
 
         val userDao = AppDatabase.getDatabase(this).userDao()
