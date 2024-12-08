@@ -5,22 +5,26 @@ import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.ToggleButton
+import android.widget.*
 import androidx.core.content.ContextCompat
 
 class FilterPopup : DialogFragment() {
 
     private lateinit var museumCheckBox: CheckBox
     private lateinit var parkCheckBox: CheckBox
-    private lateinit var houseCheckBox: CheckBox
+    private lateinit var outdoorsCheckBox: CheckBox
+    private lateinit var indoorsCheckBox: CheckBox
     private lateinit var otherCheckBox: CheckBox
 
     private lateinit var commonToggle: ToggleButton
     private lateinit var rareToggle: ToggleButton
     private lateinit var epicToggle: ToggleButton
     private lateinit var legendaryToggle: ToggleButton
+
+    private lateinit var distanceSeekBar: SeekBar
+    private lateinit var distanceTextView: TextView
+
+    private lateinit var timeLimitedCheckBox: CheckBox
 
     private lateinit var applyButton: Button
 
@@ -34,7 +38,8 @@ class FilterPopup : DialogFragment() {
 
         museumCheckBox = view.findViewById(R.id.checkbox_museum)
         parkCheckBox = view.findViewById(R.id.checkbox_park)
-        houseCheckBox = view.findViewById(R.id.checkbox_house)
+        outdoorsCheckBox = view.findViewById(R.id.checkbox_outdoors)
+        indoorsCheckBox = view.findViewById(R.id.checkbox_indoors)
         otherCheckBox = view.findViewById(R.id.checkbox_other)
 
         commonToggle = view.findViewById(R.id.toggle_common)
@@ -46,6 +51,21 @@ class FilterPopup : DialogFragment() {
         initializeToggleButton(rareToggle, "rare", R.color.rare)
         initializeToggleButton(epicToggle, "epic", R.color.epic)
         initializeToggleButton(legendaryToggle, "legendary", R.color.legendary)
+
+        // Initialize distance slider
+        distanceSeekBar = view.findViewById(R.id.seekbar_distance)
+        distanceTextView = view.findViewById(R.id.textview_distance)
+        distanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                distanceTextView.text = "${progress} km"
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar) {}
+        })
+
+        // Initialize time-limited badge checkbox
+        timeLimitedCheckBox = view.findViewById(R.id.checkbox_time_limited)
 
         applyButton = view.findViewById(R.id.apply_button)
         applyButton.setOnClickListener {

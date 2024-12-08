@@ -57,34 +57,83 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
             android:text="Filter by Type"
-            android:textStyle="bold"
             android:textSize="18sp"
-            android:paddingBottom="8dp" />
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox_indoors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="InDoors" />
+
+            <CheckBox
+                android:id="@+id/checkbox_outdoors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="OutDoors" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/checkbox_museum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Museum" />
+
+            <CheckBox
+                android:id="@+id/checkbox_park"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Park" />
+
+            <CheckBox
+                android:id="@+id/checkbox_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Other" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/textview_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Filter Distance"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <SeekBar
+            android:id="@+id/seekbar_distance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Filter by Badges"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <CheckBox
-            android:id="@+id/checkbox_museum"
-            android:layout_width="wrap_content"
+            android:id="@+id/checkbox_time_limited"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Museum" />
-
-        <CheckBox
-            android:id="@+id/checkbox_park"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Park" />
-
-        <CheckBox
-            android:id="@+id/checkbox_house"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="House" />
-
-        <CheckBox
-            android:id="@+id/checkbox_other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Other" />
+            android:text="Time Limited Badges" />
 
         <Button
             android:id="@+id/apply_button"
