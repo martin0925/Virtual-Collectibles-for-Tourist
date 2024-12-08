@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.virtualcollectiblesfortourist.data.Place
 
 class BadgeAdapter(private val places: List<Place>) : RecyclerView.Adapter<BadgeAdapter.BadgeViewHolder>() {
@@ -24,19 +25,28 @@ class BadgeAdapter(private val places: List<Place>) : RecyclerView.Adapter<Badge
     override fun getItemCount(): Int = places.size
 
     class BadgeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val badgeRibbon: TextView = itemView.findViewById(R.id.badgeRibbon)
         private val badgeImage: ImageView = itemView.findViewById(R.id.badgeImage)
-        private val badgeTitle: TextView = itemView.findViewById(R.id.badgeTitle)
-        private val badgeRarity: TextView = itemView.findViewById(R.id.badgeRarity)
         private val badgeDate: TextView = itemView.findViewById(R.id.badgeDate)
+        private val badgeTitle: TextView = itemView.findViewById(R.id.badgeTitle)
 
         fun bind(place: Place) {
             badgeTitle.text = place.title
-            badgeRarity.text = place.rarity
             badgeDate.text = place.dateOfVisit ?: "Unknown"
+
+            val rarityColor = when (place.rarity) {
+                "legendary" -> R.color.legendary
+                "epic" -> R.color.epic
+                "rare" -> R.color.rare
+                "common" -> R.color.common
+                else -> R.color.light_gray
+            }
+            badgeRibbon.setBackgroundColor(itemView.context.getColor(rarityColor))
 
             Glide.with(itemView.context)
                 .load(place.imageUrl)
                 .placeholder(R.drawable.sample_image)
+                .transform(CircleCrop())
                 .into(badgeImage)
         }
     }

@@ -1,37 +1,85 @@
-<LinearLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:layout_margin="8dp">
+    android:layout_margin="12dp"
+    card_view:cardCornerRadius="24dp"
+    card_view:cardElevation="12dp"
+    android:background="@drawable/card_background_gradient">
 
-    <ImageView
-        android:id="@+id/badgeImage"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:background="#C3E9FD">
 
-    <TextView
-        android:id="@+id/badgeTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="#000"
-        android:textStyle="bold" />
+        <!-- Praporek rarity (dynamic) -->
+        <TextView
+            android:id="@+id/badgeRibbon"
+            android:layout_width="35dp"
+            android:layout_height="24dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/badge_ribbon"
+            android:padding="4dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:layout_alignParentTop="true" />
 
-    <TextView
-        android:id="@+id/badgeRarity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColor="#666" />
+        <!-- Obrázek odznaku s efektem medaile -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/wholeBadgeImage">
 
-    <TextView
-        android:id="@+id/badgeDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="#999" />
-</LinearLayout>
+            <!-- Zlatý rámec medaile (větší ImageView pro pozadí) -->
+            <ImageView
+                android:id="@+id/medalBackground"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_medal" />
+
+            <!-- Obrázek medaile -->
+            <ImageView
+                android:id="@+id/badgeImage"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
+
+        <!-- Textové informace (Text fields below the photo) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@id/wholeBadgeImage"
+            android:gravity="center"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/badgeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/badgeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/common"
+                android:gravity="center" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -3,6 +3,7 @@ package com.example.virtualcollectiblesfortourist
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +24,8 @@ class BadgeActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.badgeRecyclerView)
         recyclerView.layoutManager = GridLayoutManager(this, 2)
 
+        val totalBadgesText = findViewById<TextView>(R.id.collectedBadgesCount)
+
         // Load collected badges from database
         lifecycleScope.launch(Dispatchers.IO) {
             val database = AppDatabase.getDatabase(applicationContext)
@@ -31,6 +34,9 @@ class BadgeActivity : AppCompatActivity() {
             withContext(Dispatchers.Main) {
                 val adapter = BadgeAdapter(collectedPlaces)
                 recyclerView.adapter = adapter
+
+                // Aktualizuj počet badge
+                totalBadgesText.text = "${collectedPlaces.size}"
             }
         }
     }
@@ -43,5 +49,4 @@ class BadgeActivity : AppCompatActivity() {
             statusBarColor = Color.TRANSPARENT
         }
     }
-
 }
