@@ -86,22 +86,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
             "automata", "riddles", "strange science", "eccentric homes", "giant heads", "haunted",
             "witchcraft", "legends"
         )
-    ).toMutableMap().apply {
-        val allTags = setOf(
-            "museums", "collections", "museums and collections", "art museum", "history",
-            "literature", "repositories of knowledge", "subterranean sites", "nature", "gardens",
-            "plants", "rock formations", "geological oddities", "natural wonders", "geology",
-            "ecosystems", "lakes", "water", "architecture", "architectural oddities", "historical",
-            "palaces", "castles", "sacred spaces", "urban planning", "monuments", "medieval",
-            "art", "sculptures", "statues", "david cerny", "installations", "pop culture",
-            "music history", "photography", "ossuaries", "alchemy", "magic", "mechanical instruments",
-            "automata", "riddles", "strange science", "eccentric homes", "giant heads", "haunted",
-            "witchcraft", "legends"
-        )
-
-        val usedTags = this.values.flatten().toSet()
-        this["other"] = allTags - usedTags
-    }
+    ).toMutableMap()
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {

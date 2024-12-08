@@ -15,7 +15,6 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
     private lateinit var historicalCheckBox: CheckBox
     private lateinit var artCheckBox: CheckBox
     private lateinit var unusualCheckBox: CheckBox
-    private lateinit var otherCheckBox: CheckBox
 
     private lateinit var commonToggle: ToggleButton
     private lateinit var rareToggle: ToggleButton
@@ -43,7 +42,6 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         historicalCheckBox = view.findViewById(R.id.checkbox_historical)
         artCheckBox = view.findViewById(R.id.checkbox_art)
         unusualCheckBox = view.findViewById(R.id.checkbox_unusual)
-        otherCheckBox = view.findViewById(R.id.checkbox_other)
 
         commonToggle = view.findViewById(R.id.toggle_common)
         rareToggle = view.findViewById(R.id.toggle_rare)
@@ -96,7 +94,6 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         historicalCheckBox.isChecked = activeFilters.contains("historical")
         artCheckBox.isChecked = activeFilters.contains("art")
         unusualCheckBox.isChecked = activeFilters.contains("unusual")
-        otherCheckBox.isChecked = activeFilters.contains("other")
 
         commonToggle.isChecked = activeFilters.contains("common")
         rareToggle.isChecked = activeFilters.contains("rare")
@@ -132,7 +129,6 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         if (historicalCheckBox.isChecked) selectedFilters.add("historical")
         if (artCheckBox.isChecked) selectedFilters.add("art")
         if (unusualCheckBox.isChecked) selectedFilters.add("unusual")
-        if (otherCheckBox.isChecked) selectedFilters.add("other")
 
         val selectedDistance = if (distanceSeekBar.progress == 0) ANY_DISTANCE else distanceSeekBar.progress
 
@@ -143,4 +139,10 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
     interface FilterDialogListener {
         fun onFiltersSelected(filters: List<String>, distance: Int)
     }
+
+    override fun onStart() {
+        super.onStart()
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+    }
+
 }
