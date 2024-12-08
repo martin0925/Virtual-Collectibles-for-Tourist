@@ -57,7 +57,7 @@ class FilterPopup : DialogFragment() {
         distanceTextView = view.findViewById(R.id.textview_distance)
         distanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
-                distanceTextView.text = "${progress} km"
+                "${progress} km".also { distanceTextView.text = it }
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
@@ -108,8 +108,11 @@ class FilterPopup : DialogFragment() {
 
         if (museumCheckBox.isChecked) selectedFilters.add("Museum")
         if (parkCheckBox.isChecked) selectedFilters.add("Park")
-        if (houseCheckBox.isChecked) selectedFilters.add("House")
+        if (outdoorsCheckBox.isChecked) selectedFilters.add("Outdoors")
+        if (indoorsCheckBox.isChecked) selectedFilters.add("Indoors")
         if (otherCheckBox.isChecked) selectedFilters.add("Other")
+
+        if (timeLimitedCheckBox.isChecked) selectedFilters.add("Time-Limited")
 
         (activity as? FilterDialogListener)?.onFiltersSelected(selectedFilters)
         dismiss()
