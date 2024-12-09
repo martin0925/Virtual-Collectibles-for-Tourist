@@ -45,6 +45,11 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
 
@@ -53,11 +58,37 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     private lateinit var locationCallback: LocationCallback
     private lateinit var profileUpdateReceiver: BroadcastReceiver
 
+    private var selectedDistanceRange: Int = 0
+
     private val activeFilters = mutableSetOf(
-        "common", "rare", "epic", "legendary",
-        "Museum", "Park", "House", "Other"
+        "common", "rare", "epic", "legendary"
     )
 
+    private val categoryTags = mapOf(
+        "museums" to setOf(
+            "museums", "collections", "museums and collections", "art museum", "history",
+            "literature", "repositories of knowledge", "subterranean sites"
+        ),
+        "nature" to setOf(
+            "nature", "gardens", "plants", "rock formations", "geological oddities",
+            "natural wonders", "geology", "ecosystems", "lakes", "water"
+        ),
+        "historical" to setOf(
+            "architecture", "architectural oddities", "historical", "palaces", "castles",
+            "sacred spaces", "urban planning", "monuments", "medieval"
+        ),
+        "art" to setOf(
+            "art", "sculptures", "statues", "david cerny", "installations", "literature",
+            "pop culture", "music history", "photography"
+        ),
+        "unusual" to setOf(
+            "ossuaries", "alchemy", "magic", "subterranean sites", "mechanical instruments",
+            "automata", "riddles", "strange science", "eccentric homes", "giant heads", "haunted",
+            "witchcraft", "legends"
+        )
+    ).toMutableMap()
+
+    @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -139,26 +170,61 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         val shouldShowLargeMarkers = zoomLevel >= 14
         map.overlays.clear()
 
+        val selectedTypeTags = activeFilters.flatMap { category ->
+            categoryTags[category] ?: emptySet()
+        }.toSet()
+
         if (shouldShowLargeMarkers) {
-            customMarkers.forEach { marker ->
-                if (marker != userLocationMarker) {
-                    val markerData = marker.relatedObject as? MarkerData
-                    if (markerData?.rarity?.let { activeFilters.contains(it) } == true || activeFilters.isEmpty()) {
-                        map.overlays.add(marker)
+            userLocationMarker?.let { userMarker ->
+                val userLocation = userMarker.position
+
+                customMarkers.forEach { marker ->
+                    val markerTags = marker.subDescription?.split(", ")?.map { it.trim().lowercase() } ?: emptyList()
+                    if (marker != userLocationMarker) {
+                        val markerData = marker.relatedObject as? MarkerData
+                        val markerRarity = markerData?.rarity?.lowercase()
+
+                        val matchesType = markerTags.any { it in selectedTypeTags }
+                        val matchesRarity = markerRarity != null && activeFilters.contains(markerRarity)
+
+                        val distanceToMarker = userLocation.distanceToAsDouble(marker.position)
+                        val withinDistance = selectedDistanceRange == 0 || distanceToMarker <= selectedDistanceRange * 1000
+
+                        if ((matchesType || selectedTypeTags.isEmpty()) &&
+                            (matchesRarity || activeFilters.isEmpty()) &&
+                            withinDistance
+                        ) {
+                            map.overlays.add(marker)
+                        }
                     }
                 }
             }
         } else {
-            customSmallMarkers.forEach { marker ->
-                if (marker != userLocationMarker) {
-                    val markerData = marker.relatedObject as? MarkerData
-                    if (markerData?.rarity?.let { activeFilters.contains(it) } == true || activeFilters.isEmpty()) {
-                        map.overlays.add(marker)
+            userLocationMarker?.let { userMarker ->
+                val userLocation = userMarker.position
+
+                customSmallMarkers.forEach { marker ->
+                    val markerTags = marker.subDescription?.split(", ")?.map { it.trim().lowercase() } ?: emptyList()
+                    if (marker != userLocationMarker) {
+                        val markerData = marker.relatedObject as? MarkerData
+                        val markerRarity = markerData?.rarity?.lowercase()
+
+                        val matchesType = markerTags.any { it in selectedTypeTags }
+                        val matchesRarity = markerRarity != null && activeFilters.contains(markerRarity)
+
+                        val distanceToMarker = userLocation.distanceToAsDouble(marker.position)
+                        val withinDistance = selectedDistanceRange == 0 || distanceToMarker <= selectedDistanceRange * 1000
+
+                        if ((matchesType || selectedTypeTags.isEmpty()) &&
+                            (matchesRarity || activeFilters.isEmpty()) &&
+                            withinDistance
+                        ) {
+                            map.overlays.add(marker)
+                        }
                     }
                 }
             }
         }
-
         userLocationMarker?.let { map.overlays.add(it) }
         map.invalidate()
     }
@@ -230,8 +296,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     }
 
     private fun showFilterDialog() {
-        val filterDialog = FilterPopup()
-        // Pass current active filters to popup for highlighting the active buttons
+        val filterDialog = FilterPopup(selectedDistanceRange)
         filterDialog.setActiveFilters(activeFilters)
         filterDialog.show(supportFragmentManager, "com.example.virtualcollectiblesfortourist.FilterPopup")
     }
@@ -275,6 +340,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
                 position = currentLocation
                 icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.current_location)
                 setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+                setOnMarkerClickListener { _, _ -> true }
                 map.overlays.add(this)
             }
         } else {
@@ -498,7 +564,6 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
             description = place.tags,
             objectUrl = place.objectUrl,
             coordinates = place.coordinates,
-            isCollected = place.collected
         )
     }
 
@@ -517,7 +582,6 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         description: String,
         objectUrl: String,
         coordinates: String,
-        isCollected: Boolean
     ) {
         val inflater = layoutInflater
         val pinView = inflater.inflate(R.layout.map_pin, null)
@@ -624,6 +688,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
             this.position = position
             this.icon = smallMarkerIcon
             this.setAnchor(0.17355f, Marker.ANCHOR_BOTTOM)
+            this.subDescription = description
             this.relatedObject = MarkerData(id, objectUrl, rarity, coordinates, imageUrl)
         }
 
@@ -688,10 +753,61 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         }
     }
 
-    override fun onFiltersSelected(filters: List<String>) {
+    override fun onFiltersSelected(filters: List<String>, distance: Int) {
         activeFilters.clear()
         activeFilters.addAll(filters)
-        val currentZoomLevel = map.zoomLevelDouble
-        updateMarkerVisibility(currentZoomLevel)
+        selectedDistanceRange = distance
+        updateFilteredMarkers()
     }
+
+    private fun updateFilteredMarkers() {
+        map.overlays.clear()
+
+        val selectedTypeTags = activeFilters.flatMap { category ->
+            categoryTags[category] ?: emptySet()
+        }.toSet()
+
+        val selectedRarities = activeFilters.filter { it in listOf("common", "rare", "epic", "legendary") }.toSet()
+
+        userLocationMarker?.let { userMarker ->
+            val userLocation = userMarker.position // Get the user's current location
+
+            customMarkers.forEach { marker ->
+                val markerData = marker.relatedObject as? MarkerData
+                val markerTags = marker.subDescription?.split(", ")?.map { it.trim().lowercase() } ?: emptyList()
+                val markerRarity = markerData?.rarity?.lowercase()
+
+                val matchesType = markerTags.any { it in selectedTypeTags }
+                val matchesRarity = selectedRarities.isEmpty() || (markerRarity != null && markerRarity in selectedRarities)
+
+                // Calculate the distance to the marker
+                val distanceToMarker = userLocation.distanceToAsDouble(marker.position)
+
+                val withinDistance = selectedDistanceRange == 0 || distanceToMarker <= selectedDistanceRange * 1000 // Convert km to meters
+
+                if ((matchesType || selectedTypeTags.isEmpty()) && matchesRarity && withinDistance) {
+                    map.overlays.add(marker)
+                }
+            }
+        }
+
+        userLocationMarker?.let { map.overlays.add(it) }
+        map.invalidate()
+    }
+
+    fun GeoPoint.distanceTo(other: GeoPoint): Double {
+        val earthRadius = 6371000.0 // Radius of Earth in meters
+
+        val dLat = (other.latitude - this.latitude).toRadians()
+        val dLon = (other.longitude - this.longitude).toRadians()
+
+        val a = sin(dLat / 2).pow(2) +
+                cos(this.latitude.toRadians()) * cos(other.latitude.toRadians()) *
+                sin(dLon / 2).pow(2)
+
+        return 2 * atan2(sqrt(a), sqrt(1 - a)) * earthRadius
+    }
+
+    private fun Double.toRadians(): Double = Math.toRadians(this)
+
 }

@@ -1,98 +1,151 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/dialog_background"
     android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Filter by Rarity"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:weightSum="2">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter by Rarity"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp" />
-
-        <!-- Rarity Toggle Buttons -->
         <ToggleButton
             android:id="@+id/toggle_common"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textOn="Common"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_toggle_background_common"
             android:textOff="Common"
-            android:background="@drawable/btn_toggle_background_common" />
+            android:textOn="Common"
+            android:textColor="@android:color/white" />
 
         <ToggleButton
             android:id="@+id/toggle_rare"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textOn="Rare"
+            android:layout_weight="1"
+            android:background="@drawable/btn_toggle_background_rare"
             android:textOff="Rare"
-            android:background="@drawable/btn_toggle_background_rare" />
+            android:textOn="Rare"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="8dp"
+        android:weightSum="2">
 
         <ToggleButton
             android:id="@+id/toggle_epic"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textOn="Epic"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_toggle_background_epic"
             android:textOff="Epic"
-            android:background="@drawable/btn_toggle_background_epic" />
+            android:textOn="Epic"
+            android:textColor="@android:color/white" />
 
         <ToggleButton
             android:id="@+id/toggle_legendary"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:textOn="Legendary"
+            android:layout_weight="1"
+            android:background="@drawable/btn_toggle_background_legendary"
             android:textOff="Legendary"
-            android:background="@drawable/btn_toggle_background_legendary" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filter by Type"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:paddingBottom="8dp" />
-
-        <CheckBox
-            android:id="@+id/checkbox_museum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Museum" />
-
-        <CheckBox
-            android:id="@+id/checkbox_park"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Park" />
-
-        <CheckBox
-            android:id="@+id/checkbox_house"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="House" />
-
-        <CheckBox
-            android:id="@+id/checkbox_other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Other" />
-
-        <Button
-            android:id="@+id/apply_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Apply"
-            android:background="@color/apply_button_background"
-            android:layout_marginTop="16dp"
-            android:padding="12dp" />
+            android:textOn="Legendary"
+            android:textColor="@android:color/white" />
     </LinearLayout>
-</ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Filter by Type"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/checkbox_museums"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Museums and Collections"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/checkbox_nature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nature and Outdoors"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/checkbox_historical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Historical and Architectural"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/checkbox_art"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Art and Culture"
+        android:textColor="@android:color/black" />
+
+    <CheckBox
+        android:id="@+id/checkbox_unusual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unusual and Unique"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:text="Filter Distance"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black" />
+
+    <SeekBar
+        android:id="@+id/seekbar_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="200" />
+
+    <TextView
+        android:id="@+id/textview_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="2dp"
+        android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/apply_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:text="Apply" />
+</LinearLayout>
