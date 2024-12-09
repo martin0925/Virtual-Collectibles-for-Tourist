@@ -2,6 +2,7 @@ package com.example.virtualcollectiblesfortourist.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 @Entity(tableName = "places")
 data class Place(
@@ -15,4 +16,4 @@ data class Place(
     val objectUrl: String,
     var collected: Boolean = false,
     var dateOfVisit: String? = null
-)
+) : Serializable

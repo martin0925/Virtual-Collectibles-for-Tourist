@@ -281,7 +281,8 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
                     startActivity(intent)
                 }
                 R.id.nav_plan_trip -> {
-                    Toast.makeText(this, "Plan Trip clicked", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, PlanTripActivity::class.java)
+                    startActivity(intent)
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -314,7 +315,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     private var userLocationMarker: Marker? = null
 
     @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
+    fun startLocationUpdates() {
         val locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000
