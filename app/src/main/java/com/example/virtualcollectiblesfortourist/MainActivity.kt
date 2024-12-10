@@ -291,15 +291,13 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
                     startActivity(intent)
                 }
                 R.id.nav_plan_trip -> {
-                    val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
-                    val hasExistingTrip = sharedPreferences.getBoolean("hasExistingTrip", false)
-
-                    val intent = if (hasExistingTrip) {
-                        Intent(this, ViewTripActivity::class.java)
-                    } else {
-                        Intent(this, PlanTripActivity::class.java)
+                    userLocationMarker?.let { marker ->
+                        val intent = Intent(this, PlanTripActivity::class.java).apply {
+                            putExtra("latitude", marker.position.latitude)
+                            putExtra("longitude", marker.position.longitude)
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -814,18 +812,15 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     }
 
     fun GeoPoint.distanceTo(other: GeoPoint): Double {
-        val earthRadius = 6371000.0 // Radius of Earth in meters
+        val earthRadius = 6371.0
 
-        val dLat = (other.latitude - this.latitude).toRadians()
-        val dLon = (other.longitude - this.longitude).toRadians()
+        val dLat = Math.toRadians(other.latitude - this.latitude)
+        val dLon = Math.toRadians(other.longitude - this.longitude)
 
         val a = sin(dLat / 2).pow(2) +
-                cos(this.latitude.toRadians()) * cos(other.latitude.toRadians()) *
+                cos(Math.toRadians(this.latitude)) * cos(Math.toRadians(other.latitude)) *
                 sin(dLon / 2).pow(2)
 
-        return 2 * atan2(sqrt(a), sqrt(1 - a)) * earthRadius
+        return earthRadius * 2 * atan2(sqrt(a), sqrt(1 - a))
     }
-
-    private fun Double.toRadians(): Double = Math.toRadians(this)
-
 }

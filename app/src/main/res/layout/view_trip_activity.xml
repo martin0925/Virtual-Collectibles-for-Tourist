@@ -11,21 +11,33 @@
         android:layout_height="wrap_content"
         android:text="Your Selected Places:"
         android:textColor="@color/black"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="start"
+        android:paddingBottom="8dp" />
 
     <ListView
         android:id="@+id/trip_list_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="394dp"
         android:background="@android:color/white"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
-        android:padding="8dp"/>
+        android:padding="8dp"
+        android:scrollbars="vertical" />
 
     <Button
         android:id="@+id/delete_trip_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete Trip" />
+        android:text="Delete Trip"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/dislike"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:elevation="4dp"
+        android:padding="12dp"
+        android:textSize="16sp" />
+
 </LinearLayout>

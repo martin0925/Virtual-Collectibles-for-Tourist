@@ -38,7 +38,7 @@ class ViewTripActivity : AppCompatActivity() {
 
         tripListView.adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_list_item_1,
+            R.layout.list_item,
             savedObjects.map { it.title }
         )
 

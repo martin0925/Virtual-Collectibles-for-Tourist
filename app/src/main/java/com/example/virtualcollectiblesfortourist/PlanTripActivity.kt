@@ -10,6 +10,11 @@ import com.bumptech.glide.Glide
 import com.example.virtualcollectiblesfortourist.data.AppDatabase
 import com.example.virtualcollectiblesfortourist.data.Place
 import kotlinx.coroutines.*
+import kotlin.math.atan2
+import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 class PlanTripActivity : AppCompatActivity() {
 
@@ -18,10 +23,15 @@ class PlanTripActivity : AppCompatActivity() {
     private var savedObjects: MutableList<Place> = mutableListOf()
     private var currentIndex = 0
     private var selectedDistance: Int = 0
+    private var userLatitude: Double = 0.0
+    private var userLongitude: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.plan_trip_activity)
+
+        userLatitude = intent.getDoubleExtra("latitude", 0.0)
+        userLongitude = intent.getDoubleExtra("longitude", 0.0)
 
         database = AppDatabase.getDatabase(this)
 
@@ -29,8 +39,10 @@ class PlanTripActivity : AppCompatActivity() {
         val hasExistingTrip = sharedPreferences.getBoolean("hasExistingTrip", false)
 
         if (hasExistingTrip) {
+            setContentView(R.layout.view_trip_activity)
             showSavedTripScreen()
         } else {
+            setContentView(R.layout.plan_trip_activity)
             showDistanceSelectionPopup()
         }
     }
@@ -51,12 +63,11 @@ class PlanTripActivity : AppCompatActivity() {
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
-
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
-        AlertDialog.Builder(this)
-            .setTitle("Select Max Distance")
+        val builder = AlertDialog.Builder(this, R.style.DistanceDialogTheme)
+        builder.setTitle("Select Max Distance")
             .setView(dialogView)
             .setPositiveButton("Apply") { _, _ ->
                 loadAvailablePlaces()
@@ -70,9 +81,15 @@ class PlanTripActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val allPlaces = database.placeDao().getAllPlaces()
 
+            val filteredPlaces = allPlaces.filter { place ->
+                val (placeLat, placeLon) = parseCoordinates(place.coordinates)
+                val distance = calculateDistance(userLatitude, userLongitude, placeLat, placeLon)
+                distance <= selectedDistance
+            }
+
             withContext(Dispatchers.Main) {
                 currentObjects.clear()
-                currentObjects.addAll(allPlaces)
+                currentObjects.addAll(filteredPlaces)
                 currentIndex = 0
                 if (currentObjects.isNotEmpty()) {
                     showPlaceSelectionScreen()
@@ -81,6 +98,26 @@ class PlanTripActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun parseCoordinates(coordinates: String): Pair<Double, Double> {
+        val coords = coordinates.split(",").map { it.trim().toDouble() }
+        return Pair(coords[0], coords[1])
+    }
+
+    private fun calculateDistance(
+        lat1: Double, lon1: Double, lat2: Double, lon2: Double
+    ): Double {
+        val earthRadius = 6371.0
+
+        val dLat = Math.toRadians(lat2 - lat1)
+        val dLon = Math.toRadians(lon2 - lon1)
+
+        val a = sin(dLat / 2).pow(2) +
+                cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) *
+                sin(dLon / 2).pow(2)
+
+        return earthRadius * 2 * atan2(sqrt(a), sqrt(1 - a))
     }
 
     private fun showPlaceSelectionScreen() {
@@ -159,9 +196,16 @@ class PlanTripActivity : AppCompatActivity() {
         val tripListView: ListView = findViewById(R.id.trip_list_view)
         val deleteButton: Button = findViewById(R.id.delete_trip_button)
 
+        // Nacte ulozene objekty
+        val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
+        val gson = com.google.gson.Gson()
+        val savedPlacesJson = sharedPreferences.getString("savedPlaces", "[]")
+        val savedPlacesType = object : com.google.gson.reflect.TypeToken<List<Place>>() {}.type
+        savedObjects = gson.fromJson(savedPlacesJson, savedPlacesType)
+
         tripListView.adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_list_item_1,
+            R.layout.list_item,
             savedObjects.map { it.title }
         )
 
@@ -169,6 +213,7 @@ class PlanTripActivity : AppCompatActivity() {
             savedObjects.clear()
 
             val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
+            sharedPreferences.edit().remove("savedPlaces").apply()
             sharedPreferences.edit().putBoolean("hasPlannedTrips", false).apply()
 
             Toast.makeText(this, "Trip deleted", Toast.LENGTH_SHORT).show()
