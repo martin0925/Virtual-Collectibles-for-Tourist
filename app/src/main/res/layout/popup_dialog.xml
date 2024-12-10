@@ -42,8 +42,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:textSize="22sp"
-            android:ellipsize="end"
-            android:maxLines="1" />
+            android:ellipsize="end" />
 
         <!-- Rarity -->
         <TextView
