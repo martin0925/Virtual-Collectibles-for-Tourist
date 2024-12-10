@@ -1,57 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:background="@color/white">
+    android:padding="16dp">
 
-    <!-- Display current object -->
     <ImageView
         android:id="@+id/place_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_marginTop="16dp"/>
+        android:contentDescription="Place image" />
 
     <TextView
         android:id="@+id/place_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Place Name"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:layout_marginTop="8dp"/>
-
-    <!-- Action buttons -->
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Place title"
+        android:textSize="18sp"
+        android:paddingTop="16dp" />
+
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
 
         <Button
             android:id="@+id/like_button"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Like"/>
+            android:text="Like" />
 
         <Button
             android:id="@+id/dislike_button"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Dislike"/>
-
+            android:text="Dislike"
+            android:layout_marginLeft="16dp" />
     </LinearLayout>
-
     <Button
-        android:id="@+id/show_saved_places_button"
-        android:layout_width="match_parent"
+        android:id="@+id/finish_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Show Saved Places"
-        android:layout_marginTop="16dp"/>
-
+        android:layout_gravity="center"
+        android:text="Finish"
+        android:layout_marginLeft="16dp" />
 </LinearLayout>

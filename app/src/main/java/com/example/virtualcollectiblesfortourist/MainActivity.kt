@@ -101,6 +101,16 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         setupLocationClient()
         setupCurrentLocationButton()
 
+        val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
+        val gson = com.google.gson.Gson()
+        val json = sharedPreferences.getString("savedPlaces", null)
+
+        if (json == null || json.isEmpty()) {
+            // Pokud není uložený seznam, nastavíme hasExistingTrip na false
+            sharedPreferences.edit().putBoolean("hasExistingTrip", false).apply()
+        }
+
+
         val database = AppDatabase.getDatabase(this)
         loadPlacesFromJsonToDb(this, database)
         loadPlacesFromDb()
@@ -281,7 +291,14 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
                     startActivity(intent)
                 }
                 R.id.nav_plan_trip -> {
-                    val intent = Intent(this, PlanTripActivity::class.java)
+                    val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
+                    val hasExistingTrip = sharedPreferences.getBoolean("hasExistingTrip", false)
+
+                    val intent = if (hasExistingTrip) {
+                        Intent(this, ViewTripActivity::class.java)
+                    } else {
+                        Intent(this, PlanTripActivity::class.java)
+                    }
                     startActivity(intent)
                 }
             }
