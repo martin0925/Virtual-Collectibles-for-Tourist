@@ -18,7 +18,7 @@
         android:contentDescription="Search Icon"
         android:src="@drawable/ic_search" />
 
-    <EditText
+    <AutoCompleteTextView
         android:id="@+id/search_field"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -28,11 +28,12 @@
         android:layout_toStartOf="@id/menu_icon"
         android:layout_toEndOf="@id/search_icon"
         android:background="@android:color/transparent"
-        android:hint="Strahov Monastery..."
+        android:hint="Search Location..."
         android:imeOptions="actionSearch"
         android:inputType="text"
         android:textColor="@android:color/black"
-        android:textColorHint="@android:color/darker_gray" />
+        android:textColorHint="@android:color/darker_gray"
+        android:cursorVisible="false" />
 
     <ImageView
         android:id="@+id/menu_icon"
