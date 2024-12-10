@@ -10,6 +10,7 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
+
     <style name="CustomDialogTitle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:textColorPrimary">#000000</item>
     </style>
@@ -28,6 +29,7 @@
     <style name="DialogButton" parent="Widget.AppCompat.Button">
         <item name="android:background">#FFFFFF</item>
         <item name="android:textColor">@color/light_blue</item>
+    </style>
 
     <style name="CustomMenuItemText" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textSize">18sp</item>
