@@ -12,13 +12,20 @@ import android.graphics.*
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.WindowManager
+import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -45,6 +52,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
+import java.text.Normalizer
 import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.pow
@@ -57,6 +65,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private lateinit var profileUpdateReceiver: BroadcastReceiver
+    private lateinit var searchField: EditText
 
     private var selectedDistanceRange: Int = 0
 
@@ -97,11 +106,13 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         setupOsmdroidConfiguration()
         setupMap()
         setupSideMenu()
+        setupSearchField()
         setupFilterButton()
         setupLocationClient()
         setupCurrentLocationButton()
 
         val database = AppDatabase.getDatabase(this)
+        val placeDao = database.placeDao()
         loadPlacesFromJsonToDb(this, database)
         loadPlacesFromDb()
 
@@ -117,6 +128,42 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         registerReceiver(profileUpdateReceiver, IntentFilter("com.example.virtualcollectiblesfortourist.PROFILE_UPDATED"),
             RECEIVER_NOT_EXPORTED
         )
+
+        // Searching listener for input and search icon
+        val searchField: AutoCompleteTextView = findViewById(R.id.search_field)
+        val searchIcon: ImageView = findViewById(R.id.search_icon)
+
+        searchField.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString()
+                if (query.isNotEmpty()) {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        val suggestions = placeDao.searchPlacesByTitle(query)
+                        withContext(Dispatchers.Main) {
+                            val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_dropdown_item_1line, suggestions)
+                            searchField.setAdapter(adapter)
+                        }
+                    }
+                }
+            }
+        })
+
+        searchField.setOnItemClickListener { _, _, position, _ ->
+            val selectedPlace = searchField.adapter.getItem(position) as String
+            searchLocation(selectedPlace)
+        }
+
+        // Listen to icon click to start searching
+        searchIcon.setOnClickListener {
+            val query = searchField.text.toString()
+            if (query.isNotEmpty()) {
+                searchLocation(query)
+            }
+        }
+
     }
 
     override fun onDestroy() {
@@ -726,6 +773,72 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         updateMarkerVisibility(18.0)
 
         return true
+    }
+
+    private fun setupSearchField() {
+        searchField = findViewById(R.id.search_field)
+
+        // Listen for search for input field, clicking on user keyboard search button
+        searchField.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val query = searchField.text.toString()
+                if (query.isNotEmpty()) {
+                    searchLocation(query)
+                }
+                true
+            } else {
+                false
+            }
+        }
+    }
+
+    private fun searchLocation(query: String) {
+        val geocoder = Geocoder(this)
+        try {
+            val normalizedQuery = normalizeString(query)
+
+            // Find an exact match for custom markers
+            val matchingMarker = customMarkers.find {
+                normalizeString(it.title) == normalizedQuery
+            }
+
+            if (matchingMarker != null) {
+                val offsetPosition = calculateOffset(matchingMarker.position, 0.0, 0.0005)
+                map.overlays.remove(matchingMarker)
+                map.overlays.add(matchingMarker)
+                map.controller.animateTo(offsetPosition)
+                map.controller.setZoom(19.0)
+            } else {
+                val addresses = geocoder.getFromLocationName(query, 1)
+                if (!addresses.isNullOrEmpty()) {
+                    val address = addresses[0]
+                    val geoPoint = GeoPoint(address.latitude, address.longitude)
+
+                    val offsetGeoPoint = calculateOffset(geoPoint, 0.0, 0.0005)
+                    map.controller.setCenter(offsetGeoPoint)
+                    map.controller.setZoom(19.0)
+                } else {
+                    Toast.makeText(this, "No results found for \"$query\"", Toast.LENGTH_SHORT).show()
+                }
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error finding location: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun normalizeString(input: String): String {
+        return Normalizer.normalize(input, Normalizer.Form.NFD)
+            .replace("\\p{InCombiningDiacriticalMarks}+".toRegex(), "")
+            .replace("-", " ")
+            .replace("’", "'")
+            .lowercase()
+            .trim()
+    }
+
+    private fun calculateOffset(geoPoint: GeoPoint, latOffset: Double, lonOffset: Double): GeoPoint {
+        val newLatitude = geoPoint.latitude + latOffset
+        val newLongitude = geoPoint.longitude + lonOffset
+        return GeoPoint(newLatitude, newLongitude)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

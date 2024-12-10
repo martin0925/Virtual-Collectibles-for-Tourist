@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/nav_badges"
-        android:title="Badges"
+        android:title="My Badges"
         android:icon="@drawable/ic_badges" />
 
     <item
         android:id="@+id/nav_plan_trip"
-        android:title="Plan my trip"
+        android:title="Plan My Trip"
         android:icon="@drawable/ic_trip" />
 
 </menu>

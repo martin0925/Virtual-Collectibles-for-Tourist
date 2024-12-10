@@ -51,4 +51,7 @@ interface PlaceDao {
 
     @Query("SELECT * FROM places WHERE collected = 1")
     fun getCollectedPlaces(): List<Place>
+
+    @Query("SELECT title FROM places WHERE title LIKE '%' || :query || '%'")
+    fun searchPlacesByTitle(query: String): List<String>
 }
