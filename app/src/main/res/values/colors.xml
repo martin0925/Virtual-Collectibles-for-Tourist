@@ -11,4 +11,6 @@
     <color name="epic">#4F1F72</color>
     <color name="rare">#33368D</color>
     <color name="common">#6D6D6D</color>
+    <color name="dislike">#C62828</color>
+    <color name="like">#2E7D32</color>
 </resources>

@@ -9,6 +9,26 @@
         <item name="strokeColor">@android:color/transparent</item>
         <item name="strokeWidth">0dp</item>
     </style>
+
+    <style name="CustomDialogTitle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:textColorPrimary">#000000</item>
+    </style>
+
+    <style name="DistanceDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textColor">#000000</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:buttonBarStyle">@style/DialogButtonBar</item>
+    </style>
+
+    <style name="DialogButtonBar">
+        <item name="android:buttonStyle">@style/DialogButton</item>
+    </style>
+
+    <style name="DialogButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:textColor">@color/light_blue</item>
+
     <style name="CustomMenuItemText" parent="TextAppearance.AppCompat.Body1">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/black</item>

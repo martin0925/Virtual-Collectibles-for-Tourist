@@ -111,6 +111,16 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         setupLocationClient()
         setupCurrentLocationButton()
 
+        val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
+        val gson = com.google.gson.Gson()
+        val json = sharedPreferences.getString("savedPlaces", null)
+
+        if (json == null || json.isEmpty()) {
+            // Pokud není uložený seznam, nastavíme hasExistingTrip na false
+            sharedPreferences.edit().putBoolean("hasExistingTrip", false).apply()
+        }
+
+
         val database = AppDatabase.getDatabase(this)
         val placeDao = database.placeDao()
         loadPlacesFromJsonToDb(this, database)
@@ -328,7 +338,13 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
                     startActivity(intent)
                 }
                 R.id.nav_plan_trip -> {
-                    Toast.makeText(this, "Plan Trip clicked", Toast.LENGTH_SHORT).show()
+                    userLocationMarker?.let { marker ->
+                        val intent = Intent(this, PlanTripActivity::class.java).apply {
+                            putExtra("latitude", marker.position.latitude)
+                            putExtra("longitude", marker.position.longitude)
+                        }
+                        startActivity(intent)
+                    }
                 }
             }
             drawerLayout.closeDrawer(GravityCompat.END)
@@ -361,7 +377,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     private var userLocationMarker: Marker? = null
 
     @SuppressLint("MissingPermission")
-    private fun startLocationUpdates() {
+    fun startLocationUpdates() {
         val locationRequest = LocationRequest.create().apply {
             interval = 10000
             fastestInterval = 5000
@@ -909,18 +925,15 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     }
 
     fun GeoPoint.distanceTo(other: GeoPoint): Double {
-        val earthRadius = 6371000.0 // Radius of Earth in meters
+        val earthRadius = 6371.0
 
-        val dLat = (other.latitude - this.latitude).toRadians()
-        val dLon = (other.longitude - this.longitude).toRadians()
+        val dLat = Math.toRadians(other.latitude - this.latitude)
+        val dLon = Math.toRadians(other.longitude - this.longitude)
 
         val a = sin(dLat / 2).pow(2) +
-                cos(this.latitude.toRadians()) * cos(other.latitude.toRadians()) *
+                cos(Math.toRadians(this.latitude)) * cos(Math.toRadians(other.latitude)) *
                 sin(dLon / 2).pow(2)
 
-        return 2 * atan2(sqrt(a), sqrt(1 - a)) * earthRadius
+        return earthRadius * 2 * atan2(sqrt(a), sqrt(1 - a))
     }
-
-    private fun Double.toRadians(): Double = Math.toRadians(this)
-
 }
