@@ -2,10 +2,14 @@ package com.example.virtualcollectiblesfortourist
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.virtualcollectiblesfortourist.data.AppDatabase
 import com.example.virtualcollectiblesfortourist.data.Place
@@ -29,6 +33,8 @@ class PlanTripActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.plan_trip_activity)
+
+        setupStatusBar()
 
         userLatitude = intent.getDoubleExtra("latitude", 0.0)
         userLongitude = intent.getDoubleExtra("longitude", 0.0)
@@ -66,15 +72,20 @@ class PlanTripActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
-        val builder = AlertDialog.Builder(this, R.style.DistanceDialogTheme)
-        builder.setTitle("Select Max Distance")
+        val alertDialog = AlertDialog.Builder(this, R.style.DistanceDialogTheme)
+            .setTitle("Select Max Distance")
             .setView(dialogView)
             .setPositiveButton("Apply") { _, _ ->
                 loadAvailablePlaces()
             }
             .setNegativeButton("Cancel", null)
             .create()
-            .show()
+
+        alertDialog.show()
+
+        // Nastavit barvu pisma pro tlacitka natvrdo, jinak byla vzdy barva nepochopitelne bila
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(Color.BLACK)
+        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)
     }
 
     private fun loadAvailablePlaces() {
@@ -157,6 +168,15 @@ class PlanTripActivity : AppCompatActivity() {
         displayCurrentPlace()  // Zobrazí aktuální místo
     }
 
+    private fun setupStatusBar() {
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.TRANSPARENT
+        }
+    }
+
     private fun saveCurrentPlace() {
         // Zajistíme, že místo bude přidáno pouze, pokud ještě není v seznamu
         if (currentIndex < currentObjects.size) {
@@ -181,9 +201,10 @@ class PlanTripActivity : AppCompatActivity() {
 
         if (currentObjects.isNotEmpty() && currentIndex < currentObjects.size) {
             val currentPlace = currentObjects[currentIndex]
+            val lightGray = ContextCompat.getColor(this, R.color.light_gray)
             Glide.with(this)
                 .load(currentPlace.imageUrl)
-                .placeholder(R.drawable.sample_image)
+                .placeholder(ColorDrawable(lightGray))
                 .into(imageView)
 
             titleView.text = currentPlace.title

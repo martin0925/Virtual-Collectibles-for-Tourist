@@ -9,9 +9,10 @@
         android:id="@+id/place_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="32dp"
+        android:background="@color/light_gray"
         android:contentDescription="Place image"
-        android:background="@color/light_gray" />
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/place_title"

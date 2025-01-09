@@ -1,7 +1,9 @@
 package com.example.virtualcollectiblesfortourist
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
@@ -16,6 +18,8 @@ class ViewTripActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.view_trip_activity)
+
+        setupStatusBar()
 
         val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
         val gson = com.google.gson.Gson()
@@ -60,5 +64,14 @@ class ViewTripActivity : AppCompatActivity() {
             finish() // Zavře ViewTripActivity
         }
 
+    }
+
+    private fun setupStatusBar() {
+        window.apply {
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.TRANSPARENT
+        }
     }
 }
