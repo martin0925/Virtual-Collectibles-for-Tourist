@@ -19,7 +19,7 @@ class BadgeAdapter(private val places: List<Place>) : RecyclerView.Adapter<Badge
 
     override fun onBindViewHolder(holder: BadgeViewHolder, position: Int) {
         val place = places[position]
-        holder.bind(place)
+        holder.bind(place) // Bind data to the view holder
     }
 
     override fun getItemCount(): Int = places.size
@@ -32,8 +32,9 @@ class BadgeAdapter(private val places: List<Place>) : RecyclerView.Adapter<Badge
 
         fun bind(place: Place) {
             badgeTitle.text = place.title
-            badgeDate.text = place.dateOfVisit ?: "Unknown"
+            badgeDate.text = place.dateOfVisit ?: "Unknown" // Set "Unknown" if no date of visit
 
+            // Set the background color of the badge ribbon based on rarity
             val rarityColor = when (place.rarity) {
                 "legendary" -> R.color.legendary
                 "epic" -> R.color.epic
@@ -43,10 +44,11 @@ class BadgeAdapter(private val places: List<Place>) : RecyclerView.Adapter<Badge
             }
             badgeRibbon.setBackgroundColor(itemView.context.getColor(rarityColor))
 
+            // Load and display the badge image with a circular crop transformation
             Glide.with(itemView.context)
                 .load(place.imageUrl)
-                .placeholder(R.drawable.sample_image)
-                .transform(CircleCrop())
+                .placeholder(R.drawable.sample_image) // Placeholder while loading
+                .transform(CircleCrop()) // Apply circular crop transformation
                 .into(badgeImage)
         }
     }

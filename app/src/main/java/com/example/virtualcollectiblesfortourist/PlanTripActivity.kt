@@ -83,7 +83,7 @@ class PlanTripActivity : AppCompatActivity() {
 
         alertDialog.show()
 
-        // Nastavit barvu pisma pro tlacitka natvrdo, jinak byla vzdy barva nepochopitelne bila
+        // Set button text color
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(Color.BLACK)
         alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)
     }
@@ -137,20 +137,20 @@ class PlanTripActivity : AppCompatActivity() {
         val finishButton: Button = findViewById(R.id.finish_button)
 
         likeButton.setOnClickListener {
-            saveCurrentPlace()  // Uloží místo do seznamu
-            showNextPlace()  // Zobrazí další místo
+            saveCurrentPlace()  // Save place to list
+            showNextPlace()  // Show next place
         }
 
         dislikeButton.setOnClickListener {
-            showNextPlace()  // Zobrazí další místo bez přidání do seznamu
+            showNextPlace()  // Show next place without saving
         }
 
         finishButton.setOnClickListener {
-            if (savedObjects.isNotEmpty()) { // Pokud máme alespoň jedno místo vybrané
+            if (savedObjects.isNotEmpty()) { // If at least one place is selected
                 val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
                 val editor = sharedPreferences.edit()
 
-                // Uložení seznamu jako JSON
+                // Save the list as JSON
                 val gson = com.google.gson.Gson()
                 val json = gson.toJson(savedObjects)
                 editor.putString("savedPlaces", json)
@@ -159,13 +159,13 @@ class PlanTripActivity : AppCompatActivity() {
 
                 val intent = Intent(this, ViewTripActivity::class.java)
                 startActivity(intent)
-                finish() // Zavře tuto aktivitu (PlanTripActivity)
+                finish() // Close the current activity (PlanTripActivity)
             } else {
                 Toast.makeText(this, "Please select at least one place", Toast.LENGTH_SHORT).show()
             }
         }
 
-        displayCurrentPlace()  // Zobrazí aktuální místo
+        displayCurrentPlace()  // Display the current place
     }
 
     private fun setupStatusBar() {
@@ -178,11 +178,11 @@ class PlanTripActivity : AppCompatActivity() {
     }
 
     private fun saveCurrentPlace() {
-        // Zajistíme, že místo bude přidáno pouze, pokud ještě není v seznamu
+        // Ensure the place is only added if not already in the list
         if (currentIndex < currentObjects.size) {
             val currentPlace = currentObjects[currentIndex]
             if (!savedObjects.contains(currentPlace)) {
-                savedObjects.add(currentPlace)  // Přidáme místo do seznamu
+                savedObjects.add(currentPlace)  // Add the place to the list
             }
         }
     }
@@ -190,7 +190,9 @@ class PlanTripActivity : AppCompatActivity() {
     private fun showNextPlace() {
         currentIndex++
         if (currentIndex >= currentObjects.size) {
-            currentIndex = 0
+            // If at the end of the list
+            Toast.makeText(this, "You have reached the end of the list.", Toast.LENGTH_LONG).show()
+            return
         }
         displayCurrentPlace()
     }
@@ -217,7 +219,7 @@ class PlanTripActivity : AppCompatActivity() {
         val tripListView: ListView = findViewById(R.id.trip_list_view)
         val deleteButton: Button = findViewById(R.id.delete_trip_button)
 
-        // Nacte ulozene objekty
+        // Load saved objects
         val sharedPreferences = getSharedPreferences("TripPrefs", MODE_PRIVATE)
         val gson = com.google.gson.Gson()
         val savedPlacesJson = sharedPreferences.getString("savedPlaces", "[]")
@@ -239,10 +241,10 @@ class PlanTripActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Trip deleted", Toast.LENGTH_SHORT).show()
 
-            // Přejdeme na MainActivity
+            // Go to MainActivity
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish() // Zavře tuto aktivitu (PlanTripActivity)
+            finish() // Close the current activity (PlanTripActivity)
         }
     }
 }

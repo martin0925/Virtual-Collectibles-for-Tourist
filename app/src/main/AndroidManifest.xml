@@ -31,7 +31,6 @@
         <activity android:name=".BadgeActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".PlanTripActivity" />
-        <activity android:name=".SavedPlacesActivity" />
         <activity android:name=".ViewTripActivity" />
     </application>
 

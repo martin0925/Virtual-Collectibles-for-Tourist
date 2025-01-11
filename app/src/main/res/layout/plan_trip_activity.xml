@@ -1,71 +1,86 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:gravity="center">
 
+    <!-- Image view for displaying the place image -->
     <ImageView
         android:id="@+id/place_image"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@color/light_gray"
         android:contentDescription="Place image"
         android:scaleType="centerCrop" />
 
+    <!-- Text view for displaying the place title -->
     <TextView
         android:id="@+id/place_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Place Title"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        android:paddingTop="16dp"
+        android:padding="8dp"
         android:textColor="@color/black"
         android:gravity="center" />
 
+    <!-- Horizontal linear layout for the Like and Dislike buttons -->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:paddingTop="16dp">
+        android:layout_marginTop="16dp">
 
-        <Button
+        <!-- Dislike button with an icon and specific style -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/dislike_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:text="Dislike"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/dislike"
-            android:padding="12dp"
-            android:textSize="16sp" />
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            app:cornerRadius="40dp"
+            app:icon="@drawable/ic_close"
+            app:iconSize="36dp"
+            app:iconGravity="start"
+            app:iconTint="@color/white"
+            app:backgroundTint="@color/dislike"
+            android:contentDescription="Dislike" />
 
-        <Button
+        <!-- Like button with an icon and specific style -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/like_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="8dp"
-            android:text="Like"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/like"
-            android:padding="12dp"
-            android:textSize="16sp" />
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            app:cornerRadius="40dp"
+            app:icon="@drawable/ic_heart"
+            app:iconSize="36dp"
+            app:iconGravity="start"
+            app:iconTint="@color/white"
+            app:backgroundTint="@color/like"
+            android:layout_marginStart="48dp"
+            android:contentDescription="Like" />
+
     </LinearLayout>
 
-    <Button
+    <!-- Finish button to save, with specific style -->
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/finish_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Finish"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="69dp"
+        android:layout_height="80dp"
+        app:cornerRadius="40dp"
+        app:icon="@drawable/ic_save"
+        app:iconSize="36dp"
+        app:iconGravity="start"
+        app:iconTint="@color/white"
+        app:backgroundTint="@color/light_blue"
         android:layout_marginTop="16dp"
-        android:padding="12dp"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/light_blue"
-        android:textSize="16sp" />
+        android:contentDescription="Save" />
 </LinearLayout>

@@ -14,7 +14,7 @@
         android:padding="8dp"
         android:background="#C3E9FD">
 
-        <!-- Praporek rarity (dynamic) -->
+        <!-- Badge Ribbon (dynamic) -->
         <TextView
             android:id="@+id/badgeRibbon"
             android:layout_width="35dp"
@@ -28,7 +28,7 @@
             android:gravity="center"
             android:layout_alignParentTop="true" />
 
-        <!-- Obrázek odznaku s efektem medaile -->
+        <!-- Medal -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/wholeBadgeImage">
 
-            <!-- Zlatý rámec medaile (větší ImageView pro pozadí) -->
+            <!-- Golden frame for the medal (larger ImageView for the background) -->
             <ImageView
                 android:id="@+id/medalBackground"
                 android:layout_width="140dp"
@@ -45,7 +45,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_medal" />
 
-            <!-- Obrázek medaile -->
+            <!-- Medal image -->
             <ImageView
                 android:id="@+id/badgeImage"
                 android:layout_width="80dp"
@@ -54,7 +54,7 @@
                 android:scaleType="centerCrop" />
         </FrameLayout>
 
-        <!-- Textové informace (Text fields below the photo) -->
+        <!-- Textual information (Text fields below the photo) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

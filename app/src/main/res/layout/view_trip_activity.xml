@@ -1,32 +1,35 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/white">
 
+    <!-- Title for the list of selected places -->
     <TextView
         android:id="@+id/trip_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Selected Places:"
         android:textColor="@color/black"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_gravity="start"
-        android:paddingBottom="8dp" />
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="8dp" />
 
+    <!-- ListView to display the selected places -->
     <ListView
         android:id="@+id/trip_list_view"
         android:layout_width="match_parent"
-        android:layout_height="394dp"
+        android:layout_height="0dp"
+        android:layout_below="@id/trip_list_title"
+        android:layout_above="@id/delete_trip_button"
         android:background="@android:color/white"
         android:divider="@android:color/darker_gray"
         android:dividerHeight="1dp"
         android:padding="8dp"
         android:scrollbars="vertical" />
 
+    <!-- Button to delete the selected trip -->
     <Button
         android:id="@+id/delete_trip_button"
         android:layout_width="match_parent"
@@ -34,10 +37,9 @@
         android:text="Delete Trip"
         android:textColor="@color/white"
         android:backgroundTint="@color/dislike"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
         android:elevation="4dp"
         android:padding="12dp"
-        android:textSize="16sp" />
-
-</LinearLayout>
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

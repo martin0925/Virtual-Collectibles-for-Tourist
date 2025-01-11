@@ -29,7 +29,7 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
     private var activeFilters: Set<String> = emptySet()
     private var pendingFilters: Set<String>? = null
 
-    private val ANY_DISTANCE = 0 // Represents "Any" distance
+    private val ANY_DISTANCE = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +37,7 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.popup_filter, container, false)
 
+        // Initialize views
         museumCheckBox = view.findViewById(R.id.checkbox_museums)
         natureCheckBox = view.findViewById(R.id.checkbox_nature)
         historicalCheckBox = view.findViewById(R.id.checkbox_historical)
@@ -56,23 +57,24 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         distanceSeekBar = view.findViewById(R.id.seekbar_distance)
         distanceTextView = view.findViewById(R.id.textview_distance)
 
+        // Set initial distance
         distanceSeekBar.progress = if (initialDistance == ANY_DISTANCE) 0 else initialDistance
         distanceTextView.text = if (initialDistance == ANY_DISTANCE) "Any" else "$initialDistance km"
 
+        // SeekBar listener to update distance display
         distanceSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
                 distanceTextView.text = if (progress == 0) "Any" else "$progress km"
             }
-
             override fun onStartTrackingTouch(seekBar: SeekBar) {}
             override fun onStopTrackingTouch(seekBar: SeekBar) {}
         })
 
+        // Apply button click listener
         applyButton = view.findViewById(R.id.apply_button)
-        applyButton.setOnClickListener {
-            applyFilters()
-        }
+        applyButton.setOnClickListener { applyFilters() }
 
+        // Set filters if there were pending ones
         pendingFilters?.let {
             setActiveFilters(it)
             pendingFilters = null
@@ -81,6 +83,7 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         return view
     }
 
+    // Set the active filters
     fun setActiveFilters(filters: Set<String>) {
         if (!this::museumCheckBox.isInitialized) {
             pendingFilters = filters
@@ -101,12 +104,14 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         legendaryToggle.isChecked = activeFilters.contains("legendary")
     }
 
+    // Initialize toggle button color change
     private fun initializeToggleButton(toggleButton: ToggleButton, filterKey: String, activeColorResId: Int) {
         toggleButton.setOnCheckedChangeListener { _, _ ->
             updateToggleButtonColor(toggleButton, activeColorResId)
         }
     }
 
+    // Update toggle button background color
     private fun updateToggleButtonColor(toggleButton: ToggleButton, activeColorResId: Int) {
         val color = if (toggleButton.isChecked) {
             ContextCompat.getColor(requireContext(), activeColorResId)
@@ -116,6 +121,7 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         toggleButton.setBackgroundColor(color)
     }
 
+    // Apply selected filters and notify listener
     private fun applyFilters() {
         val selectedFilters = mutableListOf<String>()
 
@@ -133,7 +139,7 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
         val selectedDistance = if (distanceSeekBar.progress == 0) ANY_DISTANCE else distanceSeekBar.progress
 
         (activity as? FilterDialogListener)?.onFiltersSelected(selectedFilters, selectedDistance)
-        dismiss()
+        dismiss()  // Close the popup
     }
 
     interface FilterDialogListener {
@@ -142,7 +148,6 @@ class FilterPopup(private val initialDistance: Int) : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
-        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)  // Transparent background
     }
-
 }

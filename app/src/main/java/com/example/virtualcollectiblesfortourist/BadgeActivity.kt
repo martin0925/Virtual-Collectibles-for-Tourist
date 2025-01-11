@@ -26,23 +26,22 @@ class BadgeActivity : AppCompatActivity() {
 
         val totalBadgesText = findViewById<TextView>(R.id.collectedBadgesCount)
 
-        // Load collected badges from database
+        // Load collected badges from the database
         lifecycleScope.launch(Dispatchers.IO) {
             val database = AppDatabase.getDatabase(applicationContext)
             val collectedPlaces = database.placeDao().getCollectedPlaces()
 
             withContext(Dispatchers.Main) {
-                val adapter = BadgeAdapter(collectedPlaces)
-                recyclerView.adapter = adapter
-
-                // Aktualizuj počet badge
+                recyclerView.adapter = BadgeAdapter(collectedPlaces)
                 totalBadgesText.text = "${collectedPlaces.size}"
             }
         }
     }
 
+    // Set up the status bar appearance
     private fun setupStatusBar() {
         window.apply {
+            // Make status bar transparent
             decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
