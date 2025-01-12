@@ -7,16 +7,6 @@
     android:background="@drawable/dialog_background"
     android:padding="16dp">
 
-    <!-- Close button -->
-    <!--    <ImageView-->
-    <!--        android:id="@+id/close_button"-->
-    <!--        android:layout_width="24dp"-->
-    <!--        android:layout_height="24dp"-->
-    <!--        android:layout_gravity="end"-->
-    <!--        android:src="@android:drawable/ic_menu_close_clear_cancel"-->
-    <!--        android:contentDescription="Close" />-->
-
-    <!-- Large photo -->
     <!-- Image -->
     <ImageView
         android:id="@+id/info_image"

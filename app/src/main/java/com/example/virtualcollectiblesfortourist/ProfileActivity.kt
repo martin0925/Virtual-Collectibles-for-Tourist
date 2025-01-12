@@ -31,6 +31,7 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        // Set up transparent status bar
         setupStatusBar()
 
         profileImage = findViewById(R.id.profileImage)
@@ -41,8 +42,10 @@ class ProfileActivity : AppCompatActivity() {
         editCity = findViewById(R.id.editCity)
         saveProfileButton = findViewById(R.id.saveProfileButton)
 
+        // Load existing user profile
         loadUserProfile()
 
+        // Save the updated profile when the button is clicked
         saveProfileButton.setOnClickListener {
             saveUserProfile()
         }
@@ -60,10 +63,12 @@ class ProfileActivity : AppCompatActivity() {
     private fun loadUserProfile() {
         val userDao = AppDatabase.getDatabase(this).userDao()
         CoroutineScope(Dispatchers.IO).launch {
+            // Fetch the user's profile from the database
             val user = userDao.getDefaultUser()
 
             withContext(Dispatchers.Main) {
                 if (user != null) {
+                    // Display the user's information in the UI
                     displayUserProfile(user)
                 } else {
                     Toast.makeText(this@ProfileActivity, "User not found", Toast.LENGTH_SHORT).show()
@@ -73,12 +78,14 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun displayUserProfile(user: User) {
+        // Populate the UI fields with user data
         editUserName.setText(user.name)
         editUserTitle.setText("Common Traveller")
         editEmail.setText(user.email)
         editCountry.setText(user.country)
         editCity.setText(user.city)
 
+        // Load the user's profile image
         Glide.with(this)
             .load(user.imageUrl)
             .placeholder(R.drawable.profile_placeholder)
@@ -87,6 +94,7 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun saveUserProfile() {
+        // Create a new User object with updated profile information
         val updatedUser = User(
             id = 0,
             name = editUserName.text.toString(),
@@ -99,16 +107,18 @@ class ProfileActivity : AppCompatActivity() {
 
         val userDao = AppDatabase.getDatabase(this).userDao()
         CoroutineScope(Dispatchers.IO).launch {
+            // Update the user profile in the database
             userDao.updateUser(updatedUser)
 
+            // Send a broadcast indicating the profile was updated
             val intent = Intent("com.example.virtualcollectiblesfortourist.PROFILE_UPDATED")
             intent.putExtra("name", updatedUser.name)
             sendBroadcast(intent)
 
             withContext(Dispatchers.Main) {
+                // Show a confirmation toast to the user
                 Toast.makeText(this@ProfileActivity, "Profile updated successfully!", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
 }

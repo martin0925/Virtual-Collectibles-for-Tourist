@@ -41,6 +41,6 @@
         app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/seekbar_distance"></androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@id/seekbar_distance" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

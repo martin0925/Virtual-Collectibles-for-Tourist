@@ -6,6 +6,7 @@
     android:background="@drawable/dialog_background"
     android:padding="16dp">
 
+    <!-- Title for the "Rarity" filter section -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,6 +16,7 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
+    <!-- Horizontal layout for the "Common" and "Rare" toggle buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +24,7 @@
         android:layout_marginBottom="8dp"
         android:weightSum="2">
 
+        <!-- Toggle button for "Common" rarity -->
         <ToggleButton
             android:id="@+id/toggle_common"
             android:layout_width="0dp"
@@ -33,6 +36,7 @@
             android:textOn="Common"
             android:textColor="@android:color/white" />
 
+        <!-- Toggle button for "Rare" rarity -->
         <ToggleButton
             android:id="@+id/toggle_rare"
             android:layout_width="0dp"
@@ -44,6 +48,7 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
+    <!-- Horizontal layout for the "Epic" and "Legendary" toggle buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,6 +56,7 @@
         android:layout_marginBottom="8dp"
         android:weightSum="2">
 
+        <!-- Toggle button for "Epic" rarity -->
         <ToggleButton
             android:id="@+id/toggle_epic"
             android:layout_width="0dp"
@@ -62,6 +68,7 @@
             android:textOn="Epic"
             android:textColor="@android:color/white" />
 
+        <!-- Toggle button for "Legendary" rarity -->
         <ToggleButton
             android:id="@+id/toggle_legendary"
             android:layout_width="0dp"
@@ -73,6 +80,7 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
+    <!-- Title for the "Type" filter section -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,6 +90,7 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
+    <!-- Checkbox for "Museums and Collections" type filter -->
     <CheckBox
         android:id="@+id/checkbox_museums"
         android:layout_width="wrap_content"
@@ -89,6 +98,7 @@
         android:text="Museums and Collections"
         android:textColor="@android:color/black" />
 
+    <!-- Checkbox for "Nature and Outdoors" type filter -->
     <CheckBox
         android:id="@+id/checkbox_nature"
         android:layout_width="wrap_content"
@@ -96,6 +106,7 @@
         android:text="Nature and Outdoors"
         android:textColor="@android:color/black" />
 
+    <!-- Checkbox for "Historical and Architectural" type filter -->
     <CheckBox
         android:id="@+id/checkbox_historical"
         android:layout_width="wrap_content"
@@ -103,6 +114,7 @@
         android:text="Historical and Architectural"
         android:textColor="@android:color/black" />
 
+    <!-- Checkbox for "Art and Culture" type filter -->
     <CheckBox
         android:id="@+id/checkbox_art"
         android:layout_width="wrap_content"
@@ -110,6 +122,7 @@
         android:text="Art and Culture"
         android:textColor="@android:color/black" />
 
+    <!-- Checkbox for "Unusual and Unique" type filter -->
     <CheckBox
         android:id="@+id/checkbox_unusual"
         android:layout_width="wrap_content"
@@ -117,6 +130,7 @@
         android:text="Unusual and Unique"
         android:textColor="@android:color/black" />
 
+    <!-- Title for the "Distance" filter section -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -126,12 +140,14 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
+    <!-- SeekBar to select the distance -->
     <SeekBar
         android:id="@+id/seekbar_distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:max="200" />
 
+    <!-- TextView to show the selected distance value -->
     <TextView
         android:id="@+id/textview_distance"
         android:layout_width="match_parent"
@@ -139,6 +155,7 @@
         android:paddingBottom="2dp"
         android:textColor="@android:color/black" />
 
+    <!-- Button to apply the filters -->
     <Button
         android:id="@+id/apply_button"
         android:layout_width="match_parent"
