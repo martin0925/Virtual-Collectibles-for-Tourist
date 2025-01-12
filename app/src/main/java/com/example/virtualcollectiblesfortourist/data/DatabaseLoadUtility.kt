@@ -17,7 +17,7 @@ object DatabaseUtils {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
-            val datasets = listOf("czech_places.json")
+            val datasets = listOf("czech_places.json","belgium_places.json","luxembourg_places.json")
             val places = mutableListOf<Place>()
 
             try {
