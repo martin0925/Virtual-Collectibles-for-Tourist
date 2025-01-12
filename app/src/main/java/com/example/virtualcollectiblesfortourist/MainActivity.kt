@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
         Configuration.getInstance().load(
             this,
             getSharedPreferences("osmdroid", MODE_PRIVATE)
-        ) // Load osmdroid configuration
+        )
     }
 
     private fun setupMap() {
@@ -238,8 +238,8 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     }
 
     private fun updateMarkerVisibility(zoomLevel: Double) {
-        val shouldShowLargeMarkers = zoomLevel >= 14 // Show large markers if zoom level is >= 14
-        map.overlays.clear() // Clear current overlays on the map
+        val shouldShowLargeMarkers = zoomLevel >= 14
+        map.overlays.clear()
 
         val selectedTypeTags = activeFilters.flatMap { category ->
             categoryTags[category] ?: emptySet()
@@ -870,6 +870,7 @@ class MainActivity : AppCompatActivity(), FilterPopup.FilterDialogListener {
     }
 
     private fun handleMarkerClick(marker: Marker, mapView: MapView, isSmall: Boolean): Boolean {
+        mapView.controller.setZoom(18.0)
         val offsetFactor = 0.0005  // Define an offset factor to adjust the map position
         val offsetPosition = GeoPoint(
             marker.position.latitude,
